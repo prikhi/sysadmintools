@@ -12,7 +12,7 @@ Usage:
 from fabric.api import prompt, sudo, env
 
 
-env.hosts = ['vishnu.acorn', 'aphrodite.acorn', 'adonis.acorn']
+env.hosts = ['aphrodite.acorn', 'vishnu.acorn', 'adonis.acorn']
 
 
 def update_package_list():
@@ -20,9 +20,12 @@ def update_package_list():
     sudo("/usr/sbin/slackpkg update -batch=on")
 
 
-def upgrade_all_packages():
-    """Upgrade all packages to the latest version."""
-    sudo("/usr/sbin/slackpkg upgrade-all -batch=on")
+def install_package(package_name=None):
+    """Install the specified package."""
+    if package_name is None:
+        package_name = prompt("Which package?")
+    update_package_list()
+    sudo("/usr/sbin/slackpkg install {}".format(package_name))
 
 
 def upgrade_package(package_name=None):
@@ -38,6 +41,11 @@ def remove_package(package_name=None):
     if package_name is None:
         package_name = prompt("Which package?")
     sudo("/usr/sbin/slackpkg remove {}".format(package_name))
+
+
+def upgrade_all_packages():
+    """Upgrade all packages to the latest version."""
+    sudo("/usr/sbin/slackpkg upgrade-all -batch=on")
 
 
 def update_and_upgrade():
