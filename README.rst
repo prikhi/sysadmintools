@@ -3,31 +3,18 @@ Acorn System Administration Tools
 ----------------------------------
 
 This repository contains files/scripts for the automated administration of
-Acorn's Linux servers & workstations.
+Acorn's Linux servers(Slackware) & workstations(Debian).
 
 The main applications used are `Ansible`_ and `Fabric`_.
 
+You can build this documentation by using python's ``docutils`` module,
+installed via ``pip``::
 
-Fabric Slackware Administration
----------------------------------
-
-`Fabric`_ is used to automate package installation and upgrades on Acorn's
-Slackware servers.
-
-Install Fabric using ``pip``:
-
-    pip install fabric
-
-List possible commands:
-
-    cd slackware_servers
-    fab -l
-
-Update all packages on all hosts:
-
-    cd slackware_servers
-    fab upgrade_all_packages
+    pip install docutils
+    rst2html.py README.rst > index.html
+    firefox index.html
 
 
-.. _Ansible: http://www.ansible.com/home
-.. _Fabric:  http://www.fabfile.org/
+.. include:: slackware_servers/README.rst
+
+.. include:: office_workstation/README.rst
