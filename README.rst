@@ -20,11 +20,13 @@ Install Fabric using ``pip``:
 
 List possible commands:
 
-    fab -f fabric/slackware.py -l
+    cd slackware_servers
+    fab -l
 
 Update all packages on all hosts:
 
-    fab -f fabric/slackware.py upgrade_all_packages
+    cd slackware_servers
+    fab upgrade_all_packages
 
 
 .. _Ansible: http://www.ansible.com/home
