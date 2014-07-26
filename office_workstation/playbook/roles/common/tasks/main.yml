@@ -1,0 +1,15 @@
+---
+
+# Just an example, the automated install should handle this
+- name: be sure ntp is installed
+  apt: name=ntp state=latest
+  tags: ntp
+
+- name: be sure nt5p is configured
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify:
+    - restart ntpd
+  tags: ntp
+
+# Split out actual actions and just include them here:
+# - include: add_users.yml

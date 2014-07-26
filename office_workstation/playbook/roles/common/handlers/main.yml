@@ -1,0 +1,5 @@
+---
+
+# Just an example
+- name: restart ntpd
+  service: name=ntpd state=restarted
