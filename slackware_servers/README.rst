@@ -3,7 +3,8 @@ Fabric Slackware Administration
 ================================
 
 `Fabric`_ is used to automate package installation and upgrades on Acorn's
-Slackware servers.
+Slackware servers. The ``slackware_servers`` module includes a ``fabfile.py``
+that defines the possible commands.
 
 Install Fabric using ``pip``::
 
@@ -20,5 +21,4 @@ Update all packages on all hosts::
     fab upgrade_all_packages
 
 
-.. _Ansible: http://www.ansible.com/home
 .. _Fabric:  http://www.fabfile.org/

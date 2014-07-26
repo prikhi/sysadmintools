@@ -14,7 +14,15 @@ installed via ``pip``::
     rst2html.py README.rst > index.html
     firefox index.html
 
+The ``Ansible`` and ``Fabric`` dependencies may also be installed via ``pip``::
+
+    pip install ansible Fabric
+
 
 .. include:: slackware_servers/README.rst
 
 .. include:: office_workstation/README.rst
+
+
+.. _Ansible: http://www.ansible.com/home
+.. _Fabric:  http://www.fabfile.org/
