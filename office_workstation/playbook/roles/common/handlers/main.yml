@@ -1,5 +1,4 @@
 ---
 
-# Just an example
-- name: restart ntpd
-  service: name=ntpd state=restarted
+- name: restart zabbix_agent
+  service: name=zabbix-agent state=restarted
