@@ -1,21 +1,22 @@
 ---
 
-- include: install_apps.yml user=root
+# Install Additional Apps & Remove Uneeded Ones
+- include: modify_apps.yml
 
-- include: setup_zabbixagent.yml user=root
+# Setup & Configure the Zabbix Agent
+- include: setup_zabbixagent.yml
 
-- include: users/main.yml user=root
+# Setup Users & Their Configurations
+- include: users/main.yml
 
-# Just an example, the automated install should handle this
-#- name: be sure ntp is installed
-#  apt: name=ntp state=latest
-#  tags: ntp
-#
-#- name: be sure ntp is configured
-#  template: src=ntp.conf.j2 dest=/etc/ntp.conf
-#  notify:
-#    - restart ntpd
-#  tags: ntp
-
-# Split out actual actions and just include them here:
-# - include: add_users.yml
+- name: Configure the KDM Login Manager
+  lineinfile: dest=/etc/kde4/kdm/kdmrc regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+    - { regexp: '^#?AutoLoginEnable=',  line: 'AutoLoginEnable=true' }
+    - { regexp: '^#?AutoLoginUser=',    line: 'AutoLoginUser=sese' }
+    - { regexp: '^#?AutoLoginDelay=',   line: 'AutoLoginDelay=5' }
+    - { regexp: '^#?PreselectUser=',   line: 'PreselectUser=Default' }
+    - { regexp: '^DefaultUser=',      line: 'DefaultUser=sese' }
+    - { regexp: '^#?UserList=',        line: 'UserList=true' }
+    - { regexp: '^#?NumLock=',         line: 'NumLock=On' }
+  tags: kdm

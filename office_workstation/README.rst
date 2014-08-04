@@ -35,9 +35,29 @@ following actions:
 * Apply personalized configurations to personal accounts
 * Configure basic applications like Firefox and Chrome
 
-**TODO**
+Start by using ``pip`` to install `Ansible`_::
 
-Actually write the playbook....
+    pip install ansible
+
+You can then run the entire playbook using ``ansible-playbook``::
+
+    cd office_workstation/playbook
+    ansible-playbook acorn.yml
+
+Root SSH-logins are required on all hosts. New hosts may be added to the
+``workstations`` file.
+
+You may run specific ``tags`` using the ``-t`` flag::
+
+    ansible-playbook acorn.yml -t apps
+
+The following ``tags`` are available:
+
+* ``kdm`` - Make KDM-related configuration changes.
+* ``apps`` - Update and install all default applications.
+* ``zabbix`` - Install and configure the Zabbix agent.
+* ``sese`` - Create and configure the ``sese`` user.
+* ``pavan`` - Create and configure Pavan's user.
 
 
 .. _Debian Linux:               https://www.debian.org/
