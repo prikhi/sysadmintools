@@ -2,38 +2,94 @@
 Debian Workstation Automated Setup
 ===================================
 
-The ``office_workstation`` module contains files used for automated
+The ``office_workstation`` folder contains files used for automated
 installation, configuration and maintenance of Acorn's Linux Workstations,
 which run `Debian Linux`_.
 
+Quickstart
+===========
+
+#. Download the `Debian Jessie Netinstall Image`_.
+#. Copy the ISO to a USB Stick::
+
+    dd if=debian-jessie.iso of=/dev/sdg
+
+#. Boot the new workstation from the USB stick. When the installer menu pops
+   up, hit escape and enter the following::
+
+    auto hostname=NewWorkstation url=http://lucy.acorn/~prikhi/preseed.cfg
+
+#. After installation is complete, jump to your workstation and install
+   ansible::
+
+    pip install ansible
+
+#. Add the new workstation to the ``workstations`` file::
+
+    echo 'NewWorkstation.acorn' >> playbook/workstations
+
+#. Run the playbook::
+
+    cd playbook; ansible-playbook acorn.yml
+
+#. Make some coffee...
+
+#. Once the playbook finishes, you should be logged in as the Public User and
+   Mumble should have popped up. Configure Mumble by adding an ``Acorn Chat
+   Server`` favorite pointing to ``chat.acorn``.
+
+#. Open PlayOnLinux and hit ``Run a Local Script``. Choose the
+   ``PlayOnLinux_msoffice.sh`` file in the Home directory.
+
+#. Open up Konsole, switch to an admin account and update & reboot::
+
+    su seseadmin
+    sudo apt-get update && sudo apt-get upgrade
+    sudp reboot
+
+#. You can do a little bit of cleanup by removing the
+
 Automated Installs
--------------------
+===================
 
 The ``preseed.cfg`` file is configuration file that can be used with the
 `Debian Automated Installer`_. It is based off of
 the Automated Install documentation and the `example pre-seed`_ file .
 
 Simply boot up using a `netinstall`_ image. When the graphical menu appears,
-press ``<ESC>`` and enter ``auto url=http://lucy.acorn/~prikhi/preseed.cfg``.
+press ``<ESC>`` and enter ``auto hostname=<workstation_hostname>
+url=<preseed_url>``. For example, if you wanted the new workstation to be named
+``HelloWorld`` and your preseed was hosted at
+http://lucy.acorn/~prikhi/preseed.cfg, you would type::
 
-This will automatically partition the drives and install KDE along with an
-``seseadmin`` user.
+    auto hostname=HelloWorld url=http://lucy.acorn/~prikhi/preseed.cfg
 
-The `Ansible`_ playbook may then be used for furthur configuration.
+This will automatically partition the drives and install `KDE`_ along with an
+``seseadmin`` admin user.
+
+The `Ansible`_ playbook may then be used for further configuration.
+
+Generate Password Hashes
+-------------------------
+
+You can use the `mkpasswd` command to generate crypted passwords for the
+pressed file::
+
+    printf "mypassword" | mkpasswd -s -m sha-512
 
 Ansible Setup
---------------
+==============
 
-The `Debian Automated Install`_ gets an entire system up and running with
+While the `Debian Automated Install`_ gets an entire system up and running with
 `KDE`_, the Ansible playbook adds Acorn specific customizations. It will do the
 following actions:
 
-* Install Standard Applications (Firefox, Flash)
-* Configure for use with Acorn's network (samba, zabbix)
-* Create an sese user along with users for specific cos
-* Apply a standardized configuration to the sese & seseadmin users
-* Apply personalized configurations to personal accounts
-* Configure basic applications like Firefox and Chrome
+* Install standard applications (Firefox, Chromium, Flash)
+* Configure for use with network services (samba, zabbix, cups)
+* Create a public user
+* Apply a standardized configuration to the public user (bookmarks, shortcuts)
+* Prepare the workstation and public user for installing MS Office
+* Create personal user accounts and apply specific configurations to them
 
 Start by using ``pip`` to install `Ansible`_::
 
@@ -44,26 +100,121 @@ You can then run the entire playbook using ``ansible-playbook``::
     cd office_workstation/playbook
     ansible-playbook acorn.yml
 
-Root SSH-logins are required on all hosts. New hosts may be added to the
-``workstations`` file.
+New hosts may be added to the ``workstations`` file. Plays will only be run if
+the host requires it.
 
-You may run specific ``tags`` using the ``-t`` flag::
+You may run specific ``tags`` using the ``-t`` flag. The following command will
+only install and configure the Zabbix agent on hosts that do not have the agent
+installed or are improperly configured::
 
-    ansible-playbook acorn.yml -t apps
+    ansible-playbook acorn.yml -t zabbix
 
 The following ``tags`` are available:
 
-* ``kdm`` - Make KDM-related configuration changes.
-* ``apps`` - Update and install all default applications.
+* ``kde`` - Install/Remove/Configure KDE packages.
+* ``apps`` - Install/Remove available applications.
 * ``zabbix`` - Install and configure the Zabbix agent.
-* ``sese`` - Create and configure the ``sese`` user.
+* ``samba`` - Configure Samba and mount network shares on boot.
+* ``cups`` - Install and configure the CUPS client(for printing).
+* ``users`` - Create and configure accounts for all users.
+* ``public_user`` - Create and configure a Public user account.
 * ``pavan`` - Create and configure Pavan's user.
 
+Playbook Overview
+------------------
 
-.. _Debian Linux:               https://www.debian.org/
+The playbook will first copy over the apt sources file. This ensures all
+workstations use a common mirror which allows caching via web proxy(we use
+`squid`_). Then the new mirrors available packages are updated.
+
+Next various applications are installed such as web browsers, games, and
+educational applications. Any XFCE4 specific packages are removed and KDE
+applications are explicitly installed(instead of being implicity linked to the
+``kde-desktop`` task). Any unnecessary dependencies and applications are then
+removed.
+
+The `Zabbix`_ agent is then installed and configured. We rely on Zabbix's
+auto-discovery features, monitoring only system resource usage.
+
+Next we set up printing by installing and configuring the `CUPS`_ client, using
+a central print server instead of configuring printers on each machine.
+
+A Public User is then created and application and DE customizations are copied
+over to it's home directory. Any additional users for specific people are then
+created and customized.
+
+Samba is then setup to use a common workgroup and WINS server. Personal and
+Community samba shares are set to be automatically mounted on boot.
+
+We then prepare the Public User's home directory for installing Microsoft
+Office 2007 using `PlayOnLinux`_. This will mount the install ISO, copy over
+patch files and create a PlayOnLinux script in the Public User's home
+directory. The script must still be run manually.
+
+Finally, we configure KDM, the KDE Display Manager, to automatically login as
+the Public User.
+
+Microsoft Office 2007
+----------------------
+
+PlayOnLinux requires a GUI to install programs, so this playbook only prepares
+a workstation for the installation, the actual installation must be done by
+hand. The installation can be run by opening up PlayOnLinux, selecting ``Tools
+-> Run a Local Script``, then choosing to run the ``PlayOnLinux_msoffice.sh``
+script found in the Public User's home directory.
+
+A network share containing the following files is required:
+
+* An ISO of the Microsoft Office 2007 install disk
+* The bin, lib and share folders for Wine 1.2.3(manually install Wine 1.2.3
+  using PlayOnLinux to get a copy of these)
+* The `wine-gecko`_ install file
+* The `XP SP3`_ patch file
+
+Customization
+--------------
+
+The playbook can be modified for other networks by creating a replacement for
+the ``acorn.yml`` file. You can override any variables found in the
+``roles/common/vars/main.yml`` file. This will allow you to customize various
+specifics like the CUPS or WINS servers and the name of the Public user
+account.
+
+Variables can also be set in the ``workstations`` file. See the `Ansible
+Documentation <ansible-var-docs>`_ for more information.
+
+Contributing
+-------------
+
+You should make sure any new features are properly abstracted from your
+specific implementation through the use of templates and variables.
+
+The main issue tracker lives at http://bugs.sleepanarchy.com/projects/sysadmin,
+feel free to create a new issue(attach a patch file if you have one). Pull
+requests are also accepted from our github mirror at
+https://github.com/prikhi/sysadmintools.
+
+To Do
+======
+
+* Abstract KDE specificities into a separate role
+* Change some of the Public User's config files into templates, especially ones
+  that have the ``sese`` user hardcoded in them.
+* Add a role that uses a lightweight DE along with customizations for the
+  Public User
+
+.. _Debian Jessie Netinstall Image: https://www.debian.org/CD/netinst/
+.. _Debian Linux:                   https://www.debian.org/
 .. _Debian Automated Installer:
-.. _Debian Automated Install:   https://www.debian.org/releases/stable/i386/apb.html
-.. _example pre-seed:           https://www.debian.org/releases/etch/example-preseed.txt
-.. _netinstall:                 https://www.debian.org/CD/netinst/
-.. _Ansible:                    http://www.ansible.com/home
-.. _KDE:                        https://wiki.debian.org/KDE
+.. _Debian Automated Install:       https://www.debian.org/releases/stable/i386/apb.html
+.. _example pre-seed:               https://www.debian.org/releases/etch/example-preseed.txt
+.. _netinstall:                     https://www.debian.org/CD/netinst/
+.. _Ansible:                        http://www.ansible.com/home
+.. _wine-gecko:                     https://lion-winebuilder.googlecode.com/files/wine_gecko-1.0.0-x86.cab
+.. _XP SP3:                         http://www.microsoft.com/en-us/download/details.aspx?id=24
+.. _ansible-var-docs:               http://docs.ansible.com/playbooks_variables.html
+.. _KDE:                            https://wiki.debian.org/KDE
+.. _squid:                          http://www.squid-cache.org/
+.. _Zabbix:                         http://www.zabbix.com/
+.. _CUPS:                           https://www.cups.org/
+.. _PlayOnLinux:                    http://www.playonlinux.com/

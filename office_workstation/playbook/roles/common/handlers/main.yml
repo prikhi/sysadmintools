@@ -1,4 +1,17 @@
 ---
 
-- name: restart zabbix_agent
+- name:    restart zabbix_agent
   service: name=zabbix-agent state=restarted
+  sudo:    yes
+
+- name:    restart samba
+  service: name=samba state=restarted
+  sudo:    yes
+
+- name:    restart kdm
+  service: name=kdm state=restarted
+  sudo:    yes
+
+- name:    restart cups
+  service: name=cups state=restarted
+  sudo:    yes

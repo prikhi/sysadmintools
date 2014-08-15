@@ -1,22 +1,61 @@
 ---
 
+- name:     Set the Debian Apt Mirror
+  template: dest=/etc/apt/sources.list src=sources.list.j2 backup=yes
+  sudo:     yes
+
+- name: Update the Apt Cache
+  apt:  update_cache=yes
+  sudo: yes
+
+# Install the Correct Graphics Driver
+- include: install_graphics_driver.yml
+
 # Install Additional Apps & Remove Uneeded Ones
 - include: modify_apps.yml
 
 # Setup & Configure the Zabbix Agent
-- include: setup_zabbixagent.yml
+- include: setup_zabbix_agent.yml
+  when:    setup_zabbix_agent
+
+# Setup & Configure the CUPS Client
+- include: setup_cups_client.yml
+  when:    setup_cups_client
 
 # Setup Users & Their Configurations
 - include: users/main.yml
+
+# Setup Samba and the Personal & Community Network Shares
+- include: setup_samba.yml
+  when:    setup_samba
+
+
+# Only Setup the System for MS Office Install if PlayOnLinux Hasn't Been
+# Configured
+- name:  Check If We Need To Install MS Office
+  stat:  path=/home/{{ public_username }}/.PlayOnLinux
+  register: pol_folder
+  when:  prepare_ms_office
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:  msoffice
+
+# Setup Dependencies for Running Microsoft Office 2007
+# The Custom PlayOnLinux Install Script Will Still Have to Be Run From the
+# PlayOnLinux GUI.
+- include: setup_microsoft_office.yml
+  when: pol_folder.stat.exists == false and prepare_ms_office
 
 - name: Configure the KDM Login Manager
   lineinfile: dest=/etc/kde4/kdm/kdmrc regexp="{{ item.regexp }}" line="{{ item.line }}"
   with_items:
     - { regexp: '^#?AutoLoginEnable=',  line: 'AutoLoginEnable=true' }
-    - { regexp: '^#?AutoLoginUser=',    line: 'AutoLoginUser=sese' }
-    - { regexp: '^#?AutoLoginDelay=',   line: 'AutoLoginDelay=5' }
-    - { regexp: '^#?PreselectUser=',   line: 'PreselectUser=Default' }
-    - { regexp: '^DefaultUser=',      line: 'DefaultUser=sese' }
-    - { regexp: '^#?UserList=',        line: 'UserList=true' }
-    - { regexp: '^#?NumLock=',         line: 'NumLock=On' }
-  tags: kdm
+    - { regexp: '^#?AutoLoginUser=',    line: 'AutoLoginUser={{ public_username }}' }
+    - { regexp: '^#?AutoLoginDelay=',   line: 'AutoLoginDelay=0' }
+    - { regexp: '^#?PreselectUser=',    line: 'PreselectUser=Default' }
+    - { regexp: '^DefaultUser=',        line: 'DefaultUser={{ public_username }}' }
+    - { regexp: '^#?UserList=',         line: 'UserList=true' }
+    - { regexp: '^#?NumLock=',          line: 'NumLock=On' }
+  notify: restart kdm
+  sudo: yes
+  tags: kde
