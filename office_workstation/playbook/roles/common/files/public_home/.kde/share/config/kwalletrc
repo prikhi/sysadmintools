@@ -1,0 +1,5 @@
+[Wallet]
+Close When Idle[$i]=false
+Enabled[$i]=false
+First Use[$i]=false
+Use One Wallet[$i]=true

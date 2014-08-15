@@ -216,8 +216,11 @@ zvalue=0
 Order=7
 
 [Containments][1][Applets][7][Configuration]
+plainClockColor[$i]=0,0,0
+plainClockDrawShadow[$i]=false
 timeZones[$i]=
 timezone[$i]=Local
+useCustomColor[$i]=true
 
 
 [Containments][16]
