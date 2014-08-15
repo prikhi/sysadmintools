@@ -1,0 +1,129 @@
+---
+
+- name: Install Pavan's Favorite Apps
+  apt:  name={{ item }} state=present
+  with_items:
+    - awesome
+    - awesome-extra
+    - cowsay
+    - compton
+    - fortunes
+    - git-all
+    - python-pip
+    - ranger
+    - rxvt-unicode-256color
+    - screen
+    - udevil
+    - vim-gtk
+    - workrave
+    - zsh
+  sudo: yes
+  tags:
+    - pavan
+    - users
+
+
+- name: Add a User for Pavan
+  user: name=prikhi state=present shell=/usr/bin/zsh append=yes createhome=yes
+        groups=cdrom,floppy,audio,dip,video,plugdev,netdev,scanner,lpadmin,sudo
+        home=/home/prikhi password=$6$M.6PpXuRy$qJQ5tjN0zkVqasAKFzbK..EW/EVNNq6G4ygBpjTLUhnrjvbtwZdy03KvKBG/UPdQMnFGjXWh6PK1yQlaG1zPv1
+  sudo: yes
+  tags:
+    - pavan
+    - users
+
+- name: Authorize Pavan's SSH keys
+  authorized_key: user=prikhi key="{{ item }}"
+  with_file:
+    - ../../files/pavan/rsa.pub
+    - ../../files/pavan/ecdsa.pub
+  sudo: yes
+  sudo_user: prikhi
+  tags:
+    - pavan
+    - users
+
+- name:  Make Pavan's Configuration Folder
+  shell: mkdir /home/prikhi/.config
+  sudo:  yes
+  sudo_user: prikhi
+  tags:
+    - pavan
+    - users
+
+- name:  Pull Pavan's AwesomeWM Config
+  git:   repo=http://bugs.sleepanarchy.com/awesome-config.git dest=/home/prikhi/.config/awesome recursive=yes
+  sudo:  yes
+  sudo_user: prikhi
+  tags:
+    - pavan
+    - users
+
+
+- name:  Pull Pavan's Dotfiles
+  git:   repo=http://bugs.sleepanarchy.com/pavans-dotfiles.git dest=/home/prikhi/.dotfiles
+  sudo:  yes
+  sudo_user: prikhi
+  tags:
+    - pavan
+    - users
+
+- name:  Link Pavan's Dotfiles
+  shell: ./install.sh chdir=/home/prikhi/.dotfiles/ creates=/home/prikhi/.zshrc
+  sudo:  yes
+  sudo_user: prikhi
+  tags:
+    - pavan
+    - users
+
+- name: Initialize Git Dependencies for Pavan's Dotfiles
+  shell: git submodule update --init --recursive chdir=/home/prikhi/.dotfiles
+  sudo:  yes
+  sudo_user: prikhi
+  tags:
+    - pavan
+    - users
+
+- name: Install PEP8 and PyLint
+  pip:  name={{ item }} state=present
+  with_items:
+    - pep8
+    - pylint
+  sudo: yes
+  tags:
+    - pavan
+    - users
+
+- name: Install YouCompleteMe Dependencies
+  apt:  name={{ item }} state=present
+  with_items:
+    - cmake
+    - build-essential
+    - python-dev
+  sudo: yes
+  tags:
+    - pavan
+    - users
+
+- name: Copy over the Hypnotoad Cow File
+  copy: src=../../files/pavan/hypnotoad.cow dest=/usr/share/cowsay/cows/hypnotoad.cow
+  sudo:  yes
+  tags:
+    - pavan
+    - users
+
+- name:  Set Pavan's Default XSession to Awesome
+  shell: echo "[Desktop]\nSession=awesome" > ~/.dmrc creates=/home/prikhi/.dmrc
+  sudo:  yes
+  sudo_user: prikhi
+  tags:
+    - pavan
+    - users
+
+- name:  Create Pavan's XDG User Directories
+  shell: xdg-user-dirs-update
+  sudo:  yes
+  sudo_user: prikhi
+  tags:
+    - pavan
+    - users

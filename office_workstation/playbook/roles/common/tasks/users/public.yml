@@ -1,0 +1,102 @@
+---
+
+- name: Add a Public User
+  user: name={{ public_username }} state=present shell=/bin/bash append=yes createhome=yes
+        groups=cdrom,floppy,audio,dip,video,plugdev,netdev,scanner,lpadmin
+        home=/home/{{ public_username }} password=$6$OZuDgBCMU$HXQe4DIBX6OcrKJEAtjcHTQM69etnsV2t8IJuLVzpC1mCjBydqvvpLlyqydyoxXfgIolWwxN6bXD2IqfTqBd4.
+  sudo:  yes
+  tags:
+    - public_user
+    - users
+
+- name:  Set the Public User's Default XSession to KDE
+  shell: echo "[Desktop]\nSession=kde-plasma" > ~/.dmrc creates=/home/{{ public_username }}/.dmrc
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - public_user
+    - users
+
+- name: Copy the Public User's Desktop Configuration Files
+  copy: src=../../files/public_home/{{ item }} dest=/home/{{ public_username }}/
+  with_items:
+    - .config
+    - .kde
+    - .local
+    - .mozilla
+    - .face.icon
+    - .gtk-bookmarks
+    - .gtkrc-2.0
+    - Desktop
+  sudo: yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - public_user
+    - users
+
+- name: Fix the Public User's Configuration Directory Permissions
+  file: path=/home/{{ public_username }}/{{ item }} owner={{ public_username }} group={{ public_username }} recurse=yes
+  with_items:
+    - .config
+    - .kde
+    - .local
+    - .mozilla
+    - Desktop
+  sudo: yes
+  tags:
+    - public_user
+    - users
+
+- name: Fix the Public User's Configuration File Permissions
+  file: path=/home/{{ public_username }}/{{ item }} owner={{ public_username }} group={{ public_username }}
+  with_items:
+    - .face.icon
+    - .gtk-bookmarks
+    - .gtkrc-2.0
+  sudo: yes
+  tags:
+    - public_user
+    - users
+
+- name: Link the GTK Customization File to the GTK-KDE Integration File
+  file: path=/home/{{ public_username }}/.gtkrc-2.0-kde4 src=/home/{{ public_username }}/.gtkrc-2.0
+        state=link
+  sudo: yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - public_user
+    - users
+
+- name: Check if the Tor Browser Bundle is Installed
+  stat: path=/home/{{ public_username }}/.torbundle/
+  register: torbundle_folder
+  sudo: yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - public_user
+    - users
+
+- name:  Check the Current Version of the Tor Browser Bundle
+  shell: cat /home/{{ public_username }}/.torbundle/Docs/ChangeLog.txt | head -n 1 | cut -d ' ' -f 4
+  register: current_tor_version
+  when:  torbundle_folder.stat.exists == true
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - public_user
+    - users
+
+- name:  Download and Extract the Tor Browser Bundle
+  shell: wget http://www.torproject.org/dist/torbrowser/{{ tor_version }}/tor-browser-{{ tor_full_version }}.tar.xz;
+         mkdir -p /home/{{ public_username }}/.torbundle;
+         tar -xvf tor-browser-{{ tor_full_version }}.tar.xz;
+         mv tor-browser_*/* .torbundle/;
+         rm tor-browser-{{ tor_full_version }}.tar.xz;
+         rmdir tor-browser_*
+         chdir=/home/{{ public_username }}
+  when:  torbundle_folder.stat.exists == false or tor_version != current_tor_version.stdout
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - public_user
+    - users

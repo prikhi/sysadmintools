@@ -1,0 +1,72 @@
+---
+
+### Playbook Configuration Variables
+# You may modify the following variables to customize the playbook to your
+# specific needs, however do not remove any variables, they are all required
+# for the playbook to function.
+
+## Task Configuration
+# Setup the Zabbix Agent for Resource Monitoring
+setup_zabbix_agent: True
+# Setup a CUPS client to a CUPS Print Server
+setup_cups_client: True
+# Configure the Samba client and Automatically Mount Personal/Community Shares
+setup_samba: True
+# Prepare the Workstation for Installing MS Office Using PlayOnLinux
+prepare_ms_office: True
+
+
+## General Configuration
+# The URL of the Apt Mirror to Use
+apt_mirror: http://http.us.debian.org/debian/
+# Install KDE & Roguelike Games
+install_games: True
+# Remove the XFCE4 Desktop Environment
+remove_xfce: True
+# The Username of the Public Account
+public_username: sese
+# The Version of the Tor Browser Bundle to Download and Install
+tor_version: 3.6.4
+# The Full Version of the Tor Browser Bundle, Including OS and Language
+tor_full_version: linux64-{{ tor_version }}_en-US
+
+
+## Zabbix Agent Configuration
+# The Hostname or IP Address of the Zabbix Server
+zabbix_server: monitor.acorn
+
+
+## CUPS Client Configuration
+# The Hostname or IP Address of the CUPS Server
+cups_server: printers.acorn
+
+
+## Samba Client Configuration
+# The Client's Workgroup
+smb_workgroup: WORKGROUP
+# Connect the Client to a WINS Server
+use_wins_server: True
+# The Hostname or IP Address of the WINS Server
+wins_server: 192.168.1.254
+# Automatically Mount a Personal Network Share
+mount_personal_share: True
+# Automatically Mount a Community Network Share
+mount_community_share: True
+# The Local Directory to Mount the Personal Share To
+personal_share_directory: /mnt/Personal
+# The fstab Entry for the Personal Share
+personal_share_fstab: //aphrodite/Personal  {{ personal_share_directory }} cifs _netdev,guest,uid={{ public_username }},gid={{ public_username }},rw,file_mode=0777,dir_mode=0777,auto 0 0
+# The Local Directory to Mount the Community Share To
+community_share_directory: /mnt/Community
+# The fstab Entry for the Community Share
+community_share_fstab: //aphrodite/Community  {{ community_share_directory }} cifs _netdev,guest,uid={{ public_username }},gid={{ public_username }},rw,file_mode=0777,dir_mode=0777,auto 0 0
+
+
+## MS Office Configuration
+# See the documentation for what these share/folders needs to contain.
+# The Command to Mount a Network Share to /tmp/msoffice.
+mount_ms_office_share_command: mount -t cifs //aphrodite/Community/IT/DebianAutoInstall /tmp/msoffice -o guest,user={{ public_username }}
+# The Name of the MS Office CD ISO File
+ms_office_iso_name: moebe.iso
+# The Name of the Folder Containing the Wine Files
+ms_office_wine_folder_name: wine1.2.3

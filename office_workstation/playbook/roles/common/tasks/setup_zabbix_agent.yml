@@ -1,0 +1,23 @@
+---
+
+- name: Install the Zabbix Agent
+  apt:  name=zabbix-agent state=present
+  sudo: yes
+  tags: zabbix
+
+- name:       Configure the Zabbix Agent
+  lineinfile: dest=/etc/zabbix/zabbix_agentd.conf
+                regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+    - { regexp: '^Server=(.*)', line: 'Server={{ zabbix_server }}' }
+    - { regexp: '^ServerActive=(.*)', line: 'ServerActive={{ zabbix_server }}' }
+    - { regexp: '^(# )?Hostname=(.*)', line: '# Hostname=\1' }
+    - { regexp: '^(# )?HostnameItem=system\.hostname$', line: 'HostnameItem=system.hostname' }
+  notify: restart zabbix_agent
+  sudo: yes
+  tags: zabbix
+
+- name: Enable the Zabbix Agent
+  service: name=zabbix-agent enabled=yes
+  sudo: yes
+  tags: zabbix

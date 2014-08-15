@@ -1,0 +1,8 @@
+[General]
+Show Menu Bar=true
+Show Status Bar=true
+
+[Kate Document Defaults]
+Indentation Width=4
+On-The-Fly Spellcheck=true
+Remove Spaces=1

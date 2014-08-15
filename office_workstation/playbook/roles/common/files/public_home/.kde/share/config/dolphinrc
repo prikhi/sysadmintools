@@ -1,0 +1,12 @@
+[General]
+EditableUrl=true
+ShowFullPath=true
+ShowSpaceInfo=true
+ShowToolTips=true
+
+[MainWindow]
+MenuBar[$i]=Enabled
+ToolBarsMovable=Disabled
+
+[PreviewSettings]
+Plugins=directorythumbnail,imagethumbnail,jpegthumbnail

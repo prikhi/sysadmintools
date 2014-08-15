@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Microsoft Excel 2007
+Comment=PlayOnLinux
+Type=Application
+Exec=/usr/share/playonlinux/playonlinux --run "Microsoft Excel 2007" %F
+Icon=/home/sese/.PlayOnLinux//icones/full_size/Microsoft Excel 2007
+Name[fr_FR]=Microsoft Excel 2007
+StartupWMClass=EXCEL.EXE
+Categories=

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Icon=folder-remote
+Name[en_US]=Personal
+Name=Personal
+Type=Link
+URL[$e]=smb://aphrodite/Personal

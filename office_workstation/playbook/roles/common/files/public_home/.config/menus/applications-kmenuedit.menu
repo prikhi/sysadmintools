@@ -1,0 +1,17 @@
+<!DOCTYPE Menu PUBLIC '-//freedesktop//DTD Menu 1.0//EN' 'http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd'>
+<Menu>
+ <Menu>
+  <Name>Office</Name>
+  <Include>
+   <Filename>Microsoft Word 2007.desktop</Filename>
+   <Filename>Microsoft Excel 2007.desktop</Filename>
+   <Filename>Microsoft Powerpoint 2007.desktop</Filename>
+  </Include>
+ </Menu>
+ <Menu>
+  <Name>Internet</Name>
+  <Include>
+   <Filename>Tor Browser.desktop</Filename>
+  </Include>
+ </Menu>
+</Menu>

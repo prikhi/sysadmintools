@@ -1,0 +1,145 @@
+---
+
+- name: Install Web Browsers, Plugins and Mumble
+  apt:  name={{ item }} state=present
+  with_items:
+    - chromium
+    - flashplugin-nonfree
+    - iceweasel
+    - mumble
+  sudo: yes
+  tags: apps
+
+- name: Install Some Games
+  apt:  name={{ item }} state=present
+  with_items:
+    - kdegames
+    - tome
+    - crawl-tiles
+  when: install_games
+  sudo: yes
+  tags: apps
+
+- name: Install Some Educational Apps
+  apt:  name={{ item }} state=present
+  with_items:
+    - kalzium
+    - kanagram
+    - kgeography
+    - kig
+    - kstars
+    - ktouch
+    - marble
+    - parley
+    - pairs
+  sudo: yes
+  tags: apps
+
+- name: Install Packages for Firefox-KDE Integration
+  apt:  name={{ item }} state=present
+  with_items:
+    - kde-config-gtk-style
+    - gtk2-engines-oxygen
+    - gtk3-engines-oxygen
+  sudo: yes
+  tags:
+    - apps
+    - kde
+
+- name: Install Some Miscellaneous Apps and Utilities
+  apt:  name={{ item }} state=present
+  with_items:
+    - ffmpegthumbs
+    - kolourpaint4
+  sudo: yes
+  tags: apps
+
+- name: Remove Uneccesary KDE Apps
+  apt:  name={{ item }} state=absent purge=yes
+  with_items:
+    - dragonplayer
+    - kmail
+    - korganizer
+    - kontact
+    - kopete
+    - kwalletmanager
+  sudo: yes
+  tags:
+    - apps
+    - kde
+
+- name: Remove XFCE4 Apps & Packages
+  apt:  name={{ item }} state=absent purge=yes
+  with_items:
+    - evince
+    - evince-common
+    - evince-gtk
+    - lightdm
+    - lightdm-gtk-greeter
+    - network-manager-gnome
+    - thunar-data
+    - xarchiver
+    - xfce-keyboard-shortcuts
+    - xfce4
+    - xfce4-artwork
+    - xfce4-power-manager-data
+    - xfce4-session
+    - xfce4-settings
+    - xfce4-taskmanager
+    - xfce4-terminal
+    - xfce4-volumed
+    - xfconf
+    - xfdesktop4
+    - xfdesktop4-data
+    - xfwm4
+    - xfwm4-themes
+    - xscreensaver
+    - xscreensaver-data
+  when: remove_xfce
+  sudo: yes
+  tags: apps
+
+- name:  Explicitly Install KDE & Debian Apps
+  shell: apt-get -y install {{ item }}
+  with_items:
+    - apper
+    - dolphin
+    - gir1.2-gst-plugins-base-1.0
+    - gstreamer1.0-x
+    - gstreamer0.10-alsa
+    - gstreamer1.0-plugins-good
+    - gstreamer1.0-plugins-bad
+    - gstreamer1.0-plugins-ugly
+    - gstreamer1.0-pulseaudio
+    - gtk2-engines-pixbuf
+    - hddtemp
+    - hyphen-en-us
+    - kde-baseapps
+    - kdeaccessibility
+    - kdesudo
+    - kfind
+    - kpart-webkit
+    - libreoffice
+    - libreoffice-help-en-us
+    - libreoffice-kde
+    - listaller
+    - mythes-en-us
+    - plasma-widget-folderview
+    - software-properties-common
+    - software-properties-kde
+    - sudo
+    - system-config-printer
+    - system-config-printer-udev
+    - tumbler
+    - udisks
+    - unattended-upgrades
+    - xdg-user-dirs
+  sudo: yes
+  tags:
+    - apps
+    - kde
+
+- name:  Autoremove Uneccesary Packages
+  shell: apt-get autoremove -y
+  sudo:  yes
+  tags:  apps

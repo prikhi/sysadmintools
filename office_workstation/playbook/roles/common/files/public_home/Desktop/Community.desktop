@@ -1,0 +1,6 @@
+[Desktop Entry]
+Icon=folder-remote
+Name[en_US]=Community
+Name=Community
+Type=Link
+URL[$e]=smb://aphrodite/Community

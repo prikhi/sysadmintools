@@ -1,0 +1,6 @@
+[Core General]
+ObeyDRM=false
+
+[Core Performance]
+MemoryLevel=Aggressive
+TextHinting=Enabled

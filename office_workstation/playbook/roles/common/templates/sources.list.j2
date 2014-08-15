@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+deb {{ apt_mirror }} jessie main non-free contrib
+deb-src {{ apt_mirror }} jessie main non-free contrib
+
+deb http://security.debian.org/ jessie/updates main contrib non-free
+deb-src http://security.debian.org/ jessie/updates main contrib non-free
+
+# jessie-updates, previously known as 'volatile'
+deb {{ apt_mirror }} jessie-updates main contrib non-free
+deb-src {{ apt_mirror }} jessie-updates main contrib non-free
+
+# jessie-backports, previously on backports.debian.org
+deb {{ apt_mirror }} jessie-backports main contrib non-free
+deb-src {{ apt_mirror }} jessie-backports main contrib non-free

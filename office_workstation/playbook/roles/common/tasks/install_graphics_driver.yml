@@ -1,0 +1,12 @@
+---
+
+- name:  Check Which Graphics Driver We Need
+  shell: lspci | grep VGA
+  register: lspci_vga
+  tags:  graphics_driver
+
+- name: Install the Intel Graphics Driver
+  apt:  name=xserver-xorg-video-intel
+  when: "'Intel' in lspci_vga.stdout"
+  sudo: yes
+  tags: graphics_driver

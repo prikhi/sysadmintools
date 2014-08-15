@@ -1,0 +1,92 @@
+---
+
+- name:  Enable Multiarch Debian
+  shell: dpkg --add-architecture i386
+  sudo:  yes
+  tags:  msoffice
+
+- name: Update the Apt Cache
+  apt:  update_cache=yes
+  sudo: yes
+  tags: msoffice
+
+- name: Install PlayOnLinux & Wine
+  apt:  name={{ item }} state=present
+  with_items:
+    - playonlinux
+    - wine32
+  sudo: yes
+  tags: msoffice
+
+- name:  Make the PlayOnLinux Folders for the Public User
+  shell: mkdir -p /home/{{ public_username }}/.PlayOnLinux/{{ item }}
+  with_items:
+    - ressources/
+    - wine/gecko
+    - wine/linux-x86/1.2.3
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:  msoffice
+
+- name:  Make a Temporary Folder for MS Office Files
+  shell: mkdir -p /tmp/{{ item }}
+  with_items:
+    - msoffice
+    - msofficecd
+  sudo:  yes
+  tags:  msoffice
+
+- name:  Mount the MS Office Network Share
+  shell: umount /tmp/msoffice || /bin/true; {{ mount_ms_office_share_command }}
+  sudo:  yes
+  tags:  msoffice
+
+# Resources is misspelled by PlayOnLinux, not by us.
+- name:  Copy Over the Microsoft Office 2007 Patch
+  shell: rsync -ahz /tmp/msoffice/WindowsXP-KB936929-SP3-x86-ENU.exe
+         /home/{{ public_username }}/.PlayOnLinux/ressources/
+         creates=/home/{{ public_username }}/.PlayOnLinux/ressources/WindowsXP-KB936929-SP3-x86-ENU.exe
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:  msoffice
+
+- name:  Copy Over the Gecko Install File
+  shell: rsync -ahz /tmp/msoffice/wine_gecko-1.0.0-x86.cab
+         /home/{{ public_username }}/.PlayOnLinux/wine/gecko/
+         creates=/home/{{ public_username }}/.PlayOnLinux/wine/gecko/wine_gecko-1.0.0-x86.cab
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:  msoffice
+
+- name:  Copy Over Wine 1.2.3
+  shell: rsync -ahz /tmp/msoffice/{{ ms_office_wine_folder_name }}
+         /home/{{ public_username }}/.PlayOnLinux/wine/linux-x86/1.2.3
+         creates=/home/{{ public_username }}/.PlayOnLinux/wine/linux-x86/1.2.3
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:  msoffice
+
+- name: Copy the MS Office 2007 Install Disk
+  shell: rsync -ahz /tmp/msoffice/{{ms_office_iso_name }}
+         /home/{{ public_username }}/{{ms_office_iso_name }}
+         creates=/home/{{ public_username }}/{{ms_office_iso_name }}
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:  msoffice
+
+- name:  Initialize the loop Module
+  shell: modprobe loop
+  sudo:  yes
+  tags:  msoffice
+
+- name:  Mount the MS Office 2007 Install Disk
+  shell: umount /tmp/msofficecd/;
+         mount /home/{{ public_username }}/{{ms_office_iso_name }} /tmp/msofficecd/ -o loop,exec
+  sudo:  yes
+  tags:  msoffice
+
+- name: Copy Over the PlayOnLinux MS Office 2007 Install Script
+  copy: src=../files/pol_msoffice.sh dest=/home/{{ public_username }}/PlayOnLinux_msoffice.sh
+  sudo: yes
+  sudo_user: "{{ public_username }}"
+  tags: msoffice

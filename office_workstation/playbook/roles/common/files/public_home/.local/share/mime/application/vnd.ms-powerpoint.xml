@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-type xmlns="http://www.freedesktop.org/standards/shared-mime-info" type="application/vnd.ms-powerpoint">
+  <!--Created automatically by update-mime-database. DO NOT EDIT!-->
+  <comment>Microsoft PowerPoint Presentation</comment>
+  <glob-deleteall/>
+  <glob pattern="*.pot"/>
+  <glob pattern="*.pps"/>
+  <glob pattern="*.ppt"/>
+  <glob pattern="*.pptx"/>
+  <glob pattern="*.ppz"/>
+</mime-type>

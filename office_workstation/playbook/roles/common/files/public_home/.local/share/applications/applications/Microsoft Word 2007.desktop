@@ -1,0 +1,17 @@
+[Desktop Entry]
+Categories=
+Comment=PlayOnLinux
+Encoding=UTF-8
+Exec=/usr/share/playonlinux/playonlinux --run "Microsoft Word 2007" %F
+Icon=/home/sese/.PlayOnLinux/icones/full_size/Microsoft Word 2007
+Name=Microsoft Word 2007
+Name[fr_FR]=Microsoft Word 2007
+NoDisplay=false
+Path[$e]=
+StartupNotify=true
+StartupWMClass=WINWORD.EXE
+Terminal=0
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=
