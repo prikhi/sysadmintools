@@ -9,6 +9,7 @@
     - compton
     - fortunes
     - git-all
+    - htop
     - python-pip
     - ranger
     - rxvt-unicode-256color
@@ -44,7 +45,7 @@
     - users
 
 - name:  Make Pavan's Configuration Folder
-  shell: mkdir /home/prikhi/.config
+  shell: mkdir /home/prikhi/.config || /bin/true
   sudo:  yes
   sudo_user: prikhi
   tags:
@@ -70,14 +71,6 @@
 
 - name:  Link Pavan's Dotfiles
   shell: ./install.sh chdir=/home/prikhi/.dotfiles/ creates=/home/prikhi/.zshrc
-  sudo:  yes
-  sudo_user: prikhi
-  tags:
-    - pavan
-    - users
-
-- name: Initialize Git Dependencies for Pavan's Dotfiles
-  shell: git submodule update --init --recursive chdir=/home/prikhi/.dotfiles
   sudo:  yes
   sudo_user: prikhi
   tags:
