@@ -8,6 +8,11 @@
   apt:  update_cache=yes
   sudo: yes
 
+- name: Copy Over the rc.local File
+  copy: src=rc.local dest=/etc/rc.local
+  sudo: yes
+  tags: configure
+
 - name: Configure Grub
   lineinfile: dest="/etc/default/grub" regexp="{{ item.regex }}" line="{{ item.line }}"
   with_items:

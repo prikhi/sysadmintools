@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Enable Suspend/Hibernate Wakeup From All USB Devices
+for f in /sys/bus/usb/devices/usb*/power/wakeup ; do echo enabled > $f ; done
+
+exit 0
