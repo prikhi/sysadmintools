@@ -8,6 +8,17 @@
   apt:  update_cache=yes
   sudo: yes
 
+- name: Configure Grub
+  lineinfile: dest="/etc/default/grub" regexp="{{ item.regex }}" line="{{ item.line }}"
+  with_items:
+      # Skip the Grub Menu
+    - { regex: '^GRUB_TIMEOUT=', line: 'GRUB_TIMEOUT=0' }
+      # IOMMU interferes with some workstations suspend/hibernate functions
+    - { regex: '^GRUB_CMDLINE_LINUX_DEFAULT=', line: 'GRUB_CMDLINE_LINUX_DEFAULT=\"quiet iommu=pt\"' }
+  notify: update grub
+  sudo: yes
+  tags: configure
+
 # Install the Correct Graphics Driver
 - include: install_graphics_driver.yml
 
