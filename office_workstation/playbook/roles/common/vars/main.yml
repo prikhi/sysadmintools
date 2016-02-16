@@ -10,6 +10,8 @@
 setup_zabbix_agent: True
 # Setup a CUPS client to a CUPS Print Server
 setup_cups_client: True
+# Configure Mumble to Automatically Connect to a Server
+setup_mumble: True
 # Configure the Samba client and Automatically Mount Personal/Community Shares
 setup_samba: True
 # Prepare the Workstation for Installing MS Office Using PlayOnLinux
@@ -39,6 +41,15 @@ zabbix_server: monitor.acorn
 ## CUPS Client Configuration
 # The Hostname or IP Address of the CUPS Server
 cups_server: printers.acorn
+
+## Mumble Client Configuration
+# The Hostname or IP of the Murmur Server
+mumble_server: chat.acorn
+# The Port of the Murmur Server
+mumble_server_port: 64738
+# The Client's Name for the Murmur Server
+mumble_server_name: Acorn Chat Server
+
 
 
 ## Samba Client Configuration

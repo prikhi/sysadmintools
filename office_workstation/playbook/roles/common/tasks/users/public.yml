@@ -67,6 +67,53 @@
     - public_user
     - users
 
+# Mumble
+- name: Make the Mumble Configuration Directory
+  shell: mkdir -p /home/{{ public_username }}/.config/Mumble || /bin/true
+  sudo: yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - mumble
+    - public_user
+    - users
+
+- name:     Copy over the Mumble Configuration File
+  template: src=../../templates/Mumble.conf.j2 dest=/home/{{ public_username }}/.config/Mumble/Mumble.conf
+  sudo: yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - mumble
+    - public_user
+    - users
+
+
+- name:  Check if Mumble has any Favorite Servers
+  shell: echo 'select count(*) from servers;' | sqlite3 .mumble.sqlite
+         chdir=/home/{{ public_username }}/.local/share/data/Mumble/Mumble/
+  register: mumble_favorties_count
+  when:  setup_mumble
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - mumble
+    - public_user
+    - user
+
+- name:  Add a Favorite Server to Mumble
+  shell: echo 'insert into servers (id, name, hostname, port, username) values
+         (372, "{{ mumble_server_name }}", "{{ mumble_server }}", {{ mumble_server_port }},
+         "{{ ansible_hostname }}");' | sqlite3 .mumble.sqlite
+         chdir=/home/{{ public_username }}/.local/share/data/Mumble/Mumble/
+  register: temp_var
+  when:  setup_mumble and mumble_favorties_count.stdout == '0'
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - mumble
+    - public_user
+    - user
+
+# Tor Browser Bundle
 - name: Check if the Tor Browser Bundle is Installed
   stat: path=/home/{{ public_username }}/.torbundle/
   register: torbundle_folder
