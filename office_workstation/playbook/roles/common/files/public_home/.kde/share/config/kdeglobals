@@ -3,3 +3,6 @@ BrowserApplication[$e]=iceweasel.desktop
 
 [KDE]
 SingleClick[$i]=false
+
+[Locale]
+DateFormatShort=%n/%d/%Y
