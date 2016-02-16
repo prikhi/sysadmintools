@@ -44,10 +44,11 @@ Quickstart
 #. Open up Konsole, switch to an admin account and update & reboot::
 
     su seseadmin
-    sudo apt-get update && sudo apt-get upgrade
-    sudp reboot
+    sudo apt-get update && sudo apt-get dist-upgrade
+    sudo reboot
 
-#. You can do a little bit of cleanup by removing the
+#. You can do a little bit of cleanup by removing the MS Office ISO and the
+   PlayOnLinux script and shortcut from the Public User's home folder.
 
 Automated Installs
 ===================
