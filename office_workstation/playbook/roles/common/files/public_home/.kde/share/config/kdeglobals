@@ -1,2 +1,5 @@
 [General]
 BrowserApplication[$e]=iceweasel.desktop
+
+[KDE]
+SingleClick[$i]=false
