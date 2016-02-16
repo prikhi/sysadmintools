@@ -1,7 +1,0 @@
-[Added Associations]
-application/msword=libreoffice-writer.desktop;Microsoft Word 2007.desktop;
-application/vnd.ms-excel=libreoffice-calc.desktop;Microsoft Excel 2007.desktop;
-application/vnd.ms-powerpoint=libreoffice-impress.desktop;Microsoft Powerpoint 2007.desktop;
-application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=libreoffice-calc.desktop;Microsoft Excel 2007.desktop;kde4-ark.desktop;xarchiver.desktop;
-application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;Microsoft Word 2007.desktop;kde4-ark.desktop;xarchiver.desktop;
-inode/directory=kde4-dolphin.desktop;

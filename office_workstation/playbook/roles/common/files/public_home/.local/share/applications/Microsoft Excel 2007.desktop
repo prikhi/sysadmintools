@@ -1,10 +1,17 @@
 [Desktop Entry]
-Encoding=UTF-8
-Name=Microsoft Excel 2007
-Comment=PlayOnLinux
-Type=Application
-Exec=/usr/share/playonlinux/playonlinux --run "Microsoft Excel 2007" %F
-Icon=/home/sese/.PlayOnLinux//icones/full_size/Microsoft Excel 2007
-Name[fr_FR]=Microsoft Excel 2007
-StartupWMClass=EXCEL.EXE
 Categories=
+Comment=PlayOnLinux
+Encoding=UTF-8
+Exec=/usr/share/playonlinux/playonlinux --run "Microsoft Excel 2007" %F
+Icon=/home/sese/.PlayOnLinux/icones/full_size/Microsoft Excel 2007
+Name=Microsoft Excel 2007
+Name[fr_FR]=Microsoft Excel 2007
+NoDisplay=false
+Path[$e]=
+StartupNotify=true
+StartupWMClass=EXCEL.EXE
+Terminal=0
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=

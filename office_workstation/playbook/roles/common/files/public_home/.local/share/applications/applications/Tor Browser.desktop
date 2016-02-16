@@ -1,8 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Name=Tor Browser
-Comment=Launch the Tor Browser Bundle
-Type=Application
-Exec=/home/sese/.torbundle/start-tor-browser
-Icon=/home/sese/.local/share/icons/tor.png
-Categories=
