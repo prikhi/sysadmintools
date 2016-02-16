@@ -5,8 +5,12 @@
   sudo: yes
   tags: samba
 
-- name:    Enable the Samba Daemon
-  service: name=samba enabled=yes
+- name:    Enable the Samba Daemons
+  service: name={{ item }} enabled=yes
+  with_items:
+    - samba
+    - smbd
+    - nmbd
   sudo:    yes
   tags:    samba
 
