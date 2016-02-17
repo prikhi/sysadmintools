@@ -28,3 +28,12 @@ installer sees it as ``/dev/sda``. Grub will try to install to the MBR of
 ``/dev/sda`` and fail. To fix this, open a shell and run ``grub-installer
 /target``, then choose to install grub to the proper drive(probably
 ``/dev/sdb``).
+
+
+Automated Maintenance
+======================
+
+There is a Fabric file that can be used to automatically update and upgrade the
+cluster servers::
+
+    fab upgrade
