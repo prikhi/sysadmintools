@@ -62,6 +62,13 @@
 - include: setup_microsoft_office.yml
   when: pol_folder.stat.exists == false and prepare_ms_office
 
+
+- name: Disable Suspend & Hibernate When Multiple Users Are Logged In
+  copy: src=disable_multi_session_powersaving.pkla
+        dest=/etc/polkit-1/localauthority/30-site.d/30-disable-multi-session-powersave.pkla
+  sudo: yes
+  tags: configure
+
 - name: Configure the KDM Login Manager
   lineinfile: dest=/etc/kde4/kdm/kdmrc regexp="{{ item.regexp }}" line="{{ item.line }}"
   with_items:

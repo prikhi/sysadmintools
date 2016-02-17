@@ -1,0 +1,6 @@
+[Disable Suspend/Hibernate When Multiple Users Are Logged In]
+Identity=unix-user:*
+Action=org.freedesktop.login1.power-off-multiple-sessions;org.freedesktop.login1.reboot-multiple-sessions;org.freedesktop.login1.hibernate-multiple-sessions;org.freedesktop.login1.suspend-multiple-sessions
+ResultAny=no
+ResultActive=no
+ResultInactive=no
