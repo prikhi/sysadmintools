@@ -16,6 +16,10 @@
   service: name=cups state=restarted
   sudo:    yes
 
+- name:    update package cache
+  apt:     update_cache=yes
+  sudo:    yes
+
 - name:    update grub
   shell:   update-grub
   sudo:    yes

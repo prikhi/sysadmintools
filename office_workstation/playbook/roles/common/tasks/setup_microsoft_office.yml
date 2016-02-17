@@ -1,9 +1,10 @@
 ---
 
-- name:  Enable Multiarch Debian
-  shell: dpkg --add-architecture i386
-  sudo:  yes
-  tags:  msoffice
+- name:   Enable Multiarch Debian
+  shell:  dpkg --add-architecture i386
+  notify: update package cache
+  sudo:   yes
+  tags:   msoffice
 
 - name: Update the Apt Cache
   apt:  update_cache=yes
