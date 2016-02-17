@@ -19,3 +19,7 @@
 - name:    update grub
   shell:   update-grub
   sudo:    yes
+
+- name:    start unattended upgrades
+  service: name=unattended-upgrades state=started
+  sudo:    yes

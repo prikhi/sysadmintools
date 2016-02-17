@@ -69,6 +69,12 @@
   sudo: yes
   tags: configure
 
+- name:    Enable Unattended Upgrades
+  service: name=unattended-upgrades enabled=yes
+  notify:  start unattended upgrades
+  sudo:    yes
+  tags:    configure
+
 - name: Configure the KDM Login Manager
   lineinfile: dest=/etc/kde4/kdm/kdmrc regexp="{{ item.regexp }}" line="{{ item.line }}"
   with_items:
