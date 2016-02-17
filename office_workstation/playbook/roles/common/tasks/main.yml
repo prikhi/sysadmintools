@@ -79,6 +79,13 @@
   sudo:    yes
   tags:    configure
 
+- name: Ensure NetworkManager Manages Connections
+  lineinfile: dest=/etc/NetworkManager/NetworkManager.conf
+              regexp="^managed=" line="managed=true"
+  notify:  restart network manager
+  sudo: yes
+  tags: configure
+
 - name: Configure the KDM Login Manager
   lineinfile: dest=/etc/kde4/kdm/kdmrc regexp="{{ item.regexp }}" line="{{ item.line }}"
   with_items:

@@ -27,3 +27,7 @@
 - name:    start unattended upgrades
   service: name=unattended-upgrades state=started
   sudo:    yes
+
+- name:    restart network manager
+  service: name=network-manager state=restarted
+  sudo:    yes
