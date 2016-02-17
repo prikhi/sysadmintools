@@ -1,41 +1,72 @@
 ---
 
-- name: Install Web Browsers, Plugins and Mumble
-  apt:  name={{ item }} state=present
+- name: Ensure Base Applications are Installed
+  apt:  name={{ item }} state=present install_recommends=yes
   with_items:
-    - chromium
-    - flashplugin-nonfree
-    - iceweasel
-    - mumble
+    - alsa-base
+    - alsa-utils
+    - anacron
+    - avahi-daemon
+    - eject
+    - firmware-linux
+    - hddtemp
+    - iw
+    - libgl1-mesa-dri
+    - libnss-mdns
+    - p7zip-full
+    - pm-utils
+    - sudo
+    - udisks
+    - unattended-upgrades
+    - upower
+    - xdg-user-dirs
+    - xdg-utils
+    - xorg
   sudo: yes
   tags: apps
 
-- name: Install Some Games
-  apt:  name={{ item }} state=present
+# Built from `kde-full` backwards, eliminating uneccesary apps
+- name: Ensure KDE Applications are Installed
+  apt:  name={{ item }} state=present install_recommends=yes
   with_items:
+    - kdm
+    - polkit-kde-1
+    - kde-plasma-desktop
+    - kdeaccessibility
+    - kdeadmin
+    - kdeartwork
+    - kdeedu
     - kdegames
-    - tome
-    - crawl-tiles
-  when: install_games
+    - kdegraphics
+    - kdegraphics-strigi-analyzer
+    - kdegraphics-thumbnailers
+    - kdegraphics
+    - svgpart
+    - ffmpegthumbs
+    - kio-audiocd
+    - kmix
+    - kscd
+    - kde-config-cddb
+    - kdenetwork
+    - kdenetwork-filesharing
+    - kde-zeroconf
+    - kdenetwork-strigi-analyzers
+    - kdeutils
+    - print-manager
+    - kdeplasma-addons
+    - plasma-widget-networkmanagement
+    - plasma-widget-folderview
+    - system-config-printer
+    - baloo4
+    - kate
+    - k3b
+    - kdesudo
   sudo: yes
-  tags: apps
+  tags:
+    - apps
+    - kde
 
-- name: Install Some Educational Apps
-  apt:  name={{ item }} state=present
-  with_items:
-    - kalzium
-    - kanagram
-    - kgeography
-    - kig
-    - kstars
-    - ktouch
-    - marble
-    - parley
-    - pairs
-  sudo: yes
-  tags: apps
-
-- name: Install Packages for Firefox-KDE Integration
+- name: Ensure Packages for Firefox-KDE Integration are Installed
   apt:  name={{ item }} state=present
   with_items:
     - kde-config-gtk-style
@@ -46,100 +77,56 @@
     - apps
     - kde
 
-- name: Install Some Miscellaneous Apps and Utilities
+- name: Ensure Internet Applications and Plugins are Installed
   apt:  name={{ item }} state=present
   with_items:
-    - ffmpegthumbs
-    - kolourpaint4
+    - chromium
+    - filezilla
+    - flashplugin-nonfree
+    - icedtea-plugin
+    - iceweasel
+    - mumble
+    - pepperflashplugin-nonfree
   sudo: yes
   tags: apps
 
-- name: Remove Uneccesary KDE Apps
-  apt:  name={{ item }} state=absent purge=yes
+- name: Ensure LibreOffice is Installed
+  apt:  name={{ item }} state=present
   with_items:
-    - dragonplayer
-    - kmail
-    - korganizer
-    - kontact
-    - kopete
-    - kwalletmanager
-  sudo: yes
-  tags:
-    - apps
-    - kde
-
-- name: Remove XFCE4 Apps & Packages
-  apt:  name={{ item }} state=absent purge=yes
-  with_items:
-    - evince
-    - evince-common
-    - evince-gtk
-    - lightdm
-    - lightdm-gtk-greeter
-    - network-manager-gnome
-    - thunar-data
-    - xarchiver
-    - xfce-keyboard-shortcuts
-    - xfce4
-    - xfce4-artwork
-    - xfce4-power-manager-data
-    - xfce4-session
-    - xfce4-settings
-    - xfce4-taskmanager
-    - xfce4-terminal
-    - xfce4-volumed
-    - xfconf
-    - xfdesktop4
-    - xfdesktop4-data
-    - xfwm4
-    - xfwm4-themes
-    - xscreensaver
-    - xscreensaver-data
-  when: remove_xfce
-  sudo: yes
-  tags: apps
-
-- name:  Explicitly Install KDE & Debian Apps
-  shell: apt-get -y install {{ item }}
-  with_items:
-    - apper
-    - dolphin
-    - gir1.2-gst-plugins-base-1.0
-    - gstreamer1.0-x
-    - gstreamer0.10-alsa
-    - gstreamer1.0-plugins-good
-    - gstreamer1.0-plugins-bad
-    - gstreamer1.0-plugins-ugly
-    - gstreamer1.0-pulseaudio
-    - gtk2-engines-pixbuf
-    - hddtemp
-    - hyphen-en-us
-    - kde-baseapps
-    - kdeaccessibility
-    - kdesudo
-    - kfind
-    - kpart-webkit
     - libreoffice
     - libreoffice-help-en-us
     - libreoffice-kde
-    - listaller
+    - libreoffice-pdfimport
     - mythes-en-us
-    - plasma-widget-folderview
-    - software-properties-common
-    - software-properties-kde
-    - sudo
-    - system-config-printer
-    - system-config-printer-udev
-    - tumbler
-    - udisks
-    - unattended-upgrades
-    - xdg-user-dirs
+    - hunspell-en-us
+    - hyphen-en-us
   sudo: yes
-  tags:
-    - apps
-    - kde
+  tags: apps
 
-- name:  Autoremove Uneccesary Packages
-  shell: apt-get autoremove -y
-  sudo:  yes
-  tags:  apps
+- name: Ensure Multimedia Codecs are Installed
+  apt:  name={{ item }} state=present
+  with_items:
+    - gir1.2-gst-plugins-base-1.0
+    - gstreamer1.0-fluendo-mp3
+    - gstreamer1.0-plugins-bad
+    - gstreamer1.0-plugins-good
+    - gstreamer1.0-plugins-ugly
+    - gstreamer1.0-pulseaudio
+    - libavcodec-extra
+    - libgstreamer-interfaces-perl
+    - libgstreamer-perl
+  sudo: yes
+  tags: apps
+
+- name: Ensure Miscellaneous Applications and Utilities are Installed
+  apt:  name={{ item }} state=present
+  with_items:
+    - tome
+    - crawl-tiles
+    - gimp
+    - gimp-data-extras
+    - sqlite3
+    - tumbler
+    - tumbler-plugins-extra
+  sudo: yes
+  tags: apps
