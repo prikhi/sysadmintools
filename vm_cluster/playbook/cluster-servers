@@ -1,0 +1,8 @@
+[master-controller]
+stack-controller-1  ansible_user=ubuntu ansible_host=192.168.1.5
+
+[controllers:children]
+master-controller
+
+[compute]
+stack-compute-1 ansible_user=ubuntu ansible_host=192.168.1.6

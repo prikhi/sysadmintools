@@ -1,0 +1,6 @@
+---
+
+admin_os_project: 'admin'
+admin_os_user: 'admin'
+default_os_project: 'acorn'
+service_os_project: 'service'

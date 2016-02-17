@@ -1,0 +1,3 @@
+[submodule "vm_cluster/playbook/library/openstack-ansible"]
+	path = vm_cluster/playbook/library
+	url = http://github.com/openstack-ansible/openstack-ansible-modules.git

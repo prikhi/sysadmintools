@@ -1,0 +1,18 @@
+---
+
+- name: restart mongodb
+  service: name=mongodb state=restarted
+  become: yes
+
+- name: sync keystone database
+  keystone_manage: action=db_sync
+  become: yes
+  become_user: keystone
+
+- name: restart keystone
+  service: name=keystone state=restarted
+  become: yes
+
+- name: restart apache
+  service: name=apache2 state=restarted
+  become: yes

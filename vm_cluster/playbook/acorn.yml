@@ -1,0 +1,14 @@
+---
+
+- hosts:
+    - controllers
+    - compute
+  roles:
+    - { name: common, tags: common }
+
+- hosts:
+    - master-controller
+    - controllers
+  roles:
+    - { name: controller, tags: controller }
+  environment: "{{ stack_env }}"

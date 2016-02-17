@@ -1,0 +1,5 @@
+---
+
+mq_user: "openstack"
+keystone_db_name: "keystone"
+keystone_db_user: "keystone"

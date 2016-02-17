@@ -1,0 +1,9 @@
+---
+
+ntp: "0.us.pool.ntp.org"
+
+stack_env: {
+  OS_TOKEN: "{{ vaulted_admin_token }}",
+  OS_URL: "http://{{ ansible_hostname }}:35357/v3",
+  OS_IDENTITY_API_VERSION: "3",
+}
