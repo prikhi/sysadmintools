@@ -96,7 +96,6 @@
       # Always Preopoulate the User Field with the Public User
     - { regexp: '^#?PreselectUser=',    line: 'PreselectUser=Default' }
     - { regexp: '^DefaultUser=',        line: 'DefaultUser={{ public_username }}' }
-    - { regexp: '^#?UserList=',         line: 'UserList=true' }
     - { regexp: '^#?NumLock=',          line: 'NumLock=On' }
   notify: restart kdm
   sudo: yes
