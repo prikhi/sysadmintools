@@ -3,10 +3,14 @@
 - name:     Set the Debian Apt Mirror
   template: dest=/etc/apt/sources.list src=sources.list.j2 backup=yes
   sudo:     yes
+  tags:     configure
 
 - name: Update the Apt Cache
   apt:  update_cache=yes
   sudo: yes
+  tags:
+    - apps
+    - configure
 
 - name: Copy Over the rc.local File
   copy: src=rc.local dest=/etc/rc.local
@@ -27,7 +31,7 @@
 # Install the Correct Graphics Driver
 - include: install_graphics_driver.yml
 
-# Install Additional Apps & Remove Uneeded Ones
+# Install KDE and Additional Applications
 - include: modify_apps.yml
 
 # Setup & Configure the Zabbix Agent
@@ -78,9 +82,11 @@
 - name: Configure the KDM Login Manager
   lineinfile: dest=/etc/kde4/kdm/kdmrc regexp="{{ item.regexp }}" line="{{ item.line }}"
   with_items:
+      # Automatically Login as the Public User
     - { regexp: '^#?AutoLoginEnable=',  line: 'AutoLoginEnable=true' }
     - { regexp: '^#?AutoLoginUser=',    line: 'AutoLoginUser={{ public_username }}' }
     - { regexp: '^#?AutoLoginDelay=',   line: 'AutoLoginDelay=0' }
+      # Always Preopoulate the User Field with the Public User
     - { regexp: '^#?PreselectUser=',    line: 'PreselectUser=Default' }
     - { regexp: '^DefaultUser=',        line: 'DefaultUser={{ public_username }}' }
     - { regexp: '^#?UserList=',         line: 'UserList=true' }

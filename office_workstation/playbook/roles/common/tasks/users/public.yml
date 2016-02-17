@@ -9,6 +9,7 @@
     - public_user
     - users
 
+# Desktop Configuration
 - name:  Set the Public User's Default XSession to KDE
   shell: echo "[Desktop]\nSession=kde-plasma" > ~/.dmrc creates=/home/{{ public_username }}/.dmrc
   sudo:  yes
@@ -59,8 +60,8 @@
     - users
 
 - name: Link the GTK Customization File to the GTK-KDE Integration File
-  file: path=/home/{{ public_username }}/.gtkrc-2.0-kde4 src=/home/{{ public_username }}/.gtkrc-2.0
-        state=link
+  file: path=/home/{{ public_username }}/.gtkrc-2.0-kde4
+        src=/home/{{ public_username }}/.gtkrc-2.0 state=link
   sudo: yes
   sudo_user: "{{ public_username }}"
   tags:
