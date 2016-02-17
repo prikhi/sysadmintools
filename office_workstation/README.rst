@@ -195,6 +195,32 @@ feel free to create a new issue(attach a patch file if you have one). Pull
 requests are also accepted from our github mirror at
 https://github.com/prikhi/sysadmintools.
 
+
+Automated Maintenance with Fabric
+==================================
+
+A ``fabfile.py`` for `Fabric`_ is also included to help automate workstation
+maintenance. Currently it may be used to automatically install and upgrade
+packages.
+
+First make sure you have `Fabric`_ installed::
+
+    pip install Fabric
+
+To get a full list of commands, run ``fab` with the ``-l`` flag::
+
+   cd office_workstation
+   fab -l
+
+To upgrade all packages, use the ``update_and_upgrade`` command::
+
+    fab update_and_upgrade
+
+To upgrade all packages **and** install any new dependencies, use
+``full_upgrade``::
+
+    fab full_upgrade
+
 To Do
 ======
 
@@ -219,3 +245,4 @@ To Do
 .. _Zabbix:                         http://www.zabbix.com/
 .. _CUPS:                           https://www.cups.org/
 .. _PlayOnLinux:                    http://www.playonlinux.com/
+.. _Fabric:                         http://www.fabfile.org/
