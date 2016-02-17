@@ -122,6 +122,7 @@
   tags:
     - public_user
     - users
+    - tor
 
 - name:  Check the Current Version of the Tor Browser Bundle
   shell: cat /home/{{ public_username }}/.torbundle/Docs/ChangeLog.txt | head -n 1 | cut -d ' ' -f 4
@@ -132,9 +133,11 @@
   tags:
     - public_user
     - users
+    - tor
 
 - name:  Download and Extract the Tor Browser Bundle
   shell: wget http://www.torproject.org/dist/torbrowser/{{ tor_version }}/tor-browser-{{ tor_full_version }}.tar.xz;
+         rm -rf /home/{{ public_username }}/.torbundle || /bin/true;
          mkdir -p /home/{{ public_username }}/.torbundle;
          tar -xvf tor-browser-{{ tor_full_version }}.tar.xz;
          mv tor-browser_*/* .torbundle/;
@@ -147,3 +150,4 @@
   tags:
     - public_user
     - users
+    - tor
