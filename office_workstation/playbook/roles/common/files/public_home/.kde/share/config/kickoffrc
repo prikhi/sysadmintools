@@ -6,6 +6,3 @@ loadAll=false
 
 [KRunner][PlasmaRunnerManager]
 pluginWhiteList=places,shell,services,bookmarks,recentdocuments,locations
-
-[RecentlyUsed]
-Applications=
