@@ -1,0 +1,72 @@
+---
+
+- name: Ensure Keystone Database Exists
+  postgresql_db: name={{ keystone_db_name }}
+  become: yes
+  become_user: postgres
+
+- name: Ensure the Keystone Database User Exists
+  postgresql_user: name={{ keystone_db_user }} db={{ keystone_db_name }}
+                   password={{ vaulted_db_password }}
+  become: yes
+  become_user: postgres
+
+- name: Ensure Keystone Does Not Start Automatically
+  lineinfile: dest=/etc/init/keystone.override regexp='.*' line='manual' create=yes
+  become: yes
+
+- name: Ensure Keystone is Installed
+  apt: name={{ item }}
+  become: yes
+  with_items:
+    - apache2
+    - keystone
+    - libapache2-mod-wsgi
+    - memcached
+    - python-memcache
+    - python-shade
+
+- name: Ensure Keystone is Correctly Configured
+  ini_file: dest=/etc/keystone/keystone.conf section="{{ item.section }}"
+            option="{{ item.option }}" value="{{ item.value }}"
+  become: yes
+  with_items:
+    - { section: 'DEFAULT', option: 'admin_token', value: "{{ vaulted_admin_token }}" }
+    - { section: 'database', option: 'connection',
+        value: 'postgresql://{{ keystone_db_user }}:{{ vaulted_db_password }}@localhost/keystone' }
+    - { section: 'memcache', option: 'servers', value: 'localhost:11211' }
+    - { section: 'token', option: 'driver', value: 'memcache' }
+    - { section: 'token', option: 'provider', value: 'uuid' }
+    - { section: 'revoke', option: 'driver', value: 'sql' }
+  notify:
+    - sync keystone database
+    - restart keystone
+
+- name: Ensure Apache is Correctly Configured
+  lineinfile: dest=/etc/apache2/apache2.conf
+              regexp='^ServerName .*' line='ServerName {{ ansible_hostname }}'
+  become: yes
+  notify: restart apache
+
+- name: Ensure Keystone Virtual Host is Correctly Configured
+  copy: src=apache-keystone.conf dest=/etc/apache2/sites-available/wsgi-keystone.conf
+  become: yes
+  notify: restart apache
+
+- name: Ensure the Keystone Virtual Host is Enabled
+  file: src=/etc/apache2/sites-available/wsgi-keystone.conf
+        dest=/etc/apache2/sites-enabled/wsgi-keystone.conf state=link
+  become: yes
+  notify: restart apache
+
+- name: Ensure Default Keystone Database is Removed
+  file: state=absent path=/var/lib/keystone/keystone.db
+  become: yes
+
+- meta: flush_handlers
+
+- name: Ensure the OpenStack Identity Service & Endpoints are Correctly Configured
+  keystone_service: name=keystone type=identity description="Identity Service"
+                    token="{{ vaulted_admin_token }}"
+                    url="http://{{ ansible_hostname }}:5000/v3.0"
+                    admin_url="http://{{ ansible_hostname }}:35357/v3.0"

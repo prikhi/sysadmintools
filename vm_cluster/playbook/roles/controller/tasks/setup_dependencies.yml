@@ -1,0 +1,31 @@
+---
+
+- name: Ensure PostgreSQL is Installed
+  apt: name={{ item }}
+  become: yes
+  with_items:
+    - postgresql
+    - python-psycopg2
+
+- name: Ensure MongoDB is Installed
+  apt: name={{ item }}
+  become: yes
+  with_items:
+    - mongodb-server
+    - mongodb-clients
+    - python-pymongo
+
+- name: Ensure MongoDB is Correctly Configured
+  lineinfile: dest=/etc/mongodb.conf regexp='bind_ip = .*'
+              line='bind_ip = {{ ansible_default_ipv4.address }}'
+  become: yes
+  notify: restart mongodb
+
+- name: Ensure RabbitMQ is Installed
+  apt: name=rabbitmq-server
+  become: yes
+
+- name: Add the RabbitMQ User
+  rabbitmq_user: user={{ mq_user }} password={{ vaulted_mq_password }} vhost=/
+                 configure_priv=.* read_priv=.* write_priv=.*
+  become: yes

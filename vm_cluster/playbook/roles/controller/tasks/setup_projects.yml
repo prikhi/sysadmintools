@@ -1,0 +1,35 @@
+---
+
+- name: Retrieve a List of Existing Projects
+  shell: openstack project list -f value -c Name
+  register: os_projects
+
+- name: Ensure the OpenStack Admin Project Exists
+  shell: openstack project create --domain default
+         --description "Administrative Project" "{{ admin_os_project|quote }}"
+  when: os_projects.stdout.find(admin_os_project) == -1
+
+- name: Ensure the OpenStack Service Project Exists
+  shell: openstack project create --domain default
+         --description "Service Project" "{{ service_os_project|quote }}"
+  when: os_projects.stdout.find(service_os_project) == -1
+
+- name: Ensure the OpenStack Default Project Exists
+  shell: openstack project create --domain default
+         --description "Default Project" "{{ default_os_project|quote }}"
+  when: os_projects.stdout.find(default_os_project) == -1
+
+- name: Retrieve a List of Existing Users
+  shell: openstack user list -f value -c Name
+  register: os_users
+
+- name: Ensure the OpenStack Admin User Exists
+  shell: openstack user create --domain default --project "{{ default_os_project|quote }}"
+         --password "{{ vaulted_os_user_password|quote }}" --email "{{ vaulted_os_user_email|quote }}"
+         admin
+  when: os_users.stdout.find(admin_os_user) == -1
+
+- name: Ensure the OpenStack Admin Role is Properly Configured
+  keystone_user:  role=admin user="{{ admin_os_user }}"
+                  tenant="{{ admin_os_project }}" token="{{ vaulted_admin_token }}"
+
