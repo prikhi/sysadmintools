@@ -59,6 +59,14 @@
     - public_user
     - users
 
+- name:  Mark Desktop Shortcuts as Executable
+  shell: chmod u+x -v ~/Desktop/*.desktop
+  sudo: yes
+  sudo_user: "{{ public_username }}"
+  tags:
+    - public_user
+    - users
+
 - name: Link the GTK Customization File to the GTK-KDE Integration File
   file: path=/home/{{ public_username }}/.gtkrc-2.0-kde4
         src=/home/{{ public_username }}/.gtkrc-2.0 state=link
