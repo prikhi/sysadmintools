@@ -11,10 +11,6 @@
   become: yes
   become_user: postgres
 
-- name: Ensure Keystone Does Not Start Automatically
-  lineinfile: dest=/etc/init/keystone.override regexp='.*' line='manual' create=yes
-  become: yes
-
 - name: Ensure Keystone is Installed
   apt: name={{ item }}
   become: yes
@@ -25,6 +21,10 @@
     - memcached
     - python-memcache
     - python-shade
+
+- name: Ensure Keystone Does Not Start Automatically
+  service: name=keystone enabled=no state=stopped
+  become: yes
 
 - name: Ensure Keystone is Correctly Configured
   ini_file: dest=/etc/keystone/keystone.conf section="{{ item.section }}"
@@ -40,7 +40,7 @@
     - { section: 'revoke', option: 'driver', value: 'sql' }
   notify:
     - sync keystone database
-    - restart keystone
+    - restart apache
 
 - name: Ensure Apache is Correctly Configured
   lineinfile: dest=/etc/apache2/apache2.conf
@@ -68,5 +68,5 @@
 - name: Ensure the OpenStack Identity Service & Endpoints are Correctly Configured
   keystone_service: name=keystone type=identity description="Identity Service"
                     token="{{ vaulted_admin_token }}"
-                    url="http://{{ ansible_hostname }}:5000/v3.0"
-                    admin_url="http://{{ ansible_hostname }}:35357/v3.0"
+                    url="http://{{ ansible_hostname }}:5000/v3"
+                    admin_url="http://{{ ansible_hostname }}:35357/v3"
