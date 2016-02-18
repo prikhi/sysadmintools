@@ -33,7 +33,7 @@
   with_items:
     - { section: 'DEFAULT', option: 'admin_token', value: "{{ vaulted_admin_token }}" }
     - { section: 'database', option: 'connection',
-        value: 'postgresql://{{ keystone_db_user }}:{{ vaulted_db_password }}@localhost/keystone' }
+        value: 'postgresql://{{ keystone_db_user }}:{{ vaulted_db_password }}@localhost/{{ keystone_db_name }}' }
     - { section: 'memcache', option: 'servers', value: 'localhost:11211' }
     - { section: 'token', option: 'driver', value: 'memcache' }
     - { section: 'token', option: 'provider', value: 'uuid' }

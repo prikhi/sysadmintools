@@ -26,7 +26,7 @@
 - name: Ensure the OpenStack Admin User Exists
   shell: openstack user create --domain default --project "{{ default_os_project|quote }}"
          --password "{{ vaulted_os_user_password|quote }}" --email "{{ vaulted_os_user_email|quote }}"
-         admin
+         "{{ admin_os_user }}"
   when: os_users.stdout.find(admin_os_user) == -1
 
 - name: Ensure the OpenStack Admin Role is Properly Configured

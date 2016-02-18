@@ -1,0 +1,63 @@
+---
+
+- name: Ensure the Glance Database Exists
+  postgresql_db: name={{ glance_db_name }}
+  become: yes
+  become_user: postgres
+
+- name: Ensure the Glance Database User Exists
+  postgresql_user: name={{ glance_db_user }} db={{ glance_db_name }}
+                   password={{ vaulted_db_password }}
+  become: yes
+  become_user: postgres
+
+- name: Retrieve a List of Existing Users
+  shell: openstack user list -f value -c Name
+  register: os_users
+
+- name: Ensure the OpenStack Glance User Exists
+  shell: openstack user create --domain default
+         --password "{{ vaulted_glance_os_password|quote }}"
+         "{{ glance_os_user }}"
+  when: os_users.stdout.find(glance_os_user) == -1
+
+- name: Retrieve the OpenStack Glance User's Roles
+  shell: openstack role list --user "{{ glance_os_user|quote }}"
+         --project "{{ service_os_project|quote }}" -f value -c Name
+  register: glance_roles
+
+- name: Ensure the OpenStack Glance User's Role is Properly Configured
+  keystone_user: role=admin user="{{ glance_os_user }}"
+                 tenant="{{ service_os_project }}"
+                 token="{{ vaulted_admin_token }}"
+
+- name: Ensure the OpenStack Glance Service & Endpoints are Correctly Configured
+  keystone_service: name=glance type=image description="Image Service"
+                    url="http://{{ ansible_hostname }}:9292"
+                    token="{{ vaulted_admin_token }}"
+
+- name: Ensure Glance is Installed
+  apt: name={{ item }}
+  with_items: [ 'glance', 'python-glanceclient' ]
+  become: yes
+
+- name: Ensure Glance is Correctly Configured
+  ini_file: dest=/etc/glance/glance-api.conf section="{{ item.section }}"
+            option="{{ item.option }}" value="{{ item.value }}"
+  become: yes
+  with_items: "{{ glance_api_config + glance_common_config }}"
+  notify:
+    - sync glance database
+    - restart glance
+
+- name: Ensure the Glance Registry is Correctly Configured
+  ini_file: dest=/etc/glance/glance-registry.conf section="{{ item.section }}"
+            option="{{ item.option }}" value="{{ item.value }}"
+  become: yes
+  with_items: glance_common_config
+  notify:
+    - sync glance database
+    - restart glance
+
+- name: Ensure the Default Glance Database is Removed
+  file: state=absent path=/var/lib/glance/glance.sqlite

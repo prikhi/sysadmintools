@@ -6,3 +6,6 @@
   tags: keystone
 
 - include: setup_projects.yml
+
+- include: setup_glance.yml
+  tags: glance

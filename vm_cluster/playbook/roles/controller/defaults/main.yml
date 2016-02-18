@@ -3,3 +3,29 @@
 mq_user: "openstack"
 keystone_db_name: "keystone"
 keystone_db_user: "keystone"
+glance_db_name: "glance"
+glance_db_user: "glance"
+glance_os_user: "glance"
+
+glance_api_config:
+  - { section: 'glance_store', option: 'default_store', value: 'file' }
+  - { section: 'glance_store', option: 'filesystem_store_datadir', value: '/var/lib/glance/images/' }
+
+glance_common_config:
+  - { section: 'DEFAULT', option: 'notification_driver', value: 'noop' }
+  - { section: 'database', option: 'connection',
+      value: 'postgresql://{{ glance_db_user }}:{{ vaulted_db_password }}@localhost/{{ glance_db_name }}' }
+  - { section: 'paste_deploy', option: 'flavor', value: 'keystone' }
+  - { section: 'keystone_authtoken', option: 'auth_uri',
+      value: 'http://{{ ansible_hostname }}:5000' }
+  - { section: 'keystone_authtoken', option: 'auth_url',
+      value: 'http://{{ ansible_hostname }}:35357' }
+  - { section: 'keystone_authtoken', option: 'auth_plugin', value: 'password' }
+  - { section: 'keystone_authtoken', option: 'project_domain_id', value: 'default' }
+  - { section: 'keystone_authtoken', option: 'user_domain_id', value: 'default' }
+  - { section: 'keystone_authtoken', option: 'project_name',
+      value: '{{ service_os_project }}' }
+  - { section: 'keystone_authtoken', option: 'user-name',
+      value: '{{ glance_os_user }}' }
+  - { section: 'keystone_authtoken', option: 'password',
+      value: '{{ vaulted_glance_os_password }}' }
