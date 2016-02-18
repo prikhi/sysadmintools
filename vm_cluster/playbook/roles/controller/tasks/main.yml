@@ -3,5 +3,6 @@
 - include: setup_dependencies.yml
 
 - include: setup_keystone.yml
+  tags: keystone
 
 - include: setup_projects.yml
