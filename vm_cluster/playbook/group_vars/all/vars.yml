@@ -1,6 +1,10 @@
 ---
 
+mq_user: "openstack"
+
 admin_os_project: 'admin'
 admin_os_user: 'admin'
 default_os_project: 'acorn'
 service_os_project: 'service'
+
+master_controller_hostname: "stack-controller-1"

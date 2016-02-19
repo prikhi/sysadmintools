@@ -1,2 +1,2 @@
 ---
-ntp: "stack-controller-1"
+ntp: "{{ master_controller_hostname }}"
