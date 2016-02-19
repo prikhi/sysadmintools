@@ -21,11 +21,6 @@
          "{{ glance_os_user }}"
   when: os_users.stdout.find(glance_os_user) == -1
 
-- name: Retrieve the OpenStack Glance User's Roles
-  shell: openstack role list --user "{{ glance_os_user|quote }}"
-         --project "{{ service_os_project|quote }}" -f value -c Name
-  register: glance_roles
-
 - name: Ensure the OpenStack Glance User's Role is Properly Configured
   keystone_user: role=admin user="{{ glance_os_user }}"
                  tenant="{{ service_os_project }}"
@@ -61,3 +56,4 @@
 
 - name: Ensure the Default Glance Database is Removed
   file: state=absent path=/var/lib/glance/glance.sqlite
+  become: yes

@@ -5,7 +5,7 @@
   become: yes
 
 - name: sync keystone database
-  keystone_manage: action=db_sync
+  shell: keystone-manage db_sync
   become: yes
   become_user: keystone
 
