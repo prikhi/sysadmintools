@@ -46,7 +46,7 @@
 - name: Ensure Nova is Correctly Configured
   ini_file: dest=/etc/nova/nova.conf section="{{ item.section }}"
             option="{{ item.option }}" value="{{ item.value }}"
-  with_items: "{{ common_auth_config + common_nova_config + nova_config  }}"
+  with_items: "{{ common_auth_config + common_rabbit_config + common_nova_config + nova_config  }}"
   become: yes
   notify:
     - sync nova database

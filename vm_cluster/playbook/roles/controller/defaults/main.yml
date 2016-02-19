@@ -7,6 +7,8 @@ glance_db_user: "glance"
 glance_os_user: "glance"
 nova_db_name: "nova"
 nova_db_user: "nova"
+neutron_db_name: "neutron"
+neutron_db_user: "neutron"
 
 glance_api_config:
   - { section: 'glance_store', option: 'default_store', value: 'file' }
@@ -30,3 +32,33 @@ nova_config:
   - { section: 'glance', option: 'host', value: '{{ master_controller_hostname }}' }
   - { section: 'DEFAULT', option: 'enabled_apis',
       value: 'osapi_compute,metadata' }
+
+neutron_config:
+  - { section: 'database', option: 'connection',
+      value: 'postgresql://{{ neutron_db_user }}:{{ vaulted_db_password }}@localhost/{{ neutron_db_name }}' }
+  - { section: 'DEFAULT', option: 'core_plugin', value: 'ml2' }
+  - { section: 'DEFAULT', option: 'service_plugins', value: 'router' }
+  - { section: 'DEFAULT', option: 'allow_overlapping_ips', value: 'True' }
+  - { section: 'DEFAULT', option: 'notify_nova_on_port_status_changes',
+      value: 'True'}
+  - { section: 'DEFAULT', option: 'notify_nova_on_port_data_changes',
+      value: 'True'}
+  - { section: 'DEFAULT', option: 'nova_url',
+      value: 'http://{{ master_controller_hostname }}:8774/v2' }
+  - { section: 'nova', option: 'auth_url',
+      value: 'http://{{ master_controller_hostname }}:35357' }
+  - { section: 'nova', option: 'auth_plugin', value: 'password' }
+  - { section: 'nova', option: 'project_domain_id', value: 'default' }
+  - { section: 'nova', option: 'user_domain_id', value: 'default' }
+  - { section: 'nova', option: 'region_name', value: 'RegionOne' }
+  - { section: 'nova', option: 'project_name',
+      value: '{{ service_os_project }}' }
+  - { section: 'nova', option: 'username',
+      value: '{{ nova_os_user }}' }
+  - { section: 'nova', option: 'password',
+      value: '{{ vaulted_nova_os_password }}' }
+
+nova_neutron_config:
+    - { option: 'service_metadata_proxy', value: 'True' }
+    - { option: 'metadata_proxy_shared_secret',
+        value: '{{ vaulted_metadata_secret }}' }

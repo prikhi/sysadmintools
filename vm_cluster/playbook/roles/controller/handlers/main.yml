@@ -40,3 +40,23 @@
   shell: nova-manage db sync
   become: yes
   become_user: nova
+
+- name: sync neutron database
+  shell: neutron-db-manage --config-file /etc/neutron/neutron.conf
+         --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
+  become: yes
+  become_user: neutron
+
+- name: restart neutron
+  service: name={{ item }} state=restarted
+  with_items:
+    - neutron-server
+    - neutron-plugin-linuxbridge-agent
+    - neutron-dhcp-agent
+    - neutron-metadata-agent
+    - neutron-l3-agent
+  become: yes
+
+- name: restart nova api
+  service: name=nova-api state=restarted
+  become: yes

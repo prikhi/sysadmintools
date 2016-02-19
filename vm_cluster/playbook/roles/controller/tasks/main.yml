@@ -12,3 +12,6 @@
 
 - include: setup_nova.yml
   tags: nova
+
+- include: setup_neutron.yml
+  tags: neutron

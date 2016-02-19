@@ -3,3 +3,7 @@
 - name: restart nova compute
   service: name=nova-compute state=restarted
   become: yes
+
+- name: restart linux bridge agent
+  service: name=neutron-plugin-linuxbridge-agent state=restarted
+  become: yes

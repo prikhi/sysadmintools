@@ -8,3 +8,6 @@ nova_config:
       value: 'http://{{ master_controller_hostname }}:6080/vnc_auto.html' }
   - { section: 'glance', option: 'host', value: '{{ master_controller_hostname }}' }
   - { section: 'oslo_concurrency', option: 'lock_path', value: '/var/lib/nova/tmp' }
+
+neutron_config:
+  - { section: 'database', option: 'connection', value: ''}

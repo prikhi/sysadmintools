@@ -1,6 +1,6 @@
 ---
 
-- name: Install OpenStack Nova
+- name: Ensure OpenStack Nova is Installed
   apt: name={{ item }}
   with_items: ['nova-compute', 'sysfsutils']
   become: yes
@@ -8,7 +8,7 @@
 - name: Ensure OpenStack Nova is Correctly Configured
   ini_file: dest=/etc/nova/nova.conf section="{{ item.section }}"
             option="{{ item.option }}" value="{{ item.value }}"
-  with_items: "{{ common_auth_config + common_nova_config + nova_config }}"
+  with_items: "{{ common_auth_config + common_rabbit_config + common_nova_config + nova_config }}"
   become: yes
   notify: restart nova compute
 
@@ -26,3 +26,34 @@
 - name: Ensure the Default Nova Database is Removed
   file: state=absent path=/var/lib/nova/nova.sqlite
   become: yes
+
+- name: Ensure OpenStack Neutron is Installed
+  apt: name={{ item }}
+  with_items: [ 'neutron-plugin-linuxbridge-agent', 'conntrack' ]
+  become: yes
+  tags: neutron
+
+- name: Ensure Neutron is Correctly Configured
+  ini_file: dest=/etc/neutron/neutron.conf section="{{ item.section }}"
+            option="{{ item.option }}" value="{{ item.value }}"
+  with_items: "{{ common_auth_config + common_rabbit_config + common_neutron_config + neutron_config }}"
+  become: yes
+  notify: restart linux bridge agent
+  tags: neutron
+
+- name: Ensure the Linux Bridge Agent is Correctly Configured
+  ini_file: dest=/etc/neutron/plugins/ml2/linuxbridge_agent.ini
+            section="{{ item.section }}" option="{{ item.option }}"
+            value="{{ item.value }}"
+  with_items: linux_bridge_agent_config
+  become: yes
+  notify: restart linux bridge agent
+  tags: neutron
+
+- name: Ensure Nova is Configured to Use Neutron
+  ini_file: dest=/etc/nova/nova.conf section=neutron
+            option="{{ item.option }}" value="{{ item.value }}"
+  with_items: common_nova_neutron_config
+  become: yes
+  notify: restart nova compute
+  tags: neutron
