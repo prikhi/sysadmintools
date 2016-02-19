@@ -23,6 +23,8 @@ The ``Ansible`` and ``Fabric`` dependencies may also be installed via ``pip``::
 
 .. include:: office_workstation/README.rst
 
+.. include:: vm_cluster/README.rst
+
 
 .. _Ansible: http://www.ansible.com/home
 .. _Fabric:  http://www.fabfile.org/
