@@ -1,0 +1,19 @@
+---
+
+- name: Ensure OpenStack Horizon is Installed
+  apt: name=openstack-dashboard
+  become: yes
+
+- name: Ensure Horizon is Correctly Configured
+  lineinfile: dest=/etc/openstack-dashboard/local_settings.py
+              regexp="{{ item.exp }}" line="{{ item.line }}"
+  with_items:
+    - { exp: 'OPENSTACK_HOST = .*', line: 'OPENSTACK_HOST = "{{ ansible_hostname }}"' }
+    - { exp: 'ALLOWED_HOSTS = .*', line: 'ALLOWED_HOSTS = ["*",]' }
+    - { exp: 'OPENSTACK_KEYSTONE_DEFAULT_ROLE = .*',
+        line: 'OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"' }
+    - { exp: 'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT =.*',
+        line: 'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True'}
+    - { exp: 'TIME_ZONE =.*', line: 'TIME_ZONE = "America/New_York"' }
+  become: yes
+  notify: restart apache
