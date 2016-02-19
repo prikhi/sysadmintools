@@ -12,3 +12,8 @@
   roles:
     - { name: controller, tags: controller }
   environment: "{{ stack_env }}"
+
+- hosts:
+    - compute
+  roles:
+    - { name: compute, tags: [ compute, nova ] }

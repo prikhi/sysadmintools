@@ -1,0 +1,57 @@
+---
+
+- name: Ensure the Nova Database Exists
+  postgresql_db: name={{ nova_db_name }}
+  become: yes
+  become_user: postgres
+
+- name: Ensure the Nova Database User Exists
+  postgresql_user: name={{ nova_db_user }} db={{ nova_db_name }}
+                   password={{ vaulted_db_password }}
+  become: yes
+  become_user: postgres
+
+- name: Retrieve a List of Existing Users
+  shell: openstack user list -f value -c Name
+  register: os_users
+
+- name: Ensure the OpenStack Nova User Exists
+  shell: openstack user create --domain default
+         --password "{{ vaulted_nova_os_password|quote }}"
+         "{{ nova_os_user }}"
+  when: os_users.stdout.find(nova_os_user) == -1
+
+- name: Ensure the OpenStack Nova User's Role is Properly Configured
+  keystone_user: role=admin user="{{ nova_os_user }}"
+                 tenant="{{ service_os_project }}"
+                 token="{{ vaulted_admin_token }}"
+
+- name: Ensure the OpenStack Nova Service & Endpoints are Correctly Configured
+  keystone_service: name=nova type=compute description="Compute Service"
+                    url="http://{{ ansible_hostname }}:8774/v2/%(tenant_id)s"
+                    token="{{ vaulted_admin_token }}"
+
+- name: Ensure Nova is Installed
+  apt: name={{ item }}
+  with_items:
+    - nova-api
+    - nova-cert
+    - nova-conductor
+    - nova-consoleauth
+    - nova-novncproxy
+    - nova-scheduler
+    - python-novaclient
+  become: yes
+
+- name: Ensure Nova is Correctly Configured
+  ini_file: dest=/etc/nova/nova.conf section="{{ item.section }}"
+            option="{{ item.option }}" value="{{ item.value }}"
+  with_items: "{{ common_auth_config + common_nova_config + nova_config  }}"
+  become: yes
+  notify:
+    - sync nova database
+    - restart nova
+
+- name: Ensure the Default Nova Database is Removed
+  file: state=absent path=/var/lib/nova/nova.sqlite
+  become: yes

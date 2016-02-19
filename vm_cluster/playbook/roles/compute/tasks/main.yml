@@ -1,0 +1,28 @@
+---
+
+- name: Install OpenStack Nova
+  apt: name={{ item }}
+  with_items: ['nova-compute', 'sysfsutils']
+  become: yes
+
+- name: Ensure OpenStack Nova is Correctly Configured
+  ini_file: dest=/etc/nova/nova.conf section="{{ item.section }}"
+            option="{{ item.option }}" value="{{ item.value }}"
+  with_items: "{{ common_auth_config + common_nova_config + nova_config }}"
+  become: yes
+  notify: restart nova compute
+
+- name: Determine if KVM is Supported
+  shell: egrep -c '(vmx|svm)' /proc/cpuinfo || /bin/true
+  register: has_kvm_support
+
+- name: Ensure QEMU is Used for Virtualization
+  ini_file: dest=/etc/nova/nova-compute.conf section=libvirt
+            option=virt_type value=qemu
+  become: yes
+  when: has_kvm_support.stdout == '0'
+  notify: restart nova compute
+
+- name: Ensure the Default Nova Database is Removed
+  file: state=absent path=/var/lib/nova/nova.sqlite
+  become: yes

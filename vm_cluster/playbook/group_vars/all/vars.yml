@@ -2,9 +2,48 @@
 
 mq_user: "openstack"
 
+nova_os_user: "nova"
+
 admin_os_project: 'admin'
 admin_os_user: 'admin'
 default_os_project: 'acorn'
 service_os_project: 'service'
 
 master_controller_hostname: "stack-controller-1"
+
+
+common_auth_config:
+  - { section: 'keystone_authtoken', option: 'auth_uri',
+      value: 'http://{{ master_controller_hostname }}:5000' }
+  - { section: 'keystone_authtoken', option: 'auth_url',
+      value: 'http://{{ master_controller_hostname }}:35357' }
+  - { section: 'keystone_authtoken', option: 'auth_plugin', value: 'password' }
+  - { section: 'keystone_authtoken', option: 'project_domain_id', value: 'default' }
+  - { section: 'keystone_authtoken', option: 'user_domain_id', value: 'default' }
+  - { section: 'keystone_authtoken', option: 'project_name',
+      value: '{{ service_os_project }}' }
+
+common_nova_config:
+  - { section: 'DEFAULT', option: 'rpc_backend', value: 'rabbit' }
+  - { section: 'oslo_messaging_rabbit', option: 'rabbit_host',
+      value: '{{ master_controller_hostname }}' }
+  - { section: 'oslo_messaging_rabbit', option: 'rabbit_userid',
+      value: '{{ mq_user }}' }
+  - { section: 'oslo_messaging_rabbit', option: 'rabbit_password',
+      value: '{{ vaulted_mq_password }}' }
+  - { section: 'DEFAULT', option: 'auth_strategy', value: 'keystone' }
+  - { section: 'keystone_authtoken', option: 'username',
+      value: '{{ nova_os_user }}' }
+  - { section: 'keystone_authtoken', option: 'password',
+      value: '{{ vaulted_nova_os_password }}' }
+  - { section: 'DEFAULT', option: 'my_ip',
+      value: '{{ ansible_default_ipv4.address }}' }
+  - { section: 'DEFAULT', option: 'network_api_class',
+      value: 'nova.network.neutronv2.api.API' }
+  - { section: 'DEFAULT', option: 'security_group_api', value: 'neutron' }
+  - { section: 'DEFAULT', option: 'linuxnet_interface_driver',
+      value: 'nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver' }
+  - { section: 'DEFAULT', option: 'firewall_driver',
+      value: 'nova.virt.firewall.NoopFirewallDriver' }
+  - { section: 'oslo_concurrency', option: 'lock_path',
+      value: '/var/lib/nova/tmp' }

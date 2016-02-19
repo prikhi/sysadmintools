@@ -5,6 +5,8 @@ keystone_db_user: "keystone"
 glance_db_name: "glance"
 glance_db_user: "glance"
 glance_os_user: "glance"
+nova_db_name: "nova"
+nova_db_user: "nova"
 
 glance_api_config:
   - { section: 'glance_store', option: 'default_store', value: 'file' }
@@ -15,16 +17,16 @@ glance_common_config:
   - { section: 'database', option: 'connection',
       value: 'postgresql://{{ glance_db_user }}:{{ vaulted_db_password }}@localhost/{{ glance_db_name }}' }
   - { section: 'paste_deploy', option: 'flavor', value: 'keystone' }
-  - { section: 'keystone_authtoken', option: 'auth_uri',
-      value: 'http://{{ ansible_hostname }}:5000' }
-  - { section: 'keystone_authtoken', option: 'auth_url',
-      value: 'http://{{ ansible_hostname }}:35357' }
-  - { section: 'keystone_authtoken', option: 'auth_plugin', value: 'password' }
-  - { section: 'keystone_authtoken', option: 'project_domain_id', value: 'default' }
-  - { section: 'keystone_authtoken', option: 'user_domain_id', value: 'default' }
-  - { section: 'keystone_authtoken', option: 'project_name',
-      value: '{{ service_os_project }}' }
-  - { section: 'keystone_authtoken', option: 'user-name',
+  - { section: 'keystone_authtoken', option: 'username',
       value: '{{ glance_os_user }}' }
   - { section: 'keystone_authtoken', option: 'password',
       value: '{{ vaulted_glance_os_password }}' }
+
+nova_config:
+  - { section: 'database', option: 'connection',
+      value: 'postgresql://{{ nova_db_user }}:{{ vaulted_db_password }}@localhost/{{ nova_db_name }}' }
+  - { section: 'vnc', option: 'vncserver_listen', value: '$my_ip' }
+  - { section: 'vnc', option: 'vncserver_proxyclient_address', value: '$my_ip' }
+  - { section: 'glance', option: 'host', value: '{{ master_controller_hostname }}' }
+  - { section: 'DEFAULT', option: 'enabled_apis',
+      value: 'osapi_compute,metadata' }

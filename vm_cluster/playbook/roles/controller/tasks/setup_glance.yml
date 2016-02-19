@@ -40,7 +40,7 @@
   ini_file: dest=/etc/glance/glance-api.conf section="{{ item.section }}"
             option="{{ item.option }}" value="{{ item.value }}"
   become: yes
-  with_items: "{{ glance_api_config + glance_common_config }}"
+  with_items: "{{ common_auth_config + glance_common_config + glance_api_config  }}"
   notify:
     - sync glance database
     - restart glance
@@ -49,7 +49,7 @@
   ini_file: dest=/etc/glance/glance-registry.conf section="{{ item.section }}"
             option="{{ item.option }}" value="{{ item.value }}"
   become: yes
-  with_items: glance_common_config
+  with_items: "{{ common_auth_config + glance_common_config }}"
   notify:
     - sync glance database
     - restart glance

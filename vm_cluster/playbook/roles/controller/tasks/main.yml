@@ -9,3 +9,6 @@
 
 - include: setup_glance.yml
   tags: glance
+
+- include: setup_nova.yml
+  tags: nova
