@@ -35,8 +35,7 @@ Quickstart
 #. Make some coffee...
 
 #. Once the playbook finishes, you should be logged in as the Public User and
-   Mumble should have popped up. Configure Mumble by adding an ``Acorn Chat
-   Server`` favorite pointing to ``chat.acorn``.
+   Mumble should have popped up.
 
 #. Open PlayOnLinux and hit ``Run a Local Script``. Choose the
    ``PlayOnLinux_msoffice.sh`` file in the Home directory.
