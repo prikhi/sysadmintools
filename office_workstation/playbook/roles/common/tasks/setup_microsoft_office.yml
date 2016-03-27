@@ -87,7 +87,7 @@
   tags:  msoffice
 
 - name: Copy Over the PlayOnLinux MS Office 2007 Install Script
-  copy: src=../files/pol_msoffice.sh dest=/home/{{ public_username }}/PlayOnLinux_msoffice.sh
+  copy: src=pol_msoffice.sh dest=/home/{{ public_username }}/PlayOnLinux_msoffice.sh
   sudo: yes
   sudo_user: "{{ public_username }}"
   tags: msoffice

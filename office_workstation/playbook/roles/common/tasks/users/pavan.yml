@@ -36,8 +36,8 @@
 - name: Authorize Pavan's SSH keys
   authorized_key: user=prikhi key="{{ item }}"
   with_file:
-    - ../../files/pavan/rsa.pub
-    - ../../files/pavan/ecdsa.pub
+    - pavan/rsa.pub
+    - pavan/ecdsa.pub
   sudo: yes
   sudo_user: prikhi
   tags:
@@ -99,7 +99,7 @@
     - users
 
 - name: Copy over the Hypnotoad Cow File
-  copy: src=../../files/pavan/hypnotoad.cow dest=/usr/share/cowsay/cows/hypnotoad.cow
+  copy: src=pavan/hypnotoad.cow dest=/usr/share/cowsay/cows/hypnotoad.cow
   sudo:  yes
   tags:
     - pavan

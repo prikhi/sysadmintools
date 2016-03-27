@@ -19,7 +19,7 @@
     - users
 
 - name: Copy the Public User's Desktop Configuration Files
-  copy: src=../../files/public_home/{{ item }} dest=/home/{{ public_username }}/
+  copy: src=public_home/{{ item }} dest=/home/{{ public_username }}/
   with_items:
     - .config
     - .kde
@@ -87,7 +87,7 @@
     - users
 
 - name:     Copy over the Mumble Configuration File
-  template: src=../../templates/Mumble.conf.j2 dest=/home/{{ public_username }}/.config/Mumble/Mumble.conf
+  template: src=Mumble.conf.j2 dest=/home/{{ public_username }}/.config/Mumble/Mumble.conf
   sudo: yes
   sudo_user: "{{ public_username }}"
   tags:
