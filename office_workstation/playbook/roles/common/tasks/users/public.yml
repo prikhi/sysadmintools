@@ -95,12 +95,17 @@
     - public_user
     - users
 
+- name: Ensure the Mumble Data Directory Exists
+  stat: path=/home/{{ public_username }}/.local/share/data/Mumble/Mumble
+  register: mumble_data_dir
+  sudo:  yes
+  sudo_user: "{{ public_username }}"
 
 - name:  Check if Mumble has any Favorite Servers
   shell: echo 'select count(*) from servers;' | sqlite3 .mumble.sqlite
          chdir=/home/{{ public_username }}/.local/share/data/Mumble/Mumble/
   register: mumble_favorties_count
-  when:  setup_mumble
+  when:  setup_mumble and mumble_data_dir.stat.isdir is defined and mumble_data_dir.stat.isdir
   sudo:  yes
   sudo_user: "{{ public_username }}"
   tags:
@@ -114,7 +119,7 @@
          "{{ ansible_hostname }}");' | sqlite3 .mumble.sqlite
          chdir=/home/{{ public_username }}/.local/share/data/Mumble/Mumble/
   register: temp_var
-  when:  setup_mumble and mumble_favorties_count.stdout == '0'
+  when:  setup_mumble and mumble_data_dir.stat.isdir is defined and mumble_data_dir.stat.isdir and mumble_favorties_count.stdout == '0'
   sudo:  yes
   sudo_user: "{{ public_username }}"
   tags:
