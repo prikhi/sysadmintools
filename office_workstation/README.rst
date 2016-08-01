@@ -64,8 +64,8 @@ http://lucy.acorn/~prikhi/preseed.cfg, you would type::
 
     auto hostname=HelloWorld url=http://lucy.acorn/~prikhi/preseed.cfg
 
-This will automatically partition the drives and install `KDE`_ along with an
-``seseadmin`` admin user.
+This will automatically partition the drives and setup an SSH server along with
+an ``seseadmin`` admin user.
 
 The `Ansible`_ playbook may then be used for further configuration.
 
@@ -73,18 +73,20 @@ Generate Password Hashes
 -------------------------
 
 You can use the `mkpasswd` command to generate crypted passwords for the
-pressed file::
+pre-seed file::
 
     printf "mypassword" | mkpasswd -s -m sha-512
 
 Ansible Setup
 ==============
 
-While the `Debian Automated Install`_ gets an entire system up and running with
-`KDE`_, the Ansible playbook adds Acorn specific customizations. It will do the
-following actions:
+While the `Debian Automated Install`_ gets a minimal system up and running with
+just an SSH server, the Ansible playbook adds the GUI(`KDE`_), desktop
+applications, and Acorn specific customizations. It will do the following
+actions:
 
-* Install standard applications (Firefox, Chromium, Flash)
+* Install basic system utilities and the desktop environment(`KDE`_)
+* Install standard applications (LibreOffice, Firefox, Chromium, Flash)
 * Configure for use with network services (samba, zabbix, cups)
 * Create a public user
 * Apply a standardized configuration to the public user (bookmarks, shortcuts)
@@ -127,11 +129,9 @@ The playbook will first copy over the apt sources file. This ensures all
 workstations use a common mirror which allows caching via web proxy(we use
 `squid`_). Then the new mirrors available packages are updated.
 
-Next various applications are installed such as web browsers, games, and
-educational applications. Any XFCE4 specific packages are removed and KDE
-applications are explicitly installed(instead of being implicity linked to the
-``kde-desktop`` task). Any unnecessary dependencies and applications are then
-removed.
+Next various applications are installed such as the desktop environment, web
+browsers, games, and educational applications. KDE applications are explicitly
+installed(instead of being implicity linked to the ``kde-desktop`` task).
 
 The `Zabbix`_ agent is then installed and configured. We rely on Zabbix's
 auto-discovery features, monitoring only system resource usage.
