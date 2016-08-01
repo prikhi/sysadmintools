@@ -17,7 +17,9 @@
   lineinfile: dest=/etc/samba/smb.conf regexp=';?\s*workgroup ='
               line='   workgroup = {{ smb_workgroup }}'
   sudo:   yes
-  notify: restart samba
+  notify:
+    - restart smbd
+    - restart nmbd
   tags:   samba
 
 - name:   Set the Samba Client's WINS Server
@@ -25,7 +27,9 @@
               line='   wins server = {{ wins_server }}'
   when:   use_wins_server
   sudo:   yes
-  notify: restart samba
+  notify:
+    - restart smbd
+    - restart nmbd
   tags:   samba
 
 - name: Install CIFS and Samba FileSystem Packages
