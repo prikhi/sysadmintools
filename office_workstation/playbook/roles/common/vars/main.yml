@@ -28,7 +28,7 @@ remove_xfce: True
 # The Username of the Public Account
 public_username: sese
 # The Version of the Tor Browser Bundle to Download and Install
-tor_version: 5.5.4
+tor_version: 6.0.2
 # The Full Version of the Tor Browser Bundle, Including OS and Language
 tor_full_version: linux64-{{ tor_version }}_en-US
 
