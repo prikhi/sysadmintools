@@ -10,6 +10,7 @@ Usage:
 
 """
 from fabric.api import prompt, sudo, env
+from fabric.context_managers import settings
 
 
 env.hosts = ['aphrodite.acorn', 'vishnu.acorn', 'adonis.acorn']
@@ -52,3 +53,9 @@ def update_and_upgrade():
     """Update the package list and Upgrade all packages."""
     update_package_list()
     upgrade_all_packages()
+
+
+def update_pavans_dotfiles():
+    """Update Pavan's User Configuration."""
+    with settings(sudo_user='prikhi'):
+        sudo("cd /home/prikhi/.dotfiles; git pull; ./install.sh")
