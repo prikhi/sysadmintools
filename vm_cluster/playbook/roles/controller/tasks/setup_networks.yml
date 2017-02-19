@@ -1,0 +1,79 @@
+---
+
+- name: Retrieve a List of OpenStack Networks
+  shell: openstack network list -c Name -f value
+  register: os_networks
+
+- name: Ensure the Provider Network Exists
+  shell: openstack network create --share --provider-physical-network provider
+         --provider-network-type flat provider
+  when: os_networks.stdout.find("provider") == -1
+
+- name: Retrieve a List of OpenStack Subnets
+  shell: openstack subnet list -c Name -f value
+  register: os_subnets
+
+- name: Ensure the Provider Subnet Exists
+  shell: openstack subnet create --network provider --allocation-pool
+         start={{ public_network_options.start_ip }},end={{ public_network_options.end_ip }}
+         --dns-nameserver {{ public_network_options.dns }}
+         --gateway {{ public_network_options.gateway }}
+         --subnet-range {{ public_network_options.cidr }}
+         provider
+  when: os_subnets.stdout.find("provider") == -1
+
+- name: Ensure the Private Network Exists
+  shell: openstack network create private
+  when: os_networks.stdout.find("private") == -1
+  environment:
+    OS_USERNAME: "{{ default_os_user }}"
+    OS_PASSWORD: "{{ vaulted_os_user_password }}"
+    OS_PROJECT_NAME: "{{ default_os_project }}"
+
+- name: Ensure the Private Subnet Exists
+  shell: openstack subnet create --network private
+         --dns-nameserver {{ private_network_options.dns }}
+         --gateway {{ private_network_options.gateway }}
+         --subnet-range {{ private_network_options.cidr }}
+         private
+  when: os_subnets.stdout.find("private") == -1
+  environment:
+    OS_USERNAME: "{{ default_os_user }}"
+    OS_PASSWORD: "{{ vaulted_os_user_password }}"
+    OS_PROJECT_NAME: "{{ default_os_project }}"
+
+- name: Check if External Routing is Enabled for the Provider Network
+  shell: neutron net-show provider -F router:external
+  register: provider_external_routing
+
+- name: Ensure External Routing is Enabled for the Provider Network
+  shell: neutron net-update provider --router:external
+  when: provider_external_routing.stdout.find("True") == -1
+
+- name: Retrieve a List of OpenStack Routers
+  shell: openstack router list -c Name -f value
+  register: os_routers
+
+- name: Ensure the Router Exists
+  shell: openstack router create router
+  environment:
+    OS_USERNAME: "{{ default_os_user }}"
+    OS_PASSWORD: "{{ vaulted_os_user_password }}"
+    OS_PROJECT_NAME: "{{ default_os_project }}"
+  when: os_routers.stdout.find("router") == -1
+
+- name: Ensure the Router is Connected to the Private Network
+  shell: neutron router-interface-add router private
+  environment:
+    OS_USERNAME: "{{ default_os_user }}"
+    OS_PASSWORD: "{{ vaulted_os_user_password }}"
+    OS_PROJECT_NAME: "{{ default_os_project }}"
+  when: os_routers.stdout.find("router") == -1
+
+- name: Ensure the Router is Connected to the Public Network
+  shell: neutron router-gateway-set router provider
+  environment:
+    OS_USERNAME: "{{ default_os_user }}"
+    OS_PASSWORD: "{{ vaulted_os_user_password }}"
+    OS_PROJECT_NAME: "{{ default_os_project }}"
+  when: os_routers.stdout.find("router") == -1

@@ -6,6 +6,7 @@
   tags: keystone
 
 - include: setup_projects.yml
+  tags: projects
 
 - include: setup_glance.yml
   tags: glance
@@ -18,3 +19,6 @@
 
 - include: setup_horizon.yml
   tags: horizon
+
+- include: setup_networks.yml
+  tags: networks

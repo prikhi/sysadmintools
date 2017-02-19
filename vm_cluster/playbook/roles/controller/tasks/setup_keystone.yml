@@ -15,31 +15,30 @@
   apt: name={{ item }}
   become: yes
   with_items:
-    - apache2
-    - keystone
-    - libapache2-mod-wsgi
-    - memcached
-    - python-memcache
-    - python-shade
+      - keystone
+      - python-keystoneclient
+      - apache2
+      - libapache2-mod-wsgi
 
-- name: Ensure Keystone Does Not Start Automatically
-  service: name=keystone enabled=no state=stopped
-  become: yes
+  # - name: Ensure Keystone Does Not Start Automatically
+  #   service: name=keystone enabled=no state=stopped
+  #   become: yes
 
 - name: Ensure Keystone is Correctly Configured
   ini_file: dest=/etc/keystone/keystone.conf section="{{ item.section }}"
             option="{{ item.option }}" value="{{ item.value }}"
   become: yes
   with_items:
-    - { section: 'DEFAULT', option: 'admin_token', value: "{{ vaulted_admin_token }}" }
+      # - { section: 'DEFAULT', option: 'admin_token', value: "{{ vaulted_admin_token }}" }
     - { section: 'database', option: 'connection',
         value: 'postgresql://{{ keystone_db_user }}:{{ vaulted_db_password }}@localhost/{{ keystone_db_name }}' }
-    - { section: 'memcache', option: 'servers', value: 'localhost:11211' }
-    - { section: 'token', option: 'driver', value: 'memcache' }
-    - { section: 'token', option: 'provider', value: 'uuid' }
-    - { section: 'revoke', option: 'driver', value: 'sql' }
+      # - { section: 'memcache', option: 'servers', value: 'localhost:11211' }
+      # - { section: 'token', option: 'driver', value: 'memcache' }
+    - { section: 'token', option: 'provider', value: 'fernet' }
+      # - { section: 'revoke', option: 'driver', value: 'sql' }
   notify:
     - sync keystone database
+    - initialize key repositories
     - restart apache
 
 - name: Ensure Apache is Correctly Configured
@@ -65,8 +64,10 @@
 
 - meta: flush_handlers
 
-- name: Ensure the OpenStack Identity Service & Endpoints are Correctly Configured
-  keystone_service: name=keystone type=identity description="Identity Service"
-                    token="{{ vaulted_admin_token }}"
-                    url="http://{{ ansible_hostname }}:5000/v3"
-                    admin_url="http://{{ ansible_hostname }}:35357/v3"
+- name: Bootstrap the OpenStack Identity Service & Endpoints
+  shell: keystone-manage bootstrap --bootstrap-password {{ vaulted_admin_token }}
+         --bootstrap-admin-url http://{{ ansible_hostname }}:35357/v3
+         --bootstrap-internal-url http://{{ ansible_hostname }}:35357/v3
+         --bootstrap-public-url http://{{ ansible_hostname }}:5000/v3
+         --bootstrap-region-id RegionOne
+  become: yes

@@ -22,18 +22,30 @@
   when: os_users.stdout.find(glance_os_user) == -1
 
 - name: Ensure the OpenStack Glance User's Role is Properly Configured
-  keystone_user: role=admin user="{{ glance_os_user }}"
-                 tenant="{{ service_os_project }}"
-                 token="{{ vaulted_admin_token }}"
+  shell: openstack role add --project {{ service_os_project }}
+         --user {{ glance_os_user }} admin
 
-- name: Ensure the OpenStack Glance Service & Endpoints are Correctly Configured
-  keystone_service: name=glance type=image description="Image Service"
-                    url="http://{{ ansible_hostname }}:9292"
-                    token="{{ vaulted_admin_token }}"
+- name: Retrieve a List of OpenStack Services
+  shell: openstack endpoint list -c "Service Type" -f value
+  register: os_services
+
+- name: Ensure the OpenStack Glance Service Exists
+  shell: openstack service create --name glance
+         --description "Image Service" image
+  when: os_services.stdout.find("image") == -1
+
+- name: Ensure the Image Service API Endpoints Exist
+  shell: openstack endpoint create --region RegionOne image {{ item }}
+         http://{{ ansible_hostname }}:9292
+  with_items:
+      - public
+      - internal
+      - admin
+  when: os_services.stdout.find("image") == -1
 
 - name: Ensure Glance is Installed
   apt: name={{ item }}
-  with_items: [ 'glance', 'python-glanceclient' ]
+  with_items: [ 'glance' ]
   become: yes
 
 - name: Ensure Glance is Correctly Configured

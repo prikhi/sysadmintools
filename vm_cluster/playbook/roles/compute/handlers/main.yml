@@ -5,5 +5,5 @@
   become: yes
 
 - name: restart linux bridge agent
-  service: name=neutron-plugin-linuxbridge-agent state=restarted
+  service: name=neutron-linuxbridge-agent state=restarted
   become: yes

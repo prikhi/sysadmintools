@@ -1,8 +1,8 @@
 [master-controller]
-stack-controller-1  ansible_user=ubuntu ansible_host=192.168.1.5
+stack-controller-1  ansible_host=192.168.1.19 ansible_port=22
 
 [controllers:children]
 master-controller
 
 [compute]
-stack-compute-1 ansible_user=ubuntu ansible_host=192.168.1.6
+stack-compute-1 ansible_host=192.168.1.121 ansible_port=22

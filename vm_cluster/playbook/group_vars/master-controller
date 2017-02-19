@@ -3,7 +3,11 @@
 ntp: "0.us.pool.ntp.org"
 
 stack_env: {
-  OS_TOKEN: "{{ vaulted_admin_token }}",
-  OS_URL: "http://{{ ansible_hostname }}:35357/v3",
-  OS_IDENTITY_API_VERSION: "3",
+  OS_USERNAME: "{{ admin_os_user }}",
+  OS_PASSWORD: "{{ vaulted_admin_token }}",
+  OS_PROJECT_NAME: "{{ admin_os_project }}",
+  OS_USER_DOMAIN_NAME: "Default",
+  OS_PROJECT_DOMAIN_NAME: "Default",
+  OS_AUTH_URL: "http://{{ ansible_hostname }}:35357/v3",
+  OS_IDENTITY_API_VERSION: 3
 }

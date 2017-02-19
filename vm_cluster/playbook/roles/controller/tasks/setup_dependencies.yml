@@ -17,7 +17,7 @@
 
 - name: Ensure MongoDB is Correctly Configured
   lineinfile: dest=/etc/mongodb.conf regexp='bind_ip = .*'
-              line='bind_ip = {{ ansible_default_ipv4.address }}'
+              line='bind_ip = {{ management_ip }}'
   become: yes
   notify: restart mongodb
 
@@ -25,7 +25,24 @@
   apt: name=rabbitmq-server
   become: yes
 
+  # - name: Ensure IPTables is Persistent
+  #   apt: name=iptables-persistent
+  #   become: yes
+
 - name: Add the RabbitMQ User
   rabbitmq_user: user={{ mq_user }} password={{ vaulted_mq_password }} vhost=/
                  configure_priv=.* read_priv=.* write_priv=.*
   become: yes
+
+- name: Ensure Memcached is Installed
+  apt: name={{ item }}
+  become: yes
+  with_items:
+      - memcached
+      - python-memcache
+
+- name: Ensure Memcached is Correctly Configured
+  lineinfile: dest=/etc/memcached.conf regexp='^-l .*$' state=present
+              line='-l {{ management_ip }}'
+  become: yes
+  notify: restart memcached

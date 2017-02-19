@@ -19,17 +19,39 @@
          --description "Default Project" "{{ default_os_project|quote }}"
   when: os_projects.stdout.find(default_os_project) == -1
 
+- name: Retrieve a List of Existing Roles
+  shell: openstack role list -f value -c Name
+  register: os_roles
+
+- name: Ensure the OpenStack User Role Exists
+  shell: openstack role create user
+  when: os_roles.stdout.find("user") == -1
+
 - name: Retrieve a List of Existing Users
   shell: openstack user list -f value -c Name
   register: os_users
 
-- name: Ensure the OpenStack Admin User Exists
-  shell: openstack user create --domain default --project "{{ default_os_project|quote }}"
+- name: Ensure the OpenStack Default User Exists
+  shell: openstack user create --domain default
          --password "{{ vaulted_os_user_password|quote }}" --email "{{ vaulted_os_user_email|quote }}"
-         "{{ admin_os_user }}"
-  when: os_users.stdout.find(admin_os_user) == -1
+         "{{ default_os_user }}"
+  when: os_users.stdout.find(default_os_user) == -1
 
-- name: Ensure the OpenStack Admin Role is Properly Configured
-  keystone_user:  role=admin user="{{ admin_os_user }}"
-                  tenant="{{ admin_os_project }}" token="{{ vaulted_admin_token }}"
+- name: Ensure the Default User is Properly Configured
+  shell: openstack role add --project {{ default_os_project }}
+         --user {{ default_os_user }} user
+  when: os_users.stdout.find(default_os_user) == -1
 
+
+- name: Ensure the OpenStack Client Environment Scripts Exist
+  template: dest="/home/{{ ansible_user_id }}/{{ item.project }}-openrc.sh"
+            src=openrc.j2
+  with_items:
+    - { project: "{{ admin_os_project }}",
+        user: "{{ admin_os_user }}",
+        password: "{{ vaulted_admin_token }}",
+        auth_port: 35357 }
+    - { project: "{{ default_os_project }}",
+        user: "{{ default_os_user }}",
+        password: "{{ vaulted_os_user_password }}",
+        auth_port: 5000 }

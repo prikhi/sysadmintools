@@ -1,0 +1,8 @@
+export OS_PROJECT_DOMAIN_ID=default
+export OS_USER_DOMAIN_ID=default
+export OS_PROJECT_NAME="{{ item.project }}"
+export OS_USERNAME="{{ item.user }}"
+export OS_PASSWORD="{{ item.password }}"
+export OS_AUTH_URL="http://{{ master_controller_hostname }}:{{ item.auth_port }}/v3"
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2

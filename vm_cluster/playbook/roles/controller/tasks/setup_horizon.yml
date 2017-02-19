@@ -10,10 +10,20 @@
   with_items:
     - { exp: 'OPENSTACK_HOST = .*', line: 'OPENSTACK_HOST = "{{ ansible_hostname }}"' }
     - { exp: 'ALLOWED_HOSTS = .*', line: 'ALLOWED_HOSTS = ["*",]' }
-    - { exp: 'OPENSTACK_KEYSTONE_DEFAULT_ROLE = .*',
-        line: 'OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"' }
+    - { exp: 'SESSION_ENGINE = .*',
+        line: 'SESSION_ENGINE = "django.contrib.sessions.backends.cache"' }
+    - { exp: ".*'LOCATION': '.*:11211',",
+        line: "'LOCATION': '{{ ansible_hostname }}:11211'," }
+    - { exp: 'OPENSTACK_KEYSTONE_URL = .*',
+        line: 'OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST' }
     - { exp: 'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT =.*',
-        line: 'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True'}
+        line: 'OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True' }
+    - { exp: 'OPENSTACK_KEYSTONE_DEFAULT_DOMAIN =.*',
+        line: 'OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"' }
+    - { exp: 'OPENSTACK_KEYSTONE_DEFAULT_ROLE =.*',
+        line: 'OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"' }
+    - { exp: 'OPENSTACK_API_VERSIONS =.*',
+        line: 'OPENSTACK_API_VERSIONS = {"identity":3,"image":2,"volume":2}' }
     - { exp: 'TIME_ZONE =.*', line: 'TIME_ZONE = "America/New_York"' }
   become: yes
   notify: restart apache

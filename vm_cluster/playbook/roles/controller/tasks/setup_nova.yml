@@ -1,15 +1,25 @@
 ---
 
 - name: Ensure the Nova Database Exists
-  postgresql_db: name={{ nova_db_name }}
+  postgresql_db: name={{ item }}
+  become: yes
+  become_user: postgres
+  with_items:
+    - "{{ nova_db_name }}"
+    - "{{ nova_db_name }}_api"
+
+- name: Ensure the Nova Database User Exists
+  postgresql_user: name={{ nova_db_user }} password={{ vaulted_db_password }}
   become: yes
   become_user: postgres
 
-- name: Ensure the Nova Database User Exists
-  postgresql_user: name={{ nova_db_user }} db={{ nova_db_name }}
-                   password={{ vaulted_db_password }}
+- name: Ensure the Nova Database User Has the Proper Permissions
+  postgresql_user: name={{ neutron_db_user }} db={{ item }}
   become: yes
   become_user: postgres
+  with_items:
+    - "{{ nova_db_name }}"
+    - "{{ nova_db_name }}_api"
 
 - name: Retrieve a List of Existing Users
   shell: openstack user list -f value -c Name
@@ -22,25 +32,35 @@
   when: os_users.stdout.find(nova_os_user) == -1
 
 - name: Ensure the OpenStack Nova User's Role is Properly Configured
-  keystone_user: role=admin user="{{ nova_os_user }}"
-                 tenant="{{ service_os_project }}"
-                 token="{{ vaulted_admin_token }}"
+  shell: openstack role add --project {{ service_os_project }}
+         --user {{ nova_os_user }} admin
 
-- name: Ensure the OpenStack Nova Service & Endpoints are Correctly Configured
-  keystone_service: name=nova type=compute description="Compute Service"
-                    url="http://{{ ansible_hostname }}:8774/v2/%(tenant_id)s"
-                    token="{{ vaulted_admin_token }}"
+- name: Retrieve a List of OpenStack Services
+  shell: openstack endpoint list -c "Service Type" -f value
+  register: os_services
+
+- name: Ensure the OpenStack Nova Service Exists
+  shell: openstack service create --name nova
+         --description "Compute Service" compute
+  when: os_services.stdout.find("compute") == -1
+
+- name: Ensure the Compute Service API Endpoints Exist
+  shell: openstack endpoint create --region RegionOne compute {{ item }}
+         http://{{ ansible_hostname }}:8774/v2.1/%\(tenant_id\)s
+  with_items:
+      - public
+      - internal
+      - admin
+  when: os_services.stdout.find("compute") == -1
 
 - name: Ensure Nova is Installed
   apt: name={{ item }}
   with_items:
     - nova-api
-    - nova-cert
     - nova-conductor
     - nova-consoleauth
     - nova-novncproxy
     - nova-scheduler
-    - python-novaclient
   become: yes
 
 - name: Ensure Nova is Correctly Configured

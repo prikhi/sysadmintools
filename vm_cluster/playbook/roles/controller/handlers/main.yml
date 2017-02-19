@@ -4,10 +4,21 @@
   service: name=mongodb state=restarted
   become: yes
 
+- name: restart memcached
+  service: name=memcached state=restarted
+  become: yes
+
 - name: sync keystone database
   shell: keystone-manage db_sync
   become: yes
   become_user: keystone
+
+- name: initialize key repositories
+  shell: keystone-manage {{ item }} --keystone-user keystone --keystone-group keystone
+  become: yes
+  with_items:
+      - fernet_setup
+      - credential_setup
 
 - name: restart apache
   service: name=apache2 state=restarted
@@ -29,7 +40,6 @@
   service: name={{ item }} state=restarted
   with_items:
     - nova-api
-    - nova-cert
     - nova-consoleauth
     - nova-scheduler
     - nova-conductor
@@ -37,9 +47,12 @@
   become: yes
 
 - name: sync nova database
-  shell: nova-manage db sync
+  shell: nova-manage {{ item }} sync
   become: yes
   become_user: nova
+  with_items:
+    - api_db
+    - db
 
 - name: sync neutron database
   shell: neutron-db-manage --config-file /etc/neutron/neutron.conf
@@ -51,7 +64,7 @@
   service: name={{ item }} state=restarted
   with_items:
     - neutron-server
-    - neutron-plugin-linuxbridge-agent
+    - neutron-linuxbridge-agent
     - neutron-dhcp-agent
     - neutron-metadata-agent
     - neutron-l3-agent

@@ -7,64 +7,82 @@ neutron_os_user: "neutron"
 
 admin_os_project: 'admin'
 admin_os_user: 'admin'
+default_os_user: 'acorn'
 default_os_project: 'acorn'
 service_os_project: 'service'
 
 master_controller_hostname: "stack-controller-1"
 
-common_rabbit_config:
-  - { section: 'DEFAULT', option: 'rpc_backend', value: 'rabbit' }
-  - { section: 'oslo_messaging_rabbit', option: 'rabbit_host',
-      value: '{{ master_controller_hostname }}' }
-  - { section: 'oslo_messaging_rabbit', option: 'rabbit_userid',
-      value: '{{ mq_user }}' }
-  - { section: 'oslo_messaging_rabbit', option: 'rabbit_password',
-      value: '{{ vaulted_mq_password }}' }
+public_network_options:
+    cidr: "192.168.1.0/24"
+    gateway: "192.168.1.254"
+    dns: "192.168.1.254"
+    start_ip: "192.168.1.211"
+    end_ip: "192.168.1.219"
 
+private_network_options:
+    cidr: "10.0.5.0/24"
+    gateway: "10.0.5.1"
+    dns: "{{ public_network_options.dns }}"
+
+common_rabbit_config:
+  - { section: 'DEFAULT', option: 'transport_url',
+      value: 'rabbit://{{ mq_user }}:{{ vaulted_mq_password }}@{{ master_controller_hostname }}' }
 
 common_auth_config:
   - { section: 'keystone_authtoken', option: 'auth_uri',
       value: 'http://{{ master_controller_hostname }}:5000' }
   - { section: 'keystone_authtoken', option: 'auth_url',
       value: 'http://{{ master_controller_hostname }}:35357' }
-  - { section: 'keystone_authtoken', option: 'auth_plugin', value: 'password' }
+  - { section: 'keystone_authtoken', option: 'memcached_servers',
+      value: '{{ ansible_hostname }}:11211' }
+  - { section: 'keystone_authtoken', option: 'auth_type', value: 'password' }
   - { section: 'keystone_authtoken', option: 'project_domain_id', value: 'default' }
   - { section: 'keystone_authtoken', option: 'user_domain_id', value: 'default' }
   - { section: 'keystone_authtoken', option: 'project_name',
       value: '{{ service_os_project }}' }
 
+management_interface_key: "ansible_{{ management_interface }}"
+management_ip: "{{ hostvars[ansible_hostname][management_interface_key].ipv4.address }}"
+
+
+# Nova
 common_nova_config:
   - { section: 'DEFAULT', option: 'auth_strategy', value: 'keystone' }
   - { section: 'keystone_authtoken', option: 'username',
       value: '{{ nova_os_user }}' }
   - { section: 'keystone_authtoken', option: 'password',
       value: '{{ vaulted_nova_os_password }}' }
-  - { section: 'DEFAULT', option: 'my_ip',
-      value: '{{ ansible_default_ipv4.address }}' }
-  - { section: 'DEFAULT', option: 'network_api_class',
-      value: 'nova.network.neutronv2.api.API' }
-  - { section: 'DEFAULT', option: 'security_group_api', value: 'neutron' }
-  - { section: 'DEFAULT', option: 'linuxnet_interface_driver',
-      value: 'nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver' }
+  - { section: 'DEFAULT', option: 'my_ip', value: '{{ management_ip}}' }
+  - { section: 'DEFAULT', option: 'use_neutron', value: 'True' }
   - { section: 'DEFAULT', option: 'firewall_driver',
       value: 'nova.virt.firewall.NoopFirewallDriver' }
   - { section: 'oslo_concurrency', option: 'lock_path',
       value: '/var/lib/nova/tmp' }
 
+# Neutron
 common_neutron_config:
   - { section: 'keystone_authtoken', option: 'username',
       value: '{{ neutron_os_user }}' }
   - { section: 'keystone_authtoken', option: 'password',
       value: '{{ vaulted_neutron_os_password }}' }
 
+ml2_config:
+  - { section: 'DEFAULT', option: 'verbose', value: 'True' }
+  - { section: 'ml2', option: 'type_drivers', value: 'flat,vlan,vxlan' }
+  - { section: 'ml2', option: 'tenant_network_types', value: 'vxlan' }
+  - { section: 'ml2', option: 'mechanism_drivers', value: 'linuxbridge,l2population' }
+  - { section: 'ml2', option: 'extension_drivers', value: 'port_security' }
+  - { section: 'ml2_type_flat', option: 'flat_networks', value: 'provider' }
+  - { section: 'ml2_type_vxlan', option: 'vni_ranges', value: '1:1000' }
+  - { section: 'securitygroup', option: 'enable_ipset', value: 'True' }
+
 linux_bridge_agent_config:
   - { section: 'linux_bridge', option: 'physical_interface_mappings',
-      value: 'public:{{ ansible_default_ipv4.interface }}' }
+      value: 'provider:{{ public_interface }}' }
   - { section: 'vxlan', option: 'enable_vxlan', value: 'True' }
-  - { section: 'vxlan', option: 'local_ip',
-      value: '{{ ansible_default_ipv4.address }}' }
+  - { section: 'vxlan', option: 'local_ip', value: '{{ management_ip }}' }
   - { section: 'vxlan', option: 'l2_population', value: 'True' }
-  - { section: 'agent', option: 'prevent_arp_spoofing', value: 'True' }
   - { section: 'securitygroup', option: 'enable_security_group', value: 'True' }
   - { section: 'securitygroup', option: 'firewall_driver',
       value: 'neutron.agent.linux.iptables_firewall.IptablesFirewallDriver' }
@@ -72,10 +90,12 @@ linux_bridge_agent_config:
 common_nova_neutron_config:
   - { option: 'url', value: 'http://{{ master_controller_hostname }}:9696' }
   - { option: 'auth_url', value: 'http://{{ master_controller_hostname }}:35357' }
-  - { option: 'auth_plugin', value: 'password' }
-  - { option: 'auth_region', value: 'RegionOne' }
+  - { option: 'auth_type', value: 'password' }
   - { option: 'project_domain_id', value: 'default' }
   - { option: 'user_domain_id', value: 'default' }
+  - { option: 'region_name', value: 'RegionOne' }
   - { option: 'project_name', value: '{{ service_os_project }}' }
   - { option: 'username', value: '{{ neutron_os_user }}' }
   - { option: 'password', value: '{{ vaulted_neutron_os_password }}' }
+  - { option: 'service_metadata_proxy', value: 'True' }
+  - { option: 'metadata_proxy_shared_secret', value: '{{ vaulted_metadata_secret }}' }
