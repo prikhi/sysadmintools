@@ -1,0 +1,78 @@
+---
+
+- name: Ensure the Cinder Database Exists
+  postgresql_db: name={{ cinder_db_name }}
+  become: yes
+  become_user: postgres
+
+- name: Ensure the Cinder Database User Exists
+  postgresql_user: name={{ cinder_db_user }} db={{ cinder_db_name }}
+                   password={{ vaulted_db_password }}
+  become: yes
+  become_user: postgres
+
+- name: Retrieve a List of Existing Users
+  shell: openstack user list -f value -c Name
+  register: os_users
+
+- name: Ensure the OpenStack Cinder User Exists
+  shell: openstack user create --domain default
+         --password "{{ vaulted_cinder_os_password|quote }}"
+         "{{ cinder_os_user }}"
+  when: os_users.stdout.find(cinder_os_user) == -1
+
+- name: Ensure the OpenStack Cinder User's Role is Properly Configured
+  shell: openstack role add --project {{ service_os_project }}
+         --user {{ cinder_os_user }} admin
+
+- name: Retrieve a List of OpenStack Services
+  shell: openstack service list -c "Type" -f value
+  register: os_services
+
+- name: Ensure the OpenStack Cinder Services Exist
+  shell: openstack service create --name {{ item.name }}
+         --description "Block Storage Service" {{ item.type }}
+  with_items:
+    - { name: cinder, type: volume }
+    - { name: cinderv2, type: volumev2 }
+  when: os_services.stdout.find("volume") == -1
+
+- name: Ensure the Volume Service API Endpoints Exist
+  shell: openstack endpoint create --region RegionOne volume {{ item }}
+         http://{{ ansible_hostname }}:8776/v1/%\(tenant_id\)s
+  with_items:
+      - public
+      - internal
+      - admin
+  when: os_services.stdout.find("volume") == -1
+
+- name: Ensure the Volume2 Service API Endpoints Exist
+  shell: openstack endpoint create --region RegionOne volumev2 {{ item }}
+         http://{{ ansible_hostname }}:8776/v2/%\(tenant_id\)s
+  with_items:
+      - public
+      - internal
+      - admin
+  when: os_services.stdout.find("volume") == -1
+
+- name: Ensure Cinder is Installed
+  apt: name="{{ item }}"
+  with_items:
+    - cinder-api
+    - cinder-scheduler
+  become: yes
+
+- name: Ensure Cinder is Correctly Configured
+  ini_file: dest=/etc/cinder/cinder.conf section="{{ item.section }}"
+            option="{{ item.option }}" value="{{ item.value }}"
+  become: yes
+  with_items: "{{ common_auth_config + common_rabbit_config + common_cinder_config + cinder_config }}"
+  notify:
+    - sync cinder database
+    - restart cinder service
+
+- name: Ensure Nova is Correctly Configured
+  ini_file: dest=/etc/nova/nova.conf section="cinder"
+            option="os_region_name" value="RegionOne"
+  become: yes
+  notify: restart nova api

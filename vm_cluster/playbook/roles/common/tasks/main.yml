@@ -1,20 +1,12 @@
 ---
 
-- debug: var={{ key }}
-  with_items: groups['all']
-  tags: debug
-  vars:
-    - key: "ansible_{{ management_interface }}"
-
 - name: Create the Hosts File
-  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' state=present
-              line="{{ hostvars[item][key].ipv4.address }} {{ item }}"
-  when: hostvars[item][key].ipv4 is defined and
-        hostvars[item][key].ipv4.address is defined
-  with_items: groups['all']
+  lineinfile: dest=/etc/hosts  regexp="{{ hostvars[item][key]['ipv4']['address'] }}.*"
+              line="{{ hostvars[item][key]['ipv4']['address'] }} {{ hostvars[item]['ansible_hostname'] }}"
+  with_items: "{{ groups['all'] }}"
   become: yes
   vars:
-    - key: "ansible_{{ management_interface }}"
+    key: "ansible_{{ management_interface }}"
 
 - name: Ensure Chrony is Installed for NTP
   apt: name=chrony
@@ -25,7 +17,6 @@
            regexp='^server .\.debian\.pool\.ntp\.org.*$' replace=""
   become: yes
 
-# TODO - Make Controllers access WAN, make everything else access controllers
 - name: Ensure the Correct NTP Server is Set
   lineinfile: dest=/etc/chrony/chrony.conf regexp='^server .*$' state=present
               line="server {{ ntp }} iburst"

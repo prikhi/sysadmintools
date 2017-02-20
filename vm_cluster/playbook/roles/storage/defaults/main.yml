@@ -1,0 +1,12 @@
+---
+
+cinder_config:
+  - { section: 'DEFAULT', option: 'enabled_backends', value: 'lvm' }
+  - { section: 'DEFAULT', option: 'glance_api_servers', value: '{{ master_controller_hostname }}' }
+  - { section: 'database', option: 'connection',
+      value: 'postgresql://{{ cinder_db_user }}:{{ vaulted_db_password }}@{{ master_controller_hostname }}/{{ cinder_db_name }}' }
+  - { section: 'lvm', option: 'volume_driver',
+      value: 'cinder.volume.drivers.lvm.LVMVolumeDriver' }
+  - { section: 'lvm', option: 'volume_group', value: 'cinder-volumes' }
+  - { section: 'lvm', option: 'iscsi_protocol', value: 'iscsi' }
+  - { section: 'lvm', option: 'iscsi_helper', value: 'tgtadm' }

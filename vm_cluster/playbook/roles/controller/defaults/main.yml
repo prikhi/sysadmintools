@@ -54,3 +54,7 @@ neutron_config:
       value: '{{ nova_os_user }}' }
   - { section: 'nova', option: 'password',
       value: '{{ vaulted_nova_os_password }}' }
+
+cinder_config:
+  - { section: 'database', option: 'connection',
+      value: 'postgresql://{{ cinder_db_user }}:{{ vaulted_db_password }}@localhost/{{ cinder_db_name }}' }

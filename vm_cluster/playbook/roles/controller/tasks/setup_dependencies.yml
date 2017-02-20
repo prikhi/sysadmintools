@@ -7,6 +7,19 @@
     - postgresql
     - python-psycopg2
 
+- name: Ensure PostgreSQL Is Served on the Management Interface
+  lineinfile: dest=/etc/postgresql/9.5/main/postgresql.conf
+              regexp='.*listen_addresses =.*' line="listen_addresses = 'localhost,{{ management_ip }}'"
+  become: yes
+  notify: restart postgresql
+
+- name: Ensure PostgreSQL Allows Connections from the Mangement Interface
+  lineinfile: dest=/etc/postgresql/9.5/main/pg_hba.conf
+              regexp='.*{{ management_network_cidr }}.*'
+              line='host all all {{ management_network_cidr }} md5'
+  become: yes
+  notify: restart postgresql
+
 - name: Ensure MongoDB is Installed
   apt: name={{ item }}
   become: yes
@@ -24,10 +37,6 @@
 - name: Ensure RabbitMQ is Installed
   apt: name=rabbitmq-server
   become: yes
-
-  # - name: Ensure IPTables is Persistent
-  #   apt: name=iptables-persistent
-  #   become: yes
 
 - name: Add the RabbitMQ User
   rabbitmq_user: user={{ mq_user }} password={{ vaulted_mq_password }} vhost=/

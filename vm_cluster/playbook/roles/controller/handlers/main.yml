@@ -1,5 +1,9 @@
 ---
 
+- name: restart postgresql
+  service: name=postgresql state=restarted
+  become: yes
+
 - name: restart mongodb
   service: name=mongodb state=restarted
   become: yes
@@ -72,4 +76,16 @@
 
 - name: restart nova api
   service: name=nova-api state=restarted
+  become: yes
+
+- name: sync cinder database
+  shell: cinder-manage db sync
+  become: yes
+  become_user: cinder
+
+- name: restart cinder service
+  service: name={{ item }} state=restarted
+  with_items:
+    - cinder-scheduler
+    - cinder-api
   become: yes

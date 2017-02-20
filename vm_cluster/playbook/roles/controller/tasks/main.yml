@@ -17,6 +17,9 @@
 - include: setup_neutron.yml
   tags: neutron
 
+- include: setup_cinder.yml
+  tags: cinder
+
 - include: setup_horizon.yml
   tags: horizon
 

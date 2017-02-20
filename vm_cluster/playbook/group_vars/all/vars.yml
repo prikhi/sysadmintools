@@ -4,12 +4,16 @@ mq_user: "openstack"
 
 nova_os_user: "nova"
 neutron_os_user: "neutron"
+cinder_os_user: "cinder"
 
 admin_os_project: 'admin'
 admin_os_user: 'admin'
 default_os_user: 'acorn'
 default_os_project: 'acorn'
 service_os_project: 'service'
+
+cinder_db_name: "cinder"
+cinder_db_user: "cinder"
 
 master_controller_hostname: "stack-controller-1"
 
@@ -24,6 +28,8 @@ private_network_options:
     cidr: "10.0.5.0/24"
     gateway: "10.0.5.1"
     dns: "{{ public_network_options.dns }}"
+
+management_network_cidr: "10.5.1.0/24"
 
 common_rabbit_config:
   - { section: 'DEFAULT', option: 'transport_url',
@@ -53,7 +59,7 @@ common_nova_config:
       value: '{{ nova_os_user }}' }
   - { section: 'keystone_authtoken', option: 'password',
       value: '{{ vaulted_nova_os_password }}' }
-  - { section: 'DEFAULT', option: 'my_ip', value: '{{ management_ip}}' }
+  - { section: 'DEFAULT', option: 'my_ip', value: '{{ management_ip }}' }
   - { section: 'DEFAULT', option: 'use_neutron', value: 'True' }
   - { section: 'DEFAULT', option: 'firewall_driver',
       value: 'nova.virt.firewall.NoopFirewallDriver' }
@@ -99,3 +105,10 @@ common_nova_neutron_config:
   - { option: 'password', value: '{{ vaulted_neutron_os_password }}' }
   - { option: 'service_metadata_proxy', value: 'True' }
   - { option: 'metadata_proxy_shared_secret', value: '{{ vaulted_metadata_secret }}' }
+
+# Cinder
+common_cinder_config:
+  - { section: 'oslo_concurrency', option: 'lock_path', value: '/var/lib/cinder/tmp' }
+  - { section: 'DEFAULT', option: 'my_ip', value: '{{ management_ip }}' }
+  - { section: 'keystone_authtoken', option: 'username', value: '{{ cinder_os_user }}'}
+  - { section: 'keystone_authtoken', option: 'password', value: '{{ vaulted_cinder_os_password }}'}

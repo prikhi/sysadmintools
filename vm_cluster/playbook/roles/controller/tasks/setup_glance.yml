@@ -44,8 +44,7 @@
   when: os_services.stdout.find("image") == -1
 
 - name: Ensure Glance is Installed
-  apt: name={{ item }}
-  with_items: [ 'glance' ]
+  apt: name=glance
   become: yes
 
 - name: Ensure Glance is Correctly Configured
