@@ -13,11 +13,12 @@
 - name: Retrieve a List of OpenStack Subnets
   shell: openstack subnet list -c Name -f value
   register: os_subnets
+  changed_when: false
 
 - name: Ensure the Provider Subnet Exists
   shell: openstack subnet create --network provider --allocation-pool
          start={{ public_network_options.start_ip }},end={{ public_network_options.end_ip }}
-         --dns-nameserver {{ public_network_options.dns }}
+         --dns-nameserver {{ public_network_options.dns }} --no-dhcp
          --gateway {{ public_network_options.gateway }}
          --subnet-range {{ public_network_options.cidr }}
          provider
