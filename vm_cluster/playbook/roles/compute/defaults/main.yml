@@ -11,3 +11,20 @@ nova_config:
 
 neutron_config:
   - { section: 'database', option: 'connection', value: ''}
+
+ceph_config:
+  - { option: 'images_type', value: 'rbd' }
+  - { option: 'images_rbd_pool', value: 'vms' }
+  - { option: 'images_rbd_ceph_conf', value: '/etc/ceph/ceph.conf' }
+  - { option: 'rbd_user', value: 'cinder' }
+  - { option: 'rbd_secret_uuid', value: '{{ vaulted_rbd_cinder_uuid }}' }
+  - { option: 'disk_cachemodes', value: '"network=writeback"' }
+  - { option: 'lib_migration_flag', value: '"VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_PERSIST_DEST,VIR_MIGRATE_TUNNELLED"' }
+  - { option: 'hw_disk_discard', value: 'unmap' }
+
+ceph_client_config:
+  - { option: 'rbd cache', value: 'true' }
+  - { option: 'rbd cache writethrough until flush', value: 'true' }
+  - { option: 'admin socket', value: '/var/run/ceph-guests/$cluster-$type.$id.$pid.$cctid.asok' }
+  - { option: 'log file', value: '/var/log/qemu/qemu-guest-$pid.log' }
+  - { option: 'rbd concurrent management ops', value: '20' }

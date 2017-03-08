@@ -9,4 +9,6 @@ stack-compute-1 ansible_host=192.168.1.194 ansible_port=22
 stack-compute-2 ansible_host=192.168.1.195 ansible_port=22
 
 [storage]
-stack-storage-1 ansible_host=192.168.1.44 ansible_port=22
+stack-storage-1 ansible_host=192.168.1.197 ansible_port=22
+stack-storage-2 ansible_host=192.168.1.198 ansible_port=22
+stack-storage-3 ansible_host=192.168.1.199 ansible_port=22

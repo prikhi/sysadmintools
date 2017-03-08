@@ -57,6 +57,9 @@
   notify:
     - sync glance database
     - restart glance
+  tags:
+    - glance
+    - ceph
 
 - name: Ensure the Glance Registry is Correctly Configured
   ini_file: dest=/etc/glance/glance-registry.conf section="{{ item.section }}"

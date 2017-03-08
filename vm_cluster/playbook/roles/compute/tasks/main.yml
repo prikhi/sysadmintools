@@ -1,5 +1,13 @@
 ---
 
+- name: Ensure the Ceph Dependencies are Installed
+  apt: name={{ item }}
+  become: yes
+  with_items:
+    - python-rbd
+    - ceph-common
+  tags: ceph
+
 - name: Ensure OpenStack Nova is Installed
   apt: name=nova-compute
   become: yes
@@ -61,3 +69,78 @@
   become: yes
   notify: restart nova compute
   tags: neutron
+
+- name: Ensure Nova is Configure to Use Ceph
+  ini_file: dest=/etc/nova/nova.conf section=libvirt
+            option="{{ item.option }}" value="{{ item.value }}"
+  with_items: "{{ ceph_config }}"
+  become: yes
+  notify: restart nova compute
+  tags: ceph
+
+- name: Ensure the Ceph Client is Correctly Configured
+  ini_file: dest=/etc/ceph/ceph.conf section=client
+            option="{{ item.option }}" value="{{ item.value }}"
+  with_items: "{{ ceph_client_config }}"
+  become: yes
+  tags: ceph
+
+- name: Ensure the Ceph Client Socket & Log Directories Exist
+  file: path="{{ item }}" state=directory owner=libvirt-qemu group=libvirtd
+        mode=0775
+  with_items: [ "/var/log/qemu", "/var/run/ceph-guests" ]
+  become: yes
+  tags: ceph
+
+- name: Determine if the Ceph Secret has been Added to Libvirtd
+  shell: virsh secret-list
+  register: libvirt_secrets
+  changed_when: false
+  become: yes
+  tags:
+    - ceph
+    - nova
+
+- name: Add the Temporary Libvirt Secret File
+  template: src=libvirt_secret.xml.j2 dest=/root/secret.xml
+  when: libvirt_secrets.stdout.find(vaulted_rbd_cinder_uuid) == -1
+  become: yes
+  tags:
+    - ceph
+    - nova
+
+- name: Ensure the Libvirt Ceph Secret Exists
+  shell: virsh secret-define --file /root/secret.xml
+  when: libvirt_secrets.stdout.find(vaulted_rbd_cinder_uuid) == -1
+  become: yes
+  tags:
+    - ceph
+    - nova
+
+- name: Ensure the Temporary Libvirt Secret File is Removed
+  file: path=/root/secret.xml state=absent
+  when: libvirt_secrets.stdout.find(vaulted_rbd_cinder_uuid) == -1
+  become: yes
+  tags:
+    - ceph
+    - nova
+
+- name: Determine the Value of the Ceph Libvirtd Secret
+  shell: virsh secret-get-value "{{ vaulted_rbd_cinder_uuid }}"
+  register: libvirt_secret_value
+  when: libvirt_secrets.stdout.find(vaulted_rbd_cinder_uuid) != -1
+  changed_when: false
+  become: yes
+  tags:
+    - ceph
+    - nova
+
+- name: Ensure the Libvirt Ceph Secret is Correctly Configured
+  shell: virsh secret-set-value --secret "{{ vaulted_rbd_cinder_uuid }}"
+         --base64 "{{ vaulted_rbd_cinder_key }}"
+  when: (libvirt_secrets.stdout.find(vaulted_rbd_cinder_uuid) == -1) or
+        (libvirt_secret_value.stdout.find(vaulted_rbd_cinder_key) == -1)
+  become: yes
+  tags:
+    - ceph
+    - nova

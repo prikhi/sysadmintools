@@ -11,9 +11,13 @@ neutron_db_name: "neutron"
 neutron_db_user: "neutron"
 
 glance_api_config:
-  - { section: 'glance_store', option: 'stores', value: 'file,http' }
-  - { section: 'glance_store', option: 'default_store', value: 'file' }
-  - { section: 'glance_store', option: 'filesystem_store_datadir', value: '/var/lib/glance/images/' }
+  - { section: 'DEFAULT', option: 'show_image_direct_url', value: 'True' }
+  - { section: 'glance_store', option: 'stores', value: 'rbd' }
+  - { section: 'glance_store', option: 'default_store', value: 'rbd' }
+  - { section: 'glance_store', option: 'rbd_store_pool', value: 'images' }
+  - { section: 'glance_store', option: 'rbd_store_user', value: 'glance' }
+  - { section: 'glance_store', option: 'rbd_store_ceph_conf', value: '/etc/ceph/ceph.conf' }
+  - { section: 'glance_store', option: 'rbd_store_chunk_size', value: '8' }
 
 glance_common_config:
   - { section: 'database', option: 'connection',
@@ -30,6 +34,8 @@ nova_config:
   - { section: 'vnc', option: 'vncserver_listen', value: '$my_ip' }
   - { section: 'vnc', option: 'vncserver_proxyclient_address', value: '$my_ip' }
   - { section: 'glance', option: 'api_servers', value: '{{ ansible_hostname }}:9292' }
+  - { section: 'libvirt', option: 'rbd_user', value: 'cinder' }
+  - { section: 'libvirt', option: 'rbd_secret_uuid', value: '{{ vaulted_rbd_cinder_uuid }}' }
 
 neutron_config:
   - { section: 'DEFAULT', option: 'verbose', value: 'True' }
@@ -56,6 +62,19 @@ neutron_config:
       value: '{{ vaulted_nova_os_password }}' }
 
 cinder_config:
+  - { section: 'DEFAULT', option: 'enabled_backends', value: 'ceph' }
   - { section: 'DEFAULT', option: 'glance_api_servers', value: '{{ master_controller_hostname }}:9292' }
   - { section: 'database', option: 'connection',
       value: 'postgresql://{{ cinder_db_user }}:{{ vaulted_db_password }}@{{ master_controller_hostname }}/{{ cinder_db_name }}' }
+  - { section: 'ceph', option: 'volume_driver',
+      value: 'cinder.volume.drivers.rbd.RBDDriver' }
+  - { section: 'ceph', option: 'volume_backend_name', value: 'ceph' }
+  - { section: 'ceph', option: 'rbd_pool', value: 'volumes' }
+  - { section: 'ceph', option: 'rbd_ceph_conf', value: '/etc/ceph/ceph.conf' }
+  - { section: 'ceph', option: 'rbd_flatten_volume_from_snapshot', value: 'false' }
+  - { section: 'ceph', option: 'rbd_max_clone_depth', value: '5' }
+  - { section: 'ceph', option: 'rbd_store_chunk_size', value: '4' }
+  - { section: 'ceph', option: 'rados_connect_timeout', value: '-1' }
+  - { section: 'ceph', option: 'glance_api_version', value: '2' }
+  - { section: 'ceph', option: 'rbd_user', value: 'cinder' }
+  - { section: 'ceph', option: 'rbd_secret_uuid', value: '{{ vaulted_rbd_cinder_uuid }}' }

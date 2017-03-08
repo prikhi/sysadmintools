@@ -17,9 +17,9 @@
 - hosts:
     - compute
   roles:
-    - { name: compute, tags: [ compute, nova ] }
+    - { name: compute, tags: compute }
 
 - hosts:
     - storage
   roles:
-    - { name: storage, tags: cinder }
+    - { name: storage, tags: storage }

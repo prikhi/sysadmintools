@@ -2,6 +2,9 @@
 
 - include: setup_dependencies.yml
 
+- include: setup_ceph.yml
+  tags: ceph
+
 - include: setup_keystone.yml
   tags: keystone
 

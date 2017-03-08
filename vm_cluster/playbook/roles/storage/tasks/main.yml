@@ -3,6 +3,7 @@
 - name: Ensure Cinder is Installed
   apt: name=cinder-volume
   become: yes
+  tags: cinder
 
 - name: Ensure Cinder is Correctly Configured
   ini_file: dest=/etc/cinder/cinder.conf section="{{ item.section }}"
@@ -12,3 +13,14 @@
   notify:
     - restart tgt service
     - restart cinder service
+  tags:
+    - cinder
+    - ceph
+
+- name: Ensure the Ceph Dependencies are Installed
+  apt: name={{ item }}
+  become: yes
+  with_items:
+    - python-rbd
+    - ceph-common
+  tags: ceph

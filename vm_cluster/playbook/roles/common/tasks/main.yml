@@ -43,6 +43,22 @@
   apt: name=python-openstackclient
   become: yes
 
+- name: Ensure the Ceph Apt Key is Installed
+  apt_key: url=https://download.ceph.com/keys/release.asc
+  become: yes
+  tags: ceph
+
+- name: Ensure HTTPS Repositories are Enabled
+  apt: name=apt-transport-https
+  become: yes
+  tags: ceph
+
+- name: Ensure the Ceph Repository is Enabled
+  apt_repository: repo='deb https://download.ceph.com/debian-kraken/ xenial main'
+                  filename=ceph
+  become: yes
+  tags: ceph
+
 - name: Check if Reboot is Necessary
   stat: path=/var/run/reboot-required
   register: reboot_required
