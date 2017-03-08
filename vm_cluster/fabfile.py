@@ -5,9 +5,14 @@ from fabric.contrib.files import exists
 from fabric.operations import reboot
 
 env.hosts = [
-    'ubuntu@192.168.1.5',
-    'ubuntu@192.168.1.6',
+    'stack@192.168.1.190',
+    'stack@192.168.1.194',
+    'stack@192.168.1.195',
+    'stack@192.168.1.197',
+    'stack@192.168.1.198',
+    'stack@192.168.1.199',
 ]
+
 
 def upgrade():
     sudo('apt-get update -qq && apt-get upgrade -yqq')
