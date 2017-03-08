@@ -3,6 +3,7 @@
 - name: Retrieve a List of Existing Projects
   shell: openstack project list -f value -c Name
   register: os_projects
+  changed_when: false
 
 - name: Ensure the OpenStack Admin Project Exists
   shell: openstack project create --domain default
@@ -22,6 +23,7 @@
 - name: Retrieve a List of Existing Roles
   shell: openstack role list -f value -c Name
   register: os_roles
+  changed_when: false
 
 - name: Ensure the OpenStack User Role Exists
   shell: openstack role create user
@@ -30,6 +32,7 @@
 - name: Retrieve a List of Existing Users
   shell: openstack user list -f value -c Name
   register: os_users
+  changed_when: false
 
 - name: Ensure the OpenStack Default User Exists
   shell: openstack user create --domain default

@@ -46,6 +46,7 @@
 - name: Check if Reboot is Necessary
   stat: path=/var/run/reboot-required
   register: reboot_required
+  changed_when: false
 
 - name: Reboot the System
   shell: reboot

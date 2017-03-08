@@ -16,6 +16,7 @@
 - name: Determine if KVM is Supported
   shell: egrep -c '(vmx|svm)' /proc/cpuinfo || /bin/true
   register: has_kvm_support
+  changed_when: false
   tags: nova
 
 - name: Ensure QEMU is Used for Virtualization
