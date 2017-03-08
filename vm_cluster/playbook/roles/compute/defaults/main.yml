@@ -7,7 +7,7 @@ nova_config:
   - { section: 'vnc', option: 'novncproxy_base_url',
       value: 'http://{{ master_controller_hostname }}:6080/vnc_auto.html' }
   - { section: 'glance', option: 'api_servers',
-      value: 'http://{{ master_controller_hostname }}:9292' }
+      value: '{{ master_controller_hostname }}:9292' }
 
 neutron_config:
   - { section: 'database', option: 'connection', value: ''}

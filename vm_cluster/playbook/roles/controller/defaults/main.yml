@@ -29,7 +29,7 @@ nova_config:
       value: 'postgresql://{{ nova_db_user }}:{{ vaulted_db_password }}@localhost/{{ nova_db_name }}_api' }
   - { section: 'vnc', option: 'vncserver_listen', value: '$my_ip' }
   - { section: 'vnc', option: 'vncserver_proxyclient_address', value: '$my_ip' }
-  - { section: 'glance', option: 'api_servers', value: 'http://{{ ansible_hostname }}:9292' }
+  - { section: 'glance', option: 'api_servers', value: '{{ ansible_hostname }}:9292' }
 
 neutron_config:
   - { section: 'DEFAULT', option: 'verbose', value: 'True' }
@@ -56,5 +56,6 @@ neutron_config:
       value: '{{ vaulted_nova_os_password }}' }
 
 cinder_config:
+  - { section: 'DEFAULT', option: 'glance_api_servers', value: '{{ master_controller_hostname }}:9292' }
   - { section: 'database', option: 'connection',
-      value: 'postgresql://{{ cinder_db_user }}:{{ vaulted_db_password }}@localhost/{{ cinder_db_name }}' }
+      value: 'postgresql://{{ cinder_db_user }}:{{ vaulted_db_password }}@{{ master_controller_hostname }}/{{ cinder_db_name }}' }
