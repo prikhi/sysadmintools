@@ -125,7 +125,7 @@ OpenStack cluster. If you are simply adding additional nodes to an existing
 cluster, you can skip this section.
 
 Ceph Setup
-+++++++++++
+-----------
 
 Start by SSHing into the master controller, generate an SSH key & copy it to the Storage nodes::
 
@@ -180,7 +180,7 @@ progress with ``ceph -w``.
 
 
 OpenStack Integration
-++++++++++++++++++++++
+----------------------
 
 Now we'll make OpenStack use the Ceph cluster for Image & Block storage. Start
 by creating some pools to use::
