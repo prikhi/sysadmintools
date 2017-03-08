@@ -1,11 +1,12 @@
 [master-controller]
-stack-controller-1  ansible_host=192.168.1.19 ansible_port=22
+stack-controller-1  ansible_host=192.168.1.190 ansible_port=22
 
 [controllers:children]
 master-controller
 
 [compute]
-stack-compute-1 ansible_host=192.168.1.121 ansible_port=22
+stack-compute-1 ansible_host=192.168.1.194 ansible_port=22
+stack-compute-2 ansible_host=192.168.1.195 ansible_port=22
 
 [storage]
 stack-storage-1 ansible_host=192.168.1.44 ansible_port=22

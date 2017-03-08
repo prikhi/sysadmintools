@@ -118,15 +118,29 @@ You can run the playbook by installing ansible with pip and using the
     cd playbook
     ansible-playbook acorn.yml
 
-Plays
-++++++
 
-Describe what the playbook does here.
+Adding Nodes
+=============
+
+Adding additional compute and storage nodes is fairly straightforward.
+
+Compute
+--------
+
+Simply follow the setup instructions, making sure to add the hostname to the
+``compute`` group in the ``custer-servers`` hosts file. The ansible playbook
+should handle the rest, and OpenStack should pickup the additional compute node
+afterwards.
+
+You can verify the setup by running ``openstack compute service list``
+on a controller node. The list should include the new compute host.
+
 
 High Availability
 ==================
 
 Haven't experimented with this yet, see the `High Availability Guide`_ for reference.
+
 
 Automated Maintenance
 ======================
