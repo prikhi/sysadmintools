@@ -59,8 +59,10 @@ The management network and provider network must be setup by manually editing
     # The Management Network Interface
     auto enp0s8
     iface enp0s8 inet static
-        address 10.5.1.10
+        address 10.5.1.11
         netmask 255.255.255.0
+
+On controller nodes, add the Provider Network Interface::
 
     # The Provider Network Interface
     auto enp0s9
