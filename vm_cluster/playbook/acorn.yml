@@ -1,11 +1,30 @@
 ---
 
-- hosts:
-    - controllers
-    - compute
-    - storage
+- hosts: all
   roles:
     - { name: common, tags: common }
+  any_errors_fatal: True
+
+- hosts: all
+  serial: 1
+  tags: common
+  tasks:
+    - name: Check if Reboot is Necessary
+      stat: path=/var/run/reboot-required
+      register: reboot_required
+      changed_when: false
+    - name: Reboot the System
+      shell: sleep 2 && reboot
+      async: 1
+      poll: 0
+      when: reboot_required.stat.exists
+      become: yes
+    - name: Wait for System Reboot
+      local_action:
+        module: wait_for
+          host={{ ansible_ssh_host }} port={{ ansible_port }}
+          delay=30 timeout=120
+      when: reboot_required.stat.exists
 
 - hosts:
     - master-controller

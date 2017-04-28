@@ -68,21 +68,3 @@
                   filename=ceph
   become: yes
   tags: ceph
-
-- name: Check if Reboot is Necessary
-  stat: path=/var/run/reboot-required
-  register: reboot_required
-  changed_when: false
-
-- name: Reboot the System
-  shell: reboot
-  when: reboot_required.stat.exists
-  become: yes
-
-- name: Wait for System Reboot
-  local_action:
-    module: wait_for
-      host={{ ansible_ssh_host }} port={{ ansible_port }}
-      delay=1 timeout=300
-    become: no
-  when: reboot_required.stat.exists
