@@ -320,7 +320,63 @@ on a controller node. The list should include the new compute host.
 Storage
 --------
 
-TODO: Test & document adding new storage node
+Follow the installation & manual setup instructions, then add the hostname to
+the ``storage`` group in the ``cluster-servers`` file and run the ansible
+playbook.
+
+This will install Ceph and setup Cinder, but you'll need to manually add the
+new node and any new storage drives to our Ceph cluster.
+
+Start by pushing the SSH key from the master controller to the new node::
+
+    # On stack-controller-1
+    ssh-copy-id stack-storage-3
+
+Then use ``ceph-deploy`` on the master controller to install Ceph on the new
+node::
+
+    cd ~/storage-cluster
+    ceph-deploy install --release kraken stack-storage-3
+
+Setup the node as a new monitor(eventually delegated to HA controllers)::
+
+    ceph-deploy mon create stack-storage-3
+
+Then deploy an OSD to each new storage disk. It's recommended to split the
+journals out on a separate SSD with a partition for each OSD::
+
+    ceph-deploy disk list stack-storage-3
+    ceph-deploy osd create stack-storage-3:/dev/sdc:/dev/sdb1 stack-storage-3:/dev/sdd:/dev/sdb2
+
+Copy the configuration file & admin key to the new node & set the correct
+permissions::
+
+    # On stack-controller-1
+    ceph-deploy admin stack-storage-3
+
+    # On stack-storage-3
+    sudo chmod +r /etc/ceph/ceph.client.admin.keyring
+
+Then copy the Cinder auth key to the new node::
+
+    # On stack-controller-1
+    ceph auth get-or-create client.cinder | ssh stack-storage-3 sudo tee /etc/ceph/ceph.client.cinder.keyring
+    ssh stack-storage-3 sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
+
+You can monitor the rebalancing progress by running ``ceph -w`` on
+stack-controller-1.
+
+Restart the ``cinder-volume`` service so that it picks up the Ceph cluster::
+
+    sudo systemctl restart cinder-volume
+
+List the discovered volume services from stack-controller-1 to ensure OpenStack
+sees the new node::
+
+    . ~/admin-openrc.sh
+    openstack volume service list
+
+You should see ``cinder-volume`` up and running on your new node.
 
 
 Ceph Initialization
@@ -353,9 +409,10 @@ will use the controllers for this, but we don't have HA controllers yet)::
 
 TODO: Use controllers as monitors when we have HA controller nodes set up.
 
-Open up the ``ceph.conf`` in ``~/acorn-cluster/`` and add the cluster network
-setting::
+Open up the ``ceph.conf`` in ``~/acorn-cluster/`` and add the public & cluster
+network settings::
 
+    public network = 10.5.1.0/24
     cluster network = 10.6.1.0/24
 
 Install Ceph on the storage nodes::
@@ -392,9 +449,9 @@ OpenStack Integration
 Now we'll make OpenStack use the Ceph cluster for Image & Block storage. Start
 by creating some pools to use::
 
-    ceph osd pool create volumes 128
-    ceph osd pool create images 128
-    ceph osd pool create vms 128
+    ceph osd pool create volumes 512
+    ceph osd pool create images 512
+    ceph osd pool create vms 512
 
 Create Ceph Users for the various OpenStack Services, and assign them the
 appropriate pool permissions::
