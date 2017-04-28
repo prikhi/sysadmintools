@@ -1,0 +1,58 @@
+---
+
+- name: Ensure Pacemaker & HAProxy are Installed
+  apt: name="{{ item }}"
+  with_items:
+    - pacemaker
+    - pcs
+    - corosync
+    - cluster-glue
+    - resource-agents
+    - openstack-resource-agents
+    - libqb0
+    - haproxy
+  become: yes
+
+- name: Ensure Pacemaker is Enabled & Started
+  service: name=pcsd state=started enabled=yes
+  become: yes
+
+- name: Ensure the hacluster User is Correctly Configured
+  user: name=hacluster password="{{ vaulted_hacluster_crypted_password }}"
+  become: yes
+
+- name: Ensure the Pacemaker Log Directory Exists
+  file: path=/var/log/cluster state=directory
+  become: yes
+
+- name: Ensure HAProxy is Correctly Configured
+  template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+  become: yes
+  vars:
+    all_controllers: "{{ groups['controllers'] }}"
+    master_controller: "{{ groups['master-controller'] }}"
+    backup_controllers: "{{ groups['backup-controller'] }}"
+  notify: restart haproxy
+
+- name: Ensure HAProxy Can Bind to the Virtual IP
+  lineinfile: dest=/etc/sysctl.conf regexp='net.ipv4.ip_nonlocal_bind =.*'
+              line='net.ipv4.ip_nonlocal_bind = 1'
+  become: yes
+  notify: reload sysctl
+
+- name: Ensure the HAProxy MySQL Check Database User Exists
+  mysql_user: name=haproxy_check password="" host="{{ item }}"
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items:
+    - localhost
+    - '%'
+  when: inventory_hostname in groups['master-controller']
+
+- name: Ensure the HAProxy MySQL Root Database User Exists
+  mysql_user: name=haproxy_root password={{ vaulted_haproxy_db_password }}
+              priv='*.*:ALL,GRANT' host="{{ item }}"
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items:
+    - localhost
+    - '%'
+  when: inventory_hostname in groups['master-controller']

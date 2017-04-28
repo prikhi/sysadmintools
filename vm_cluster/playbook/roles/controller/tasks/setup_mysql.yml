@@ -1,0 +1,58 @@
+---
+
+- name: Ensure the MariaDB Apt Key is Installed
+  apt_key: keyserver="hkp://keyserver.ubuntu.com:80" id=F1656F24C74CD1D8
+  become: yes
+
+- name: Ensure the MariaDB Repository Mirror is Enabled
+  apt_repository: repo="deb [arch=amd64,i386] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu xenial main"
+                  filename="mariadb"
+  become: yes
+
+- name: Ensure the MariaDB Server & Client are Installed
+  apt: name="{{ item }}"
+  become: yes
+  with_items:
+    - mariadb-server
+    - python-mysqldb
+
+- name: Ensure the MariaDB root User has a Password Set
+  mysql_user: user=root password="{{ vaulted_db_root_password }}" host="localhost"
+              login_user=root login_password=""
+  ignore_errors: yes
+  become: yes
+
+- name: Ensure the MariaDB root User is Correctly Configured
+  mysql_user: user=root password="{{ vaulted_db_root_password }}" host="{{ item }}"
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items:
+    - "::1"
+    - "127.0.0.1"
+    - "localhost"
+
+- name: Ensure the Anonymous MariaDB Users are Removed
+  mysql_user: user="" host="{{ item }}" state="absent"
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items: ['{{ ansible_fqdn }}', 'localhost']
+
+- name: Ensure Remote root Access for MariaDB is Disabled
+  mysql_user: user="root" host="{{ ansible_fqdn }}" state=absent
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+
+- name: Ensure the MariaDB test Database is Removed
+  mysql_db: db=test state=absent
+            login_user=root login_password="{{ vaulted_db_root_password }}"
+
+- name: Ensure MariaDB is Correctly Configured
+  ini_file: dest=/etc/mysql/conf.d/openstack.cnf create=yes
+            section="mysqld" option="{{ item.option }}" value="{{ item.value }}"
+  become: yes
+  vars:
+    key: "ansible_{{ management_interface }}"
+    ip_list: "{% for host in groups.controllers %}{% set interface = \"ansible_\" + hostvars[host]['management_interface'] %}{{ hostvars[host][interface]['ipv4']['address'] }}{% if not loop.last %},{% endif %}{% endfor %}"
+  with_items: "{{ mysql_config }}"
+  notify: restart mysql
+
+# Restart Mysql on backup controllers first, so they can sync from the master controller
+- meta: flush_handlers
+  when: "'backup-controller' in group_names"

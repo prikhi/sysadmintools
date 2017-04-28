@@ -1,0 +1,141 @@
+ global
+  chroot  /var/lib/haproxy
+  daemon
+  group  haproxy
+  maxconn  4000
+  pidfile  /var/run/haproxy.pid
+  user  haproxy
+  stats socket /var/run/haproxy.sock mode 660 level admin
+  stats timeout 2m
+
+defaults
+  log  global
+  maxconn  4000
+  option  redispatch
+  retries  3
+  timeout  http-request 10s
+  timeout  queue 1m
+  timeout  connect 10s
+  timeout  client 1m
+  timeout  server 1m
+  timeout  check 10s
+
+ listen dashboard_cluster
+  bind {{ master_controller_ip }}:80
+  balance  source
+  option  tcpka
+  option  httpchk
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:80 check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen galera_cluster
+  bind {{ master_controller_ip }}:3306
+  balance  source
+  option mysql-check user haproxy_check
+{% for host in master_controller %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:3306 check inter 2000 rise 2 fall 5
+{% endfor %}
+{% for host in backup_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:3306 backup check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen glance_api_cluster
+  bind {{ master_controller_ip }}:9292
+  balance  source
+  option  tcpka
+  option  httpchk
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:9292 check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen glance_registry_cluster
+  bind {{ master_controller_ip }}:9191
+  balance  source
+  option  tcpka
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:9191 check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen keystone_admin_cluster
+  bind {{ master_controller_ip }}:35357
+  balance  source
+  option  tcpka
+  option  httpchk
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:35357 check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen keystone_public_internal_cluster
+  bind {{ master_controller_ip }}:5000
+  balance  source
+  option  tcpka
+  option  httpchk
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:5000 check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen nova_compute_api_cluster
+  bind {{ master_controller_ip }}:8774
+  balance  source
+  option  tcpka
+  option  httpchk
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:8774 check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen nova_metadata_api_cluster
+  bind {{ master_controller_ip }}:8775
+  balance  source
+  option  tcpka
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:8775 check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen cinder_api_cluster
+  bind {{ master_controller_ip }}:8776
+  balance  source
+  option  tcpka
+  option  httpchk
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:8776 check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen nova_vncproxy_cluster
+  bind {{ master_controller_ip }}:6080
+  balance  source
+  option  tcpka
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:6080 check inter 2000 rise 2 fall 5
+{% endfor %}
+
+ listen neutron_api_cluster
+  bind {{ master_controller_ip }}:9696
+  balance  source
+  option  tcpka
+  option  httpchk
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:9696 check inter 2000 rise 2 fall 5
+{% endfor %}
