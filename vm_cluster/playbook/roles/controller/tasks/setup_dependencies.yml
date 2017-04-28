@@ -1,25 +1,5 @@
 ---
 
-- name: Ensure PostgreSQL is Installed
-  apt: name={{ item }}
-  become: yes
-  with_items:
-    - postgresql
-    - python-psycopg2
-
-- name: Ensure PostgreSQL Is Served on the Management Interface
-  lineinfile: dest=/etc/postgresql/9.5/main/postgresql.conf
-              regexp='.*listen_addresses =.*' line="listen_addresses = 'localhost,{{ management_ip }}'"
-  become: yes
-  notify: restart postgresql
-
-- name: Ensure PostgreSQL Allows Connections from the Mangement Interface
-  lineinfile: dest=/etc/postgresql/9.5/main/pg_hba.conf
-              regexp='.*{{ management_network_cidr }}.*'
-              line='host all all {{ management_network_cidr }} md5'
-  become: yes
-  notify: restart postgresql
-
 - name: Ensure MongoDB is Installed
   apt: name={{ item }}
   become: yes
@@ -38,10 +18,20 @@
   apt: name=rabbitmq-server
   become: yes
 
+- name: Ensure the RabbitMQ Cookie is Installed Correctly
+  copy: dest=/var/lib/rabbitmq/.erlang.cookie content="{{ vaulted_mq_cookie }}"
+        owner=rabbitmq group=rabbitmq mode="400"
+  become: yes
+  notify: restart rabbitmq
+  tags: ha
+
+- meta: flush_handlers
+
 - name: Add the RabbitMQ User
   rabbitmq_user: user={{ mq_user }} password={{ vaulted_mq_password }} vhost=/
                  configure_priv=.* read_priv=.* write_priv=.*
   become: yes
+  become_user: rabbitmq
 
 - name: Ensure Memcached is Installed
   apt: name={{ item }}

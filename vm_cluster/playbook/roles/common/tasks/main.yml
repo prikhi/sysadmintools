@@ -8,6 +8,16 @@
   vars:
     key: "ansible_{{ management_interface }}"
 
+- name: Ensure the Second Loopback Address is Removed from the Hosts File
+  lineinfile: dest=/etc/hosts  regexp="127.0.1.1.*" state=absent
+  become: yes
+
+- name: Ensure the Master Controller is in the Hosts File
+  lineinfile: dest=/etc/hosts regexp="{{ master_controller_ip }}.*"
+              line="{{ master_controller_ip }} {{ master_controller_hostname }}"
+  become: yes
+  tags: ha
+
 - name: Ensure Chrony is Installed for NTP
   apt: name=chrony
   become: yes

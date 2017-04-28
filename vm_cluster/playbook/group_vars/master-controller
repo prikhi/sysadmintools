@@ -8,6 +8,6 @@ stack_env: {
   OS_PROJECT_NAME: "{{ admin_os_project }}",
   OS_USER_DOMAIN_NAME: "Default",
   OS_PROJECT_DOMAIN_NAME: "Default",
-  OS_AUTH_URL: "http://{{ ansible_hostname }}:35357/v3",
+  OS_AUTH_URL: "http://{{ master_controller_hostname }}:35357/v3",
   OS_IDENTITY_API_VERSION: 3
 }

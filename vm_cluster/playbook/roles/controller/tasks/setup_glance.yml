@@ -1,15 +1,18 @@
 ---
 
-- name: Ensure the Glance Database Exists
-  postgresql_db: name={{ glance_db_name }}
-  become: yes
-  become_user: postgres
+- name: Ensure Glance Database Exists
+  mysql_db: name={{ glance_db_name }}
+            login_user=root login_password="{{ vaulted_db_root_password }}"
+  when: inventory_hostname in groups['master-controller']
 
 - name: Ensure the Glance Database User Exists
-  postgresql_user: name={{ glance_db_user }} db={{ glance_db_name }}
-                   password={{ vaulted_db_password }}
-  become: yes
-  become_user: postgres
+  mysql_user: name={{ glance_db_user }} password={{ vaulted_db_password }}
+              priv='{{ glance_db_name }}.*:ALL' host="{{ item }}"
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items:
+    - localhost
+    - '%'
+  when: inventory_hostname in groups['master-controller']
 
 - name: Retrieve a List of Existing Users
   shell: openstack user list -f value -c Name
@@ -20,11 +23,13 @@
   shell: openstack user create --domain default
          --password "{{ vaulted_glance_os_password|quote }}"
          "{{ glance_os_user }}"
-  when: os_users.stdout.find(glance_os_user) == -1
+  when: (os_users.stdout.find(glance_os_user) == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure the OpenStack Glance User's Role is Properly Configured
   shell: openstack role add --project {{ service_os_project }}
          --user {{ glance_os_user }} admin
+  when: inventory_hostname in groups['master-controller']
 
 - name: Retrieve a List of OpenStack Services
   shell: openstack endpoint list -c "Service Type" -f value
@@ -34,16 +39,18 @@
 - name: Ensure the OpenStack Glance Service Exists
   shell: openstack service create --name glance
          --description "Image Service" image
-  when: os_services.stdout.find("image") == -1
+  when: (os_services.stdout.find("image") == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure the Image Service API Endpoints Exist
   shell: openstack endpoint create --region RegionOne image {{ item }}
-         http://{{ ansible_hostname }}:9292
+         http://{{ master_controller_hostname }}:9292
   with_items:
       - public
       - internal
       - admin
-  when: os_services.stdout.find("image") == -1
+  when: (os_services.stdout.find("image") == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure Glance is Installed
   apt: name=glance
@@ -53,7 +60,7 @@
   ini_file: dest=/etc/glance/glance-api.conf section="{{ item.section }}"
             option="{{ item.option }}" value="{{ item.value }}"
   become: yes
-  with_items: "{{ common_auth_config + glance_common_config + glance_api_config  }}"
+  with_items: "{{ common_auth_config + common_rabbit_config + glance_common_config + glance_api_config  }}"
   notify:
     - sync glance database
     - restart glance
@@ -65,7 +72,7 @@
   ini_file: dest=/etc/glance/glance-registry.conf section="{{ item.section }}"
             option="{{ item.option }}" value="{{ item.value }}"
   become: yes
-  with_items: "{{ common_auth_config + glance_common_config }}"
+  with_items: "{{ common_auth_config + common_rabbit_config + glance_common_config }}"
   notify:
     - sync glance database
     - restart glance

@@ -2,6 +2,12 @@
 
 - include: setup_dependencies.yml
 
+- include: setup_mysql.yml
+  tags: mysql
+
+- include: setup_high_availability.yml
+  tags: ha
+
 - include: setup_ceph.yml
   tags: ceph
 
@@ -10,6 +16,21 @@
 
 - include: setup_projects.yml
   tags: projects
+  when: inventory_hostname in groups['master-controller']
+
+- name: Ensure the OpenStack Client Environment Scripts Exist
+  template: dest="/home/{{ ansible_user_id }}/{{ item.project }}-openrc.sh"
+            src=openrc.j2
+  tags: projects
+  with_items:
+    - { project: "{{ admin_os_project }}",
+        user: "{{ admin_os_user }}",
+        password: "{{ vaulted_admin_token }}",
+        auth_port: 35357 }
+    - { project: "{{ default_os_project }}",
+        user: "{{ default_os_user }}",
+        password: "{{ vaulted_os_user_password }}",
+        auth_port: 5000 }
 
 - include: setup_glance.yml
   tags: glance
@@ -28,3 +49,4 @@
 
 - include: setup_networks.yml
   tags: networks
+  when: inventory_hostname in groups['master-controller']

@@ -101,10 +101,209 @@ You can run the playbook by installing ansible with pip and using the
     ansible-playbook acorn.yml
 
 
+Initial Cluster Setup
+======================
+
+TODO: Write initial cluster setup guide after getting everything working.
+
+
+3/9/17 Test
+------------
+
+This was done when setting up controller High Availability.
+
+**Started w/ just 1 controller node, no compute, no storage.**
+
+First playbook run failed at starting mysql, had to start new cluster::
+
+    sudo galera_new_cluster
+
+Re-run, broke at rabbitmq user, fixed by re-ordering tasks & restarting
+rabbitmq before adding.
+
+Re-run broke a bootstrapping identity service, needed to remove config options,
+fix name of config file.
+
+Re-run broke at setting up projects. Need to do initial pacemaker config. Had
+to change ``hacluster`` user password manually.
+
+Re-run finished all updated tasks(after Glance setup). Image service verified
+by image listing. Image creation does not work due to ceph not being setup.
+
+Updated nova's tasks & config for controller HA.
+
+Failed at nova re-run due to existing service but wrong endpoints.
+
+TODO: Fix service/endpoint tasks to decouple service & endpoint creation.
+
+Failed at nova addresses already bound. Fixed by setting
+``osapi_compute_listen``, ``novncproxy_host``, & ``metadata_listen_host`` to
+management IP.
+
+TODO: PR OpenStack HA Docs to Fix Required Nova Listen Options
+
+Re-run finished all nova tasks. Nova service verified by compute service list.
+
+Updated neutron's tasks & config.
+
+Failed at neutron.wsgi unable to bind address. Fixed by setting ``bind_host``
+in neutron.conf
+
+TODO: PR OpenStack HA Docs to Fix Required Neutron Listen Options
+
+Re-run finished all neutron tasks. Verified by service list.
+
+Updated cinder's tasks & config.
+
+Re-run finished all cinder tasks, verify by volume service list.
+
+Updated horizon tasks.
+
+Re-run finished all horizon tasks, verify by visitng site.
+
+Re-run failed at creating router, not enough l3 agents available. Fixed by
+lowering min to ``1``.
+
+Re-run completed all controller tasks.
+
+
+**Add 1 Compute Node**
+
+Did minimal setup for new node & re-ran ansible playbook.
+
+Verified by running ``openstack compute service list``.
+
+
+**Add 2 Storage Nodes**
+
+Did minimal setup for new nodes & re-ran ansible playbook.
+
+Followed initial ceph setup.
+
+Verified by running ``openstack volume service list``.
+
+Test stack by adding image, & launching server by making image into volume.
+
+
+**Add Backup Controller Node**
+
+Did minimal setup for new nodes & re-ran ansible playbook.
+
+Failed at restarting mysql. Issue was wrong list of ips for cluster setting.
+After fixing, it failed when trying to restart galera, since it brought all
+cluster servers down. Fixed by staggering restarts, backup controllers first,
+then the master controller.
+
+Rerun of playbook passed. Followed instructions from "adding nodes".
+
+Tested by shutting down controller 1 and provisioning a server. Failed at
+openstack auth, needed to copy fernet keys from master controller. Fixed by
+adding keys to vault.
+
+Was then able to get token, failed at uploading image. Needed to setup ceph keys.
+After fixing & documenting, was able to create image, launch server, & SSH in.
+Then started master controller and shutdown backup, still able to SSH into server.
+
+
 Adding Nodes
 =============
 
-Adding additional compute and storage nodes is fairly straightforward.
+Adding additional controller, compute, or storage nodes is fairly straightforward.
+
+Controller
+-----------
+
+New controllers require some manual configuration due to the high availability
+setup. Start with the minimal setup and ansible playbook. Add any extra
+controllers to the ``backup-controller`` group in the ``cluster-servers`` file.
+
+MySQL
+++++++
+
+The new controller should automatically connect to the MySQL cluster. You can
+verify this by checking the cluster size::
+
+    echo "SHOW STATUS LIKE '%cluster_size';" | mysql -u root -p
+
+RabbitMQ
++++++++++
+
+The ansible playbook will have copied an erlang cookie to all the controller
+hosts. Restart the new node in clustering mode::
+
+    sudo rabbitmqctl stop_app
+    sudo rabbitmqctl join_cluster rabbit@stack-controller-1
+    sudo rabbitmqctl start_app
+
+Check the status, then enable mirroring of all queues::
+
+    sudo rabbitmqctl cluster_status
+    sudo rabbitmqctl set_policy ha-all '^(?!amq\.).*' '{"ha-mode": "all"}'
+
+Pacemaker
+++++++++++
+
+You'll need to authenticate the new node from the master controller::
+
+    # On stack-controller-1
+    sudo pcs cluster auth -u hacluster stack-controller-2
+
+Next, remove the default cluster from the new node::
+
+    # On stack-controller-2
+    sudo pcs cluster destroy
+
+Add the new node using the master controller and start the service on the new
+node::
+
+    # On stack-controller-1
+    sudo pcs cluster node add stack-controller-2
+
+    # On stack-controller-2
+    sudo pcs cluster start
+    sudo pcs cluster enable
+
+Ceph
++++++
+
+**Minimal**
+
+Copy the SSH key from the master controller to the new controller::
+
+    # On stack-controller-1
+    ssh-copy-id stack-controller-2
+
+Install & deploy Ceph on the new controller node::
+
+    # On stack-controller-1
+    cd ~/storage-cluster
+    ceph-deploy install --release kraken stack-controller-2
+    ceph-deploy admin stack-controller-2
+
+
+Copy the Glance Key to the new controller node::
+
+    # On stack-controller-1
+    ceph auth get-or-create client.glance | ssh stack-controller-2 sudo tee /etc/ceph/ceph.client.glance.keyring
+    ssh stack-controller-2 sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
+
+**Extra Deploy Node**
+
+Copy the SSH key from each existing controller to the new controller::
+
+    ssh-copy-id stack-controller-2
+
+Then initialize a key on the new server & copy it to the existing controller
+and storage nodes::
+
+    ssh-keygen -t ecdsa -b 521
+    ssh-copy-id stack-controller-1
+    ssh-copy-id stack-storage-1
+    ssh-copy-id stack-storage-2
+    ssh-copy-id stack-storage-3
+
+TODO: Finish ceph-deploy node setup for extra controller
+
 
 Compute
 --------
@@ -116,6 +315,12 @@ afterwards.
 
 You can verify the setup by running ``openstack compute service list``
 on a controller node. The list should include the new compute host.
+
+
+Storage
+--------
+
+TODO: Test & document adding new storage node
 
 
 Ceph Initialization
@@ -155,7 +360,7 @@ setting::
 
 Install Ceph on the storage nodes::
 
-    ceph-deploy install stack-controller-1 stack-storage-1 stack-storage-2 stack-storage-3
+    ceph-deploy install --release kraken stack-controller-1 stack-storage-1 stack-storage-2 stack-storage-3
 
 Then create the initial monitors::
 
@@ -209,6 +414,10 @@ Then copy them to your nodes::
     # For each Storage node
     ceph auth get-or-create client.cinder | ssh stack-storage-1 sudo tee /etc/ceph/ceph.client.cinder.keyring
     ssh stack-storage-1 sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
+    ceph auth get-or-create client.cinder | ssh stack-storage-2 sudo tee /etc/ceph/ceph.client.cinder.keyring
+    ssh stack-storage-2 sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
+    ceph auth get-or-create client.cinder | ssh stack-storage-3 sudo tee /etc/ceph/ceph.client.cinder.keyring
+    ssh stack-storage-3 sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
 
 
 Copy the ``ceph.conf`` to the Compute nodes(it should already be present on the
@@ -249,10 +458,108 @@ Test the setup::
     rbd -p volumes ls
 
 
+High Availability Initialization
+=================================
+
+Some manual setup is required for highly available controller nodes.  You
+should have only one controller node for this initial setup. Add additional
+controller nodes after setting up the OpenStack cluster for the first time.
+
+
+Pacemaker
+----------
+
+Ansible only installs the Pacemaker & HAProxy packages. You will need to create
+the cluster & Virtual IP address when first creating the OpenStack cluster.
+
+Start by removing the initial config file & authenticating the controller
+node::
+
+    sudo rm /etc/corosync/corosync.conf
+    sudo pcs cluster auth stack-controller-1 -u hacluster -p PASSWORD --force
+
+Stop Pacemaker then create, start, & enable
+the cluster::
+
+    sudo systemctl stop pacemaker corosync
+    sudo pcs cluster setup --force --name acorn-controller-cluster stack-controller-1
+    sudo pcs cluster start --all
+    sudo pcs cluster enable --all
+
+Set some basic properties::
+
+    sudo pcs property set pe-warn-series-max=1000 \
+        pe-input-series-max=1000 \
+        pe-error-series-max=1000 \
+        cluster-recheck-interval=3min
+
+Disable STONITH for now::
+
+    sudo pcs property set stonith-enabled=false
+
+Create the Virtual IP Address::
+
+    sudo pcs resource create management-vip ocf:heartbeat:IPaddr2 \
+        params ip="10.5.1.10" cidr_netmask="24" op monitor interval="30s"
+
+Add HAProxy to the cluster & only serve the VIP when HAProxy is running::
+
+    sudo pcs resource create lb-haproxy systemd:haproxy --clone --force
+    sudo pcs constraint order start management-vip then lb-haproxy-clone kind=Optional
+    sudo pcs constraint colocation add lb-haproxy-clone with management-vip
+
+Add the Keystone service to Pacemaker::
+
+    sudo pcs resource create keystone keystone --clone interleave=true
+
+Add the Glance service to Pacemaker::
+
+    sudo pcs resource create glance-api glance-api --clone
+
+Add the Cinder service to Pacemaker::
+
+    sudo pcs resource create cinder-api cinder-api --clone interleave=true
+    sudo pcs resource create cinder-scheduler cinder-scheduler --clone interleave=true
+
+
+MySQL
+------
+
+Stop the mysql server on the controller node & start it as a cluster::
+
+    sudo systemctl stop mysql
+    sudo galera_new_cluster
+
+
 High Availability
 ==================
 
-Haven't experimented with this yet, see the `High Availability Guide`_ for reference.
+See the `High Availability Guide`_ for reference.
+
+For setup directions, see the ``High Availability Initialization`` and ``Adding
+Nodes`` sections.
+
+
+Compute nodes are not setup for high availability, there is currently no
+automated relaunching of VMs on failed Compute nodes.
+
+Storage nodes use Ceph for distributed storage & high availability. An odd
+number of 3 or more storage nodes is recommended.
+
+Controller nodes are have various services for High Availability. Pacemaker is
+used to share a virtual IP address between all Controller nodes. When a node
+goes down, another node adopts the virtual IP.
+
+OpenStack services & endpoints are made highly available via HAProxy. HAProxy
+takes requests to the virtual IP address and distributes them across all
+available controller nodes.
+
+RabbitMQ, Memcached, & MySQL are all clustered as well. RabbitMQ & Memcached
+use other nodes as failovers, while MySQL uses Galera for replication & HAProxy
+for handling failovers.
+
+
+TODO: Do memcached urls for openstack service auth & horizon need configuration?
 
 
 Automated Maintenance
@@ -263,6 +570,8 @@ the cluster servers::
 
     fab upgrade
 
+TODO: Fabric command to check & bootstrap inactive galera cluster?
+
 
 Architecture
 =============
@@ -272,6 +581,8 @@ Storage nodes. Neutron is setup to support self-service networks.
 
 Eventually a High Availability setup will be implemented, along with image
 storage on the storage nodes(instead of controllers).
+
+TODO: Investigate Cinder Backup
 
 
 Nodes

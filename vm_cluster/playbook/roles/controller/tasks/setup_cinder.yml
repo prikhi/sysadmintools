@@ -1,15 +1,18 @@
 ---
 
-- name: Ensure the Cinder Database Exists
-  postgresql_db: name={{ cinder_db_name }}
-  become: yes
-  become_user: postgres
+- name: Ensure Cinder Database Exists
+  mysql_db: name={{ cinder_db_name }}
+            login_user=root login_password="{{ vaulted_db_root_password }}"
+  when: inventory_hostname in groups['master-controller']
 
 - name: Ensure the Cinder Database User Exists
-  postgresql_user: name={{ cinder_db_user }} db={{ cinder_db_name }}
-                   password={{ vaulted_db_password }}
-  become: yes
-  become_user: postgres
+  mysql_user: name={{ cinder_db_user }} password={{ vaulted_db_password }}
+              priv='{{ cinder_db_name }}.*:ALL' host="{{ item }}"
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items:
+    - localhost
+    - '%'
+  when: inventory_hostname in groups['master-controller']
 
 - name: Retrieve a List of Existing Users
   shell: openstack user list -f value -c Name
@@ -20,11 +23,13 @@
   shell: openstack user create --domain default
          --password "{{ vaulted_cinder_os_password|quote }}"
          "{{ cinder_os_user }}"
-  when: os_users.stdout.find(cinder_os_user) == -1
+  when: (os_users.stdout.find(cinder_os_user) == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure the OpenStack Cinder User's Role is Properly Configured
   shell: openstack role add --project {{ service_os_project }}
          --user {{ cinder_os_user }} admin
+  when: inventory_hostname in groups['master-controller']
 
 - name: Retrieve a List of OpenStack Services
   shell: openstack service list -c "Type" -f value
@@ -37,25 +42,28 @@
   with_items:
     - { name: cinder, type: volume }
     - { name: cinderv2, type: volumev2 }
-  when: os_services.stdout.find("volume") == -1
+  when: (os_services.stdout.find("volume") == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure the Volume Service API Endpoints Exist
   shell: openstack endpoint create --region RegionOne volume {{ item }}
-         http://{{ ansible_hostname }}:8776/v1/%\(tenant_id\)s
+         http://{{ master_controller_hostname }}:8776/v1/%\(tenant_id\)s
   with_items:
       - public
       - internal
       - admin
-  when: os_services.stdout.find("volume") == -1
+  when: (os_services.stdout.find("volume") == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure the Volume2 Service API Endpoints Exist
   shell: openstack endpoint create --region RegionOne volumev2 {{ item }}
-         http://{{ ansible_hostname }}:8776/v2/%\(tenant_id\)s
+         http://{{ master_controller_hostname }}:8776/v2/%\(tenant_id\)s
   with_items:
       - public
       - internal
       - admin
-  when: os_services.stdout.find("volume") == -1
+  when: (os_services.stdout.find("volume") == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure Cinder is Installed
   apt: name="{{ item }}"

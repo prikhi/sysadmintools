@@ -1,15 +1,19 @@
 ---
 
-- name: Ensure the Neutron Database Exists
-  postgresql_db: name={{ neutron_db_name }}
-  become: yes
-  become_user: postgres
+- name: Ensure Neutron Database Exists
+  mysql_db: name={{ neutron_db_name }}
+            login_user=root login_password="{{ vaulted_db_root_password }}"
+  when: inventory_hostname in groups['master-controller']
 
 - name: Ensure the Neutron Database User Exists
-  postgresql_user: name={{ neutron_db_user }} db={{ neutron_db_name }}
-                   password={{ vaulted_db_password }}
-  become: yes
-  become_user: postgres
+  mysql_user: name={{ neutron_db_user }} password={{ vaulted_db_password }}
+              priv='{{ neutron_db_name }}.*:ALL' host="{{ item }}"
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items:
+    - localhost
+    - '%'
+    - "{{ ansible_hostname }}"
+  when: inventory_hostname in groups['master-controller']
 
 - name: Retrieve a List of Existing Users
   shell: openstack user list -f value -c Name
@@ -20,7 +24,8 @@
   shell: openstack user create --domain default
          --password "{{ vaulted_neutron_os_password|quote }}"
          "{{ neutron_os_user }}"
-  when: os_users.stdout.find(neutron_os_user) == -1
+  when: (os_users.stdout.find(neutron_os_user) == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure the OpenStack Neutron User's Role is Properly Configured
   shell: openstack role add --project {{ service_os_project }}
@@ -34,16 +39,18 @@
 - name: Ensure the OpenStack Neutron Service Exists
   shell: openstack service create --name neutron
          --description "Networking Service" network
-  when: os_services.stdout.find("network") == -1
+  when: (os_services.stdout.find("network") == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure the Network Service Endpoints Exist
   shell: openstack endpoint create --region RegionOne network {{ item }}
-         http://{{ ansible_hostname }}:9696
+         http://{{ master_controller_hostname }}:9696
   with_items:
     - public
     - internal
     - admin
-  when: os_services.stdout.find("network") == -1
+  when: (os_services.stdout.find("network") == -1) and
+        (inventory_hostname in groups['master-controller'])
 
 - name: Ensure the OpenStack Neutron Self-Service Components are Installed
   apt: name={{ item }}

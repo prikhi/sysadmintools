@@ -4,18 +4,35 @@
   service: name=postgresql state=restarted
   become: yes
 
+- name: restart mysql
+  service: name=mysql state=restarted
+  become: yes
+
 - name: restart mongodb
   service: name=mongodb state=restarted
+  become: yes
+
+- name: restart rabbitmq
+  service: name=rabbitmq-server state=restarted
   become: yes
 
 - name: restart memcached
   service: name=memcached state=restarted
   become: yes
 
+- name: restart haproxy
+  service: name=haproxy state=restarted
+  become: yes
+
+- name: reload sysctl
+  shell: sysctl -p
+  become: yes
+
 - name: sync keystone database
   shell: keystone-manage db_sync
   become: yes
   become_user: keystone
+  when: inventory_hostname in groups['master-controller']
 
 - name: initialize key repositories
   shell: keystone-manage {{ item }} --keystone-user keystone --keystone-group keystone
@@ -23,6 +40,7 @@
   with_items:
       - fernet_setup
       - credential_setup
+  when: inventory_hostname in groups['master-controller']
 
 - name: restart apache
   service: name=apache2 state=restarted
@@ -32,6 +50,7 @@
   shell: glance-manage db_sync
   become: yes
   become_user: glance
+  when: inventory_hostname in groups['master-controller']
 
 - name: restart glance
   service: name={{ item }} state=restarted
@@ -54,6 +73,7 @@
   shell: nova-manage {{ item }} sync
   become: yes
   become_user: nova
+  when: inventory_hostname in groups['master-controller']
   with_items:
     - api_db
     - db
@@ -63,6 +83,7 @@
          --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
   become: yes
   become_user: neutron
+  when: inventory_hostname in groups['master-controller']
 
 - name: restart neutron
   service: name={{ item }} state=restarted
@@ -82,6 +103,7 @@
   shell: cinder-manage db sync
   become: yes
   become_user: cinder
+  when: inventory_hostname in groups['master-controller']
 
 - name: restart cinder service
   service: name={{ item }} state=restarted

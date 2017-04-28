@@ -1,8 +1,11 @@
 ---
 
-- name: Ensure Cinder is Installed
-  apt: name=cinder-volume
+- name: Ensure Cinder & Dependencies are Installed
+  apt: name={{ item }}
   become: yes
+  with_items:
+    - cinder-volume
+    - mariadb-client
   tags: cinder
 
 - name: Ensure Cinder is Correctly Configured

@@ -1,15 +1,21 @@
 ---
 
 - name: Ensure Keystone Database Exists
-  postgresql_db: name={{ keystone_db_name }}
-  become: yes
-  become_user: postgres
+  mysql_db: name={{ keystone_db_name }}
+            login_user=root login_password="{{ vaulted_db_root_password }}"
+  when: inventory_hostname in groups['master-controller']
+  notify:
+    - sync keystone database
+    - initialize key repositories
 
 - name: Ensure the Keystone Database User Exists
-  postgresql_user: name={{ keystone_db_user }} db={{ keystone_db_name }}
-                   password={{ vaulted_db_password }}
-  become: yes
-  become_user: postgres
+  mysql_user: name={{ keystone_db_user }} password={{ vaulted_db_password }}
+              priv='{{ keystone_db_name }}.*:ALL' host="{{ item }}"
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items:
+    - localhost
+    - '%'
+  when: inventory_hostname in groups['master-controller']
 
 - name: Ensure Keystone is Installed
   apt: name={{ item }}
@@ -20,22 +26,30 @@
       - apache2
       - libapache2-mod-wsgi
 
-  # - name: Ensure Keystone Does Not Start Automatically
-  #   service: name=keystone enabled=no state=stopped
-  #   become: yes
+- name: Ensure the Fernet Key Directory Exists
+  file: path=/etc/keystone/fernet-keys state=directory
+        owner=keystone group=keystone mode=700
+  become: yes
+
+- name: Ensure the Fernet Keys Exist
+  copy: dest="/etc/keystone/fernet-keys/{{ item.file }}" content="{{ item.value }}"
+        owner=keystone group=keystone mode=600 directory_mode=700
+  with_items:
+    - { file: "0", value: "{{ vaulted_fernet_key_0 }}" }
+    - { file: "1", value: "{{ vaulted_fernet_key_1 }}" }
+  become: yes
 
 - name: Ensure Keystone is Correctly Configured
   ini_file: dest=/etc/keystone/keystone.conf section="{{ item.section }}"
             option="{{ item.option }}" value="{{ item.value }}"
   become: yes
   with_items:
-      # - { section: 'DEFAULT', option: 'admin_token', value: "{{ vaulted_admin_token }}" }
+    - { section: 'DEFAULT', option: 'bind_host', value: '{{ management_ip }}' }
+    - { section: 'DEFAULT', option: 'public_bind_host', value: '{{ management_ip }}' }
+    - { section: 'DEFAULT', option: 'admin_bind_host', value: '{{ management_ip }}' }
     - { section: 'database', option: 'connection',
-        value: 'postgresql://{{ keystone_db_user }}:{{ vaulted_db_password }}@localhost/{{ keystone_db_name }}' }
-      # - { section: 'memcache', option: 'servers', value: 'localhost:11211' }
-      # - { section: 'token', option: 'driver', value: 'memcache' }
+        value: 'mysql+pymysql://{{ keystone_db_user }}:{{ vaulted_db_password }}@{{ ansible_hostname }}/{{ keystone_db_name }}' }
     - { section: 'token', option: 'provider', value: 'fernet' }
-      # - { section: 'revoke', option: 'driver', value: 'sql' }
   notify:
     - sync keystone database
     - initialize key repositories
@@ -43,18 +57,18 @@
 
 - name: Ensure Apache is Correctly Configured
   lineinfile: dest=/etc/apache2/apache2.conf
-              regexp='^ServerName .*' line='ServerName {{ ansible_hostname }}'
+              regexp='^ServerName .*' line='ServerName {{ master_controller_hostname }}'
   become: yes
   notify: restart apache
 
 - name: Ensure Keystone Virtual Host is Correctly Configured
-  copy: src=apache-keystone.conf dest=/etc/apache2/sites-available/wsgi-keystone.conf
+  copy: src=apache-keystone.conf dest=/etc/apache2/sites-available/keystone.conf
   become: yes
   notify: restart apache
 
 - name: Ensure the Keystone Virtual Host is Enabled
-  file: src=/etc/apache2/sites-available/wsgi-keystone.conf
-        dest=/etc/apache2/sites-enabled/wsgi-keystone.conf state=link
+  file: src=/etc/apache2/sites-available/keystone.conf
+        dest=/etc/apache2/sites-enabled/keystone.conf state=link
   become: yes
   notify: restart apache
 
@@ -66,8 +80,9 @@
 
 - name: Bootstrap the OpenStack Identity Service & Endpoints
   shell: keystone-manage bootstrap --bootstrap-password {{ vaulted_admin_token }}
-         --bootstrap-admin-url http://{{ ansible_hostname }}:35357/v3
-         --bootstrap-internal-url http://{{ ansible_hostname }}:35357/v3
-         --bootstrap-public-url http://{{ ansible_hostname }}:5000/v3
+         --bootstrap-admin-url http://{{ master_controller_hostname }}:35357/v3
+         --bootstrap-internal-url http://{{ master_controller_hostname }}:35357/v3
+         --bootstrap-public-url http://{{ master_controller_hostname }}:5000/v3
          --bootstrap-region-id RegionOne
   become: yes
+  when: inventory_hostname in groups['master-controller']

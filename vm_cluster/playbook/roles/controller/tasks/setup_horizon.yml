@@ -8,7 +8,7 @@
   lineinfile: dest=/etc/openstack-dashboard/local_settings.py
               regexp="{{ item.exp }}" line="{{ item.line }}"
   with_items:
-    - { exp: 'OPENSTACK_HOST = .*', line: 'OPENSTACK_HOST = "{{ ansible_hostname }}"' }
+    - { exp: 'OPENSTACK_HOST = .*', line: 'OPENSTACK_HOST = "{{ master_controller_hostname }}"' }
     - { exp: 'ALLOWED_HOSTS = .*', line: 'ALLOWED_HOSTS = ["*",]' }
     - { exp: 'SESSION_ENGINE = .*',
         line: 'SESSION_ENGINE = "django.contrib.sessions.backends.cache"' }

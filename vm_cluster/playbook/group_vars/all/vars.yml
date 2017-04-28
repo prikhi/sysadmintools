@@ -15,7 +15,8 @@ service_os_project: 'service'
 cinder_db_name: "cinder"
 cinder_db_user: "cinder"
 
-master_controller_hostname: "stack-controller-1"
+master_controller_hostname: "stack-master-controller"
+master_controller_ip: "10.5.1.10"
 
 public_network_options:
     cidr: "192.168.1.0/24"
@@ -31,17 +32,26 @@ private_network_options:
 
 management_network_cidr: "10.5.1.0/24"
 
+rabbit_hosts:
+    "{% for host in groups.controllers %}{{ mq_user }}:{{ vaulted_mq_password }}@{{ host }}{% if not loop.last %},{% endif %}{% endfor %}"
+
+memcached_hosts:
+    "{% for host in groups.controllers %}{{ host }}:11211{% if not loop.last %},{% endif %}{% endfor %}"
+
+
 common_rabbit_config:
   - { section: 'DEFAULT', option: 'transport_url',
-      value: 'rabbit://{{ mq_user }}:{{ vaulted_mq_password }}@{{ master_controller_hostname }}' }
+      value: 'rabbit://{{ rabbit_hosts }}' }
 
 common_auth_config:
   - { section: 'keystone_authtoken', option: 'auth_uri',
       value: 'http://{{ master_controller_hostname }}:5000' }
+  - { section: 'keystone_authtoken', option: 'auth_host',
+      value: '{{ master_controller_ip }}' }
   - { section: 'keystone_authtoken', option: 'auth_url',
       value: 'http://{{ master_controller_hostname }}:35357' }
   - { section: 'keystone_authtoken', option: 'memcached_servers',
-      value: '{{ ansible_hostname }}:11211' }
+      value: '{{ memcached_hosts }}' }
   - { section: 'keystone_authtoken', option: 'auth_type', value: 'password' }
   - { section: 'keystone_authtoken', option: 'project_domain_id', value: 'default' }
   - { section: 'keystone_authtoken', option: 'user_domain_id', value: 'default' }
@@ -108,7 +118,9 @@ common_nova_neutron_config:
 
 # Cinder
 common_cinder_config:
-  - { section: 'oslo_concurrency', option: 'lock_path', value: '/var/lib/cinder/tmp' }
   - { section: 'DEFAULT', option: 'my_ip', value: '{{ management_ip }}' }
+  - { section: 'DEFAULT', option: 'glance_api_servers', value: '{{ master_controller_hostname }}:9292' }
+  - { section: 'DEFAULT', option: 'glance_api_version', value: '2' }
+  - { section: 'oslo_concurrency', option: 'lock_path', value: '/var/lib/cinder/tmp' }
   - { section: 'keystone_authtoken', option: 'username', value: '{{ cinder_os_user }}'}
   - { section: 'keystone_authtoken', option: 'password', value: '{{ vaulted_cinder_os_password }}'}

@@ -44,17 +44,3 @@
   shell: openstack role add --project {{ default_os_project }}
          --user {{ default_os_user }} user
   when: os_users.stdout.find(default_os_user) == -1
-
-
-- name: Ensure the OpenStack Client Environment Scripts Exist
-  template: dest="/home/{{ ansible_user_id }}/{{ item.project }}-openrc.sh"
-            src=openrc.j2
-  with_items:
-    - { project: "{{ admin_os_project }}",
-        user: "{{ admin_os_user }}",
-        password: "{{ vaulted_admin_token }}",
-        auth_port: 35357 }
-    - { project: "{{ default_os_project }}",
-        user: "{{ default_os_user }}",
-        password: "{{ vaulted_os_user_password }}",
-        auth_port: 5000 }
