@@ -205,6 +205,29 @@ After fixing & documenting, was able to create image, launch server, & SSH in.
 Then started master controller and shutdown backup, still able to SSH into server.
 
 
+4/30/17 Test
+-------------
+
+Trial moving Ceph monitors to Controller. Started by wiping block storage
+servers, & purging ceph & data from controllers.
+
+Ran ansible playbook.
+
+SSH into controller, push ssh keys.
+
+Deploy new node to controllers::
+
+    ceph-deploy new stack-controller-1 stack-controller-2
+
+Install::
+
+    ceph-deploy new stack-controller-1 stack-controller-2 \
+        stack-storage-1 stack-storage-2 stack-storage-3
+
+From creating initial monitors onwards works the same. Verified by uploading
+image, creating volume, & launching instance.
+
+
 Adding Nodes
 =============
 
@@ -271,33 +294,38 @@ Ceph
 Copy the SSH key from the master controller to the new controller::
 
     # On stack-controller-1
-    ssh-copy-id stack-controller-2
+    ssh-copy-id stack-controller-3
 
 Install & deploy Ceph on the new controller node::
 
     # On stack-controller-1
     cd ~/storage-cluster
-    ceph-deploy install --release kraken stack-controller-2
-    ceph-deploy admin stack-controller-2
+    ceph-deploy install --release kraken stack-controller-3
+    ceph-deploy admin stack-controller-3
+
+Setup the new controller as a Ceph monitor::
+
+    ceph-deploy mon add stack-controller-3
 
 
 Copy the Glance Key to the new controller node::
 
     # On stack-controller-1
-    ceph auth get-or-create client.glance | ssh stack-controller-2 sudo tee /etc/ceph/ceph.client.glance.keyring
-    ssh stack-controller-2 sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
+    ceph auth get-or-create client.glance | ssh stack-controller-3 sudo tee /etc/ceph/ceph.client.glance.keyring
+    ssh stack-controller-3 sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
 
 **Extra Deploy Node**
 
 Copy the SSH key from each existing controller to the new controller::
 
-    ssh-copy-id stack-controller-2
+    ssh-copy-id stack-controller-3
 
 Then initialize a key on the new server & copy it to the existing controller
 and storage nodes::
 
     ssh-keygen -t ecdsa -b 521
     ssh-copy-id stack-controller-1
+    ssh-copy-id stack-controller-2
     ssh-copy-id stack-storage-1
     ssh-copy-id stack-storage-2
     ssh-copy-id stack-storage-3
@@ -390,9 +418,13 @@ cluster, you can skip this section.
 Ceph Setup
 -----------
 
-Start by SSHing into the master controller, generate an SSH key & copy it to the Storage nodes::
+TODO: Set some varibles and use loops to reduce duplicate commands
+
+Start by SSHing into the master controller, generate an SSH key & copy it to
+the Controller & Storage nodes::
 
     ssh-keygen -t ecdsa -b 521
+    ssh-copy-id stack-controller-2
     ssh-copy-id stack-storage-1
     ssh-copy-id stack-storage-2
     ssh-copy-id stack-storage-3
@@ -402,12 +434,9 @@ Now create a directory for the cluster configuration::
     mkdir ~/acorn-cluster
     cd ~/acorn-cluster
 
-Deploy the initial cluster with the Storage nodes as monitors(eventually we
-will use the controllers for this, but we don't have HA controllers yet)::
+Deploy the initial cluster with the Controller nodes as monitors::
 
-    ceph-deploy new stack-storage-1 stack-storage-2 stack-storage-3
-
-TODO: Use controllers as monitors when we have HA controller nodes set up.
+    ceph-deploy new stack-controller-1 stack-controller-2
 
 Open up the ``ceph.conf`` in ``~/acorn-cluster/`` and add the public & cluster
 network settings::
@@ -415,9 +444,10 @@ network settings::
     public network = 10.5.1.0/24
     cluster network = 10.6.1.0/24
 
-Install Ceph on the storage nodes::
+Install Ceph on the nodes::
 
-    ceph-deploy install --release kraken stack-controller-1 stack-storage-1 stack-storage-2 stack-storage-3
+    ceph-deploy install --release kraken stack-controller-1 stack-controller-2 \
+        stack-storage-1 stack-storage-2 stack-storage-3
 
 Then create the initial monitors::
 
@@ -432,7 +462,8 @@ OSD(``/dev/sdb#``), and an HDD for each OSD::
 
 Now copy the configuraton file & admin key to the controller & storage nodes::
 
-    ceph-deploy admin stack-controller-1 stack-storage-1 stack-storage-2 stack-storage-3
+    ceph-deploy admin stack-controller-1 stack-controller-2 \
+        stack-storage-1 stack-storage-2 stack-storage-3
 
 And set the correct permissions on the admin key::
 
@@ -450,8 +481,8 @@ Now we'll make OpenStack use the Ceph cluster for Image & Block storage. Start
 by creating some pools to use::
 
     ceph osd pool create volumes 512
-    ceph osd pool create images 512
-    ceph osd pool create vms 512
+    ceph osd pool create vms 128
+    ceph osd pool create images 64
 
 Create Ceph Users for the various OpenStack Services, and assign them the
 appropriate pool permissions::
@@ -464,6 +495,8 @@ Then copy them to your nodes::
     # For each Controller node
     ceph auth get-or-create client.glance | ssh stack-controller-1 sudo tee /etc/ceph/ceph.client.glance.keyring
     ssh stack-controller-1 sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
+    ceph auth get-or-create client.glance | ssh stack-controller-2 sudo tee /etc/ceph/ceph.client.glance.keyring
+    ssh stack-controller-2 sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
 
     # For each Compute Node
     ceph auth get-or-create client.cinder | ssh stack-compute-1 sudo tee /etc/ceph/ceph.client.cinder.keyring
