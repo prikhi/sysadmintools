@@ -332,6 +332,21 @@ and storage nodes::
 
 TODO: Finish ceph-deploy node setup for extra controller
 
+Neutron
+++++++++
+
+Add the new controller as a DHCP agent for the private network::
+
+    cd ~
+    . admin-openrc.sh
+    # Run this & find the ID of the `DHCP agent` on the new controller
+    openstack network agent list
+
+    # Then add the agent as a DHCP server
+    neutron dhcp-agent-network-add <dhcp-agent-id> private
+
+TODO: Find out if needed when setting all controllers up at once & automate
+
 
 Compute
 --------
