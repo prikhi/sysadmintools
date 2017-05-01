@@ -2,7 +2,6 @@
 
 cinder_config:
   - { section: 'DEFAULT', option: 'enabled_backends', value: 'ceph' }
-  - { section: 'DEFAULT', option: 'glance_api_servers', value: '{{ master_controller_hostname }}:9292' }
   - { section: 'database', option: 'connection',
       value: 'mysql+pymysql://{{ cinder_db_user }}:{{ vaulted_db_password }}@{{ master_controller_hostname }}/{{ cinder_db_name }}' }
   - { section: 'ceph', option: 'volume_driver',
