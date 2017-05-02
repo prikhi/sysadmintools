@@ -45,3 +45,5 @@
               line='-l {{ management_ip }}'
   become: yes
   notify: restart memcached
+
+- meta: flush_handlers

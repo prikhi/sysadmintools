@@ -1,6 +1,6 @@
 ---
 
-ntp: "0.us.pool.ntp.org"
+ntp: "{{ master_controller_hostname }}"
 
 stack_env: {
   OS_USERNAME: "{{ admin_os_user }}",

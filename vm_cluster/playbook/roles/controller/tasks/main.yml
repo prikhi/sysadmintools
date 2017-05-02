@@ -14,6 +14,8 @@
 - include: setup_keystone.yml
   tags: keystone
 
+- meta: flush_handlers
+
 - include: setup_projects.yml
   tags: projects
   when: inventory_hostname in groups['master-controller']
@@ -46,6 +48,8 @@
 
 - include: setup_horizon.yml
   tags: horizon
+
+- meta: flush_handlers
 
 - include: setup_networks.yml
   tags: networks

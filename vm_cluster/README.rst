@@ -6,6 +6,9 @@ The ``vm_cluster`` folder contains files relevant to administration of Acorn's
 VM cluster, which runs on `OpenStack Newton`_ with Ubuntu nodes.
 
 
+TODO: Update OpenStack to Ocata
+
+
 Automated Installs
 ===================
 
@@ -62,7 +65,7 @@ The management network and provider network must be setup by manually editing
         address 10.5.1.11
         netmask 255.255.255.0
 
-On controller nodes, add the Provider Network Interface::
+On controller & compute nodes, add the Provider Network Interface::
 
     # The Provider Network Interface
     auto enp0s9
@@ -226,6 +229,94 @@ Install::
 
 From creating initial monitors onwards works the same. Verified by uploading
 image, creating volume, & launching instance.
+
+
+5/1/17 Test 1
+--------------
+
+Testing setup of all nodes at once. Started with fresh install from preseed
+file on 2 controllers, 1 compute, & 3 storage nodes.
+
+Ran playbook once, expected failure when restarting mysql for first time, since
+no cluster was initialized.
+
+Setup master controller & then restarted mysql on backup::
+
+    # On stack-controller-1
+    sudo galera_new_cluster
+
+    # On stack-controller-2
+    sudo systemctl restart mysql
+
+Then ran playbook again. Failed at retrieving openstack user list. Followed
+high availability setup instructions.
+
+Then ran playbook again, finished fine. Followed with Ceph Initialization.
+
+After Ceph finished, verified all services from master controller::
+
+    cd ~
+    . admin-openrc.sh
+
+    # Image Service
+    sudo apt-get install -y qemu-utils
+    wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+    qemu-img convert -f qcow2 -O raw cirros-0.3.4-x86_64-disk.img cirros.raw
+    openstack image create "cirros" --file cirros.raw --disk-format raw \
+        --container-format bare --public
+    openstack image list
+
+    # Compute Service
+    openstack compute service list
+
+    # Networking Service
+    neutron ext-list
+    openstack network agent list
+
+    # Block Storage Service
+    openstack volume service list
+
+    # Launch a VM
+    openstack flavor create --id 0 --vcpus 1 --ram 64 --disk 1 m1.nano
+    . acorn-openrc.sh
+    openstack security group rule create --proto icmp default
+    openstack security group rule create --proto tcp --dst-port 22 default
+    openstack network list
+    PRIVATE_NETWORK_ID="$(openstack network list -f value -c ID -c Name | grep private | cut -f1 -d' ')"
+    openstack server create --flavor m1.nano --image cirros \
+        --nic net-id=$PRIVATE_NETWORK_ID --security-group default test-instance
+    openstack server list
+    openstack floating ip create provider   # Check the created IP
+    FLOATING_IP="$(openstack floating ip list -c 'Floating IP Address' -f value)"
+    openstack server add floating ip test-instance $FLOATING_IP
+    # Should be able to ssh in as `cirros` w/ password `cubswin:)`
+
+
+5/1/17 Test 2
+--------------
+
+Rolled back to pre-ansible snapshots, ran playbook. Failed at mysql.
+
+TODO: Maybe run first time with tags, so doesn't fail? Something like::
+
+    ansible-playbook acorn.yml -t initial
+
+Initialized mysql cluster, then ran high availability playbook::
+
+    ansible-playbook acorn.yml -t ha
+
+After completion, followed HA initialization setup. Re-ran full playbook.
+Controller 1 failed when trying to query networks. Had to modify playbook to
+flush handlers before setting up projects/networks. Rolled back to initial
+snapshot, re-tested & working OK now.
+
+Ran Ceph initialization & verified cluster operation. Verification failed at
+compute service list, had to sync nova db & restart nova-compute on compute
+node. Failed again on volume service list due to unsync'd time, had to sync &
+restart::
+
+    sudo chronyc -a makestep
+    sudo systemctl cinder-volume restart
 
 
 Adding Nodes
@@ -433,27 +524,29 @@ cluster, you can skip this section.
 Ceph Setup
 -----------
 
-TODO: Set some varibles and use loops to reduce duplicate commands
+Start by SSHing into the master controller, we'll make running repeated
+commands easier by setting some array variables::
 
-Start by SSHing into the master controller, generate an SSH key & copy it to
-the Controller & Storage nodes::
+    # On stack-controller-1
+    CONTROLLERS=('stack-controller-1' 'stack-controller-2')
+    COMPUTE=('stack-compute-1')
+    STORAGE=('stack-storage-1' 'stack-storage-2' 'stack-storage-3')
+
+Then generate an SSH key & copy it to the Controller & Storage nodes::
 
     ssh-keygen -t ecdsa -b 521
-    ssh-copy-id stack-controller-2
-    ssh-copy-id stack-storage-1
-    ssh-copy-id stack-storage-2
-    ssh-copy-id stack-storage-3
+    for SRV in "${CONTROLLERS[@]}" "${COMPUTE[@]}" "${STORAGE[@]}"; do ssh-copy-id $SRV; done
 
 Now create a directory for the cluster configuration::
 
-    mkdir ~/acorn-cluster
-    cd ~/acorn-cluster
+    mkdir ~/ceph-cluster
+    cd ~/ceph-cluster
 
 Deploy the initial cluster with the Controller nodes as monitors::
 
-    ceph-deploy new stack-controller-1 stack-controller-2
+    ceph-deploy new ${CONTROLLERS[@]}
 
-Open up the ``ceph.conf`` in ``~/acorn-cluster/`` and add the public & cluster
+Open up the ``ceph.conf`` in ``~/ceph-cluster/`` and add the public & cluster
 network settings::
 
     public network = 10.5.1.0/24
@@ -461,12 +554,14 @@ network settings::
 
 Install Ceph on the nodes::
 
-    ceph-deploy install --release kraken stack-controller-1 stack-controller-2 \
-        stack-storage-1 stack-storage-2 stack-storage-3
+    ceph-deploy install --release kraken ${CONTROLLERS[@]} ${STORAGE[@]}
 
-Then create the initial monitors::
+Then create the initial monitors & start them on boot::
 
     ceph-deploy mon create-initial
+    for SRV in "${CONTROLLERS[@]}"; do
+        ssh $SRV sudo systemctl enable ceph-mon.target
+    done
 
 Next, add the OSDs. You'll want an SSD with a journal partition for each
 OSD(``/dev/sdb#``), and an HDD for each OSD::
@@ -475,15 +570,20 @@ OSD(``/dev/sdb#``), and an HDD for each OSD::
         stack-storage-2:/dev/sdc:/dev/sdb1 stack-storage-2:/dev/sdd:/dev/sdb2 \
         stack-storage-3:/dev/sdc:/dev/sdb1 stack-storage-3:/dev/sdd:/dev/sdb2
 
+    # If your drive layout is identical on every storage server:
+    for SRV in "${STORAGE[@]}"; do
+        ceph-deploy osd create $SRV:/dev/sdc:/dev/sdb1 $SRV:/dev/sdd:/dev/sdb2
+    done
+
 Now copy the configuraton file & admin key to the controller & storage nodes::
 
-    ceph-deploy admin stack-controller-1 stack-controller-2 \
-        stack-storage-1 stack-storage-2 stack-storage-3
+    ceph-deploy admin ${CONTROLLERS[@]} ${STORAGE[@]}
 
 And set the correct permissions on the admin key::
 
-    # Do this on every node
-    sudo chmod +r /etc/ceph/ceph.client.admin.keyring
+    for SRV in "${CONTROLLERS[@]}" "${STORAGE[@]}"; do
+        ssh $SRV sudo chmod +r /etc/ceph/ceph.client.admin.keyring
+    done
 
 Check the health of the storage cluster with ``ceph health`` & watch syncing
 progress with ``ceph -w``.
@@ -507,28 +607,28 @@ appropriate pool permissions::
 
 Then copy them to your nodes::
 
-    # For each Controller node
-    ceph auth get-or-create client.glance | ssh stack-controller-1 sudo tee /etc/ceph/ceph.client.glance.keyring
-    ssh stack-controller-1 sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
-    ceph auth get-or-create client.glance | ssh stack-controller-2 sudo tee /etc/ceph/ceph.client.glance.keyring
-    ssh stack-controller-2 sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
+    # Copy glance key to controllers
+    for SRV in ${CONTROLLERS[@]}; do
+        ceph auth get-or-create client.glance | ssh $SRV sudo tee /etc/ceph/ceph.client.glance.keyring
+        ssh $SRV sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
+    done
 
-    # For each Compute Node
-    ceph auth get-or-create client.cinder | ssh stack-compute-1 sudo tee /etc/ceph/ceph.client.cinder.keyring
+    # Copy cinder key to compute & storage nodes
+    for SRV in "${COMPUTE[@]}" "${STORAGE[@]}"; do
+        ceph auth get-or-create client.cinder | ssh $SRV sudo tee /etc/ceph/ceph.client.cinder.keyring
+    done
 
-    # For each Storage node
-    ceph auth get-or-create client.cinder | ssh stack-storage-1 sudo tee /etc/ceph/ceph.client.cinder.keyring
-    ssh stack-storage-1 sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
-    ceph auth get-or-create client.cinder | ssh stack-storage-2 sudo tee /etc/ceph/ceph.client.cinder.keyring
-    ssh stack-storage-2 sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
-    ceph auth get-or-create client.cinder | ssh stack-storage-3 sudo tee /etc/ceph/ceph.client.cinder.keyring
-    ssh stack-storage-3 sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
-
+    # Set the correct permissions on storage nodes
+    for SRV in "${STORAGE[@]}"; do
+        ssh $SRV sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
+    done
 
 Copy the ``ceph.conf`` to the Compute nodes(it should already be present on the
 other nodes)::
 
-    ssh stack-compute-1 sudo tee /etc/ceph/ceph.conf < /etc/ceph/ceph.conf
+    for SRV in "${COMPUTE[@]}"; do
+        ssh $SRV sudo tee /etc/ceph/ceph.conf < /etc/ceph/ceph.conf
+    done
 
 Display the secret key for the ``client.cinder`` ceph user and add it to the
 ansible password vault as ``vaulted_rbd_cinder_key``::
@@ -543,11 +643,19 @@ added(``ansible-playbook acorn.yml -t compute``).
 Finally, restart the OpenStack services::
 
     # On Controller
-    systemctl restart glance-api
+    for SRV in "${CONTROLLERS[@]}"; do
+        ssh $SRV sudo systemctl restart glance-api
+    done
+
     # On Compute
-    systemctl restart nova-compute
+    for SRV in "${COMPUTE[@]}"; do
+        ssh $SRV sudo systemctl restart nova-compute
+    done
+
     # On Storage
-    systemctl restart cinder-volume
+    for SRV in "${STORAGE[@]}"; do
+        ssh $SRV sudo systemctl restart cinder-volume
+    done
 
 Test the setup::
 
@@ -570,9 +678,35 @@ Some manual setup is required for highly available controller nodes.  You
 should have only one controller node for this initial setup. Add additional
 controller nodes after setting up the OpenStack cluster for the first time.
 
+TODO: Fix Chrony config & authorization
+
+MySQL
+------
+
+Stop the mysql server on the controller node & start it as a cluster::
+
+    sudo systemctl stop mysql
+    sudo galera_new_cluster
+
+RabbitMQ
+---------
+
+Join the backup controllers to the master controller::
+
+    # On stack-controller-2, stack-controller-3
+    sudo rabbitmqctl stop_app
+    sudo rabbitmqctl join_cluster rabbit@stack-controller-1
+    sudo rabbitmqctl start_app
+
+Then, on any controller node, enable mirroring of all queues::
+
+    sudo rabbitmqctl cluster_status
+    sudo rabbitmqctl set_policy ha-all '^(?!amq\.).*' '{"ha-mode": "all"}'
 
 Pacemaker
 ----------
+
+TODO: Setup VIP on public interface(192.168.1.0/24)
 
 Ansible only installs the Pacemaker & HAProxy packages. You will need to create
 the cluster & Virtual IP address when first creating the OpenStack cluster.
@@ -580,16 +714,14 @@ the cluster & Virtual IP address when first creating the OpenStack cluster.
 Start by removing the initial config file & authenticating the controller
 node::
 
-    sudo rm /etc/corosync/corosync.conf
-    sudo pcs cluster auth stack-controller-1 -u hacluster -p PASSWORD --force
+    sudo pcs cluster destroy
+    sudo pcs cluster auth stack-controller-1 stack-controller-2 \
+        -u hacluster -p PASSWORD
 
-Stop Pacemaker then create, start, & enable
-the cluster::
+Create, start, & enable the cluster::
 
-    sudo systemctl stop pacemaker corosync
-    sudo pcs cluster setup --force --name acorn-controller-cluster stack-controller-1
-    sudo pcs cluster start --all
-    sudo pcs cluster enable --all
+    sudo pcs cluster setup --start --enable --name acorn-controller-cluster \
+        --force stack-controller-1 stack-controller-2
 
 Set some basic properties::
 
@@ -601,6 +733,8 @@ Set some basic properties::
 Disable STONITH for now::
 
     sudo pcs property set stonith-enabled=false
+
+TODO: Instructions for re-enabling STONITH
 
 Create the Virtual IP Address::
 
@@ -615,25 +749,16 @@ Add HAProxy to the cluster & only serve the VIP when HAProxy is running::
 
 Add the Keystone service to Pacemaker::
 
-    sudo pcs resource create keystone keystone --clone interleave=true
+    sudo pcs resource create keystone keystone --clone interleave=true --force
 
 Add the Glance service to Pacemaker::
 
-    sudo pcs resource create glance-api glance-api --clone
+    sudo pcs resource create glance-api systemd:glance-api --clone --force
 
 Add the Cinder service to Pacemaker::
 
-    sudo pcs resource create cinder-api cinder-api --clone interleave=true
-    sudo pcs resource create cinder-scheduler cinder-scheduler --clone interleave=true
-
-
-MySQL
-------
-
-Stop the mysql server on the controller node & start it as a cluster::
-
-    sudo systemctl stop mysql
-    sudo galera_new_cluster
+    sudo pcs resource create cinder-api systemd:cinder-api --clone interleave=true --force
+    sudo pcs resource create cinder-scheduler systemd:cinder-scheduler --clone interleave=true --force
 
 
 High Availability

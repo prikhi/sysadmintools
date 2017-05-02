@@ -56,3 +56,6 @@
 # Restart Mysql on backup controllers first, so they can sync from the master controller
 - meta: flush_handlers
   when: "'backup-controller' in group_names"
+
+- meta: flush_handlers
+  when: "'backup-controller' not in group_names"
