@@ -7,6 +7,7 @@ VM cluster, which runs on `OpenStack Newton`_ with Ubuntu nodes.
 
 
 TODO: Update OpenStack to Ocata
+TODO: Putting cinder-volume on controller nodes as well.
 
 
 Automated Installs
@@ -52,10 +53,11 @@ The nodes should be setup to use ``sudo`` without a password::
 Network Setup
 --------------
 
-The management network and provider network must be setup by manually editing
+The management network must be setup by manually editing
 ``/etc/network/interfaces``::
 
-    # The primary public interface - for access nodes only
+    # TODO: Remove this for final install since public routed through mgmt
+    # The primary public interface
     auto enp0s3
     iface enp0s3 inet dhcp
 
@@ -65,7 +67,7 @@ The management network and provider network must be setup by manually editing
         address 10.5.1.11
         netmask 255.255.255.0
 
-On controller & compute nodes, add the Provider Network Interface::
+On controller & compute nodes, add the Provider & Overlay Network Interfaces::
 
     # The Provider Network Interface
     auto enp0s9
@@ -73,11 +75,25 @@ On controller & compute nodes, add the Provider Network Interface::
     up ip link set $IFACE up
     down ip link set $IFACE down
 
-On storage nodes, add the Storage Network Interface as well::
-
+    # The Overlay Network Interface
     auto enp0s10
     iface enp0s10 inet static
-        address 10.5.2.10
+        address 10.4.1.11
+        netmask 255.255.255.0
+
+
+On controller, compute, & storage nodes, add the Storage Network Interface::
+
+    auto enp0s11
+    iface enp0s11 inet static
+        address 10.6.1.11
+        netmask 255.255.255.0
+
+On storage nodes, add the Storage Sync Network::
+
+    auto enp0s12
+    iface enp0s12 inet static
+        address 10.7.1.11
         netmask 255.255.255.0
 
 Then restart the networking service::
@@ -107,7 +123,88 @@ You can run the playbook by installing ansible with pip and using the
 Initial Cluster Setup
 ======================
 
-TODO: Write initial cluster setup guide after getting everything working.
+Start up all of your Controller, Compute, & Storage Nodes and use the preseed
+file to install Ubuntu on them. Once the basic OS is installed, follow the Sudo
+& Network setup instructions.
+
+Write down which interface connects to which network on each node, this will be
+useful as you won't have to keep checking the config file. Add any extra files
+to the ``host_vars`` directory - look at similar hosts to see what variables
+need to be defined.
+
+Next run the ansible playbook with the ``initial`` tag::
+
+    ansible-playbook acorn.yml -t initial
+
+This will fail when mysql is restarted because there is no running cluster for
+the nodes to join. On your first controller, run ``sudo galera_new_cluster`` to
+start a one-node cluster, then run ``sudo systemctl start mysql`` on the other
+controllers to have them join that cluster.
+
+Now run the playbook with the ``ha`` tag to install the High Availability
+dependencies::
+
+    ansible-playbook acorn.yml -t ha
+
+Follow the instructions in the ``High Availability Initialization`` section to
+setup the Master Controller Virtual IP Address & HAProxy.
+
+On your controllers, add the Open vSwitch Bridge::
+
+    sudo ovs-vsctl add-br br-provider
+
+On your compute nodes, add the Open vSwitch Bridge & attach the provider
+interface::
+
+    sudo ovs-vsctl add-br br-provider
+    sudo ovs-vsctl add-port br-provider THE_NODES_PROVIDER_INTERFACE
+
+Now run the entire playbook::
+
+    ansible-playbook acorn.yml
+
+Once that's finished, follow the instructions in the ``Ceph Initialization``
+section.
+
+You should be set now, you can verify by running the following commands on the
+first controller node::
+
+    cd ~
+    . admin-openrc.sh
+
+    # Image Service
+    sudo apt-get install -y qemu-utils
+    wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+    qemu-img convert -f qcow2 -O raw cirros-0.3.5-x86_64-disk.img cirros.raw
+    openstack image create "cirros" --file cirros.raw --disk-format raw \
+        --container-format bare --public
+    openstack image list
+
+    # Compute Service
+    openstack compute service list
+
+    # Networking Service
+    neutron ext-list
+    openstack network agent list
+
+    # Block Storage Service
+    openstack volume service list
+
+    # Launch a VM
+    openstack flavor create --id 0 --vcpus 1 --ram 64 --disk 1 nano
+    . acorn-openrc.sh
+    openstack security group rule create --proto icmp default
+    openstack security group rule create --proto tcp --dst-port 22 default
+    openstack network list
+    PRIVATE_NETWORK_ID="$(openstack network list -f value -c ID -c Name | grep private | cut -f1 -d' ')"
+    openstack server create --flavor nano --image cirros \
+        --nic net-id=$PRIVATE_NETWORK_ID --security-group default test-instance
+    openstack server list
+    openstack floating ip create provider   # Check the created IP
+    FLOATING_IP="$(openstack floating ip list -c 'Floating IP Address' -f value)"
+    openstack server add floating ip test-instance $FLOATING_IP
+    echo $FLOATING_IP
+    # Should be able to ssh in as `cirros` w/ password `cubswin:)`
 
 
 3/9/17 Test
@@ -260,8 +357,8 @@ After Ceph finished, verified all services from master controller::
 
     # Image Service
     sudo apt-get install -y qemu-utils
-    wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
-    qemu-img convert -f qcow2 -O raw cirros-0.3.4-x86_64-disk.img cirros.raw
+    wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+    qemu-img convert -f qcow2 -O raw cirros-0.3.5-x86_64-disk.img cirros.raw
     openstack image create "cirros" --file cirros.raw --disk-format raw \
         --container-format bare --public
     openstack image list
@@ -289,6 +386,7 @@ After Ceph finished, verified all services from master controller::
     openstack floating ip create provider   # Check the created IP
     FLOATING_IP="$(openstack floating ip list -c 'Floating IP Address' -f value)"
     openstack server add floating ip test-instance $FLOATING_IP
+    echo $FLOATING_IP
     # Should be able to ssh in as `cirros` w/ password `cubswin:)`
 
 
@@ -296,10 +394,6 @@ After Ceph finished, verified all services from master controller::
 --------------
 
 Rolled back to pre-ansible snapshots, ran playbook. Failed at mysql.
-
-TODO: Maybe run first time with tags, so doesn't fail? Something like::
-
-    ansible-playbook acorn.yml -t initial
 
 Initialized mysql cluster, then ran high availability playbook::
 
@@ -317,6 +411,66 @@ restart::
 
     sudo chronyc -a makestep
     sudo systemctl cinder-volume restart
+
+
+6/5/17 Additions
+-----------------
+
+These changes been tested in a fresh install, but will be necessary next time
+we try.
+
+On controllers::
+
+    sudo ovs-vsctl add-br br-provider
+
+On computes::
+
+    sudo ovs-vsctl add-br br-provider
+    sudo ovs-vsctl add-port br-provider PROVIDER_INTERFACE
+
+Verify distributed self-service networking:
+https://docs.openstack.org/newton/networking-guide/deploy-ovs-ha-dvr.html#verify-network-operation
+
+
+6/6/17 Test
+------------
+
+For testing DVR networking. Started w/ fresh preseed installs & all nodes
+running.
+
+Ran playbook, controllers failed at mysql as expected. Initialized mysql
+cluster on controller-1. Started mysql on controller-2 afterwards.
+
+Ran playbook. Failed at querying users for glance(since no VIP). Did HA setup.
+
+Ran playbook. Failed at creating network. Did OVS setup & restarted
+``neutron-openvswitch-agent`` & ``neutron-metadata-agent`` on controller &
+compute.
+
+Ran playbook, everything passed. Did Ceph setup.
+
+Verified everything, failed at assigning floating ip, had to restart
+``neutron-l3-agent`` on compute nodes. Failed to ping from public LAN, tried
+some playbook tweaks & debugging but ended up rolling back to snapshot.
+Probably old config messing stuff up.
+
+6/7/17 Test
+------------
+
+Try to get DVR working again....
+
+Ran playbook, failed at mysql. Started cluster. Ran ``ha`` tags, setup
+pacemaker & OVS bridge.
+
+Ran playbook, failed at creating neutron user. Re-ran playbook & it
+completed past that(maybe due to low resources?)
+
+But failed at creating Router. Restarted neutron-metadata-agent on controllers
+& it completed(added restart to playbook).
+
+Ran ``pcs resource cleanup`` to refresh pacemaker status.
+
+Setup Ceph. Verified operation, can SSH into instance & ping internet.
 
 
 Adding Nodes
@@ -348,11 +502,6 @@ hosts. Restart the new node in clustering mode::
     sudo rabbitmqctl stop_app
     sudo rabbitmqctl join_cluster rabbit@stack-controller-1
     sudo rabbitmqctl start_app
-
-Check the status, then enable mirroring of all queues::
-
-    sudo rabbitmqctl cluster_status
-    sudo rabbitmqctl set_policy ha-all '^(?!amq\.).*' '{"ha-mode": "all"}'
 
 Pacemaker
 ++++++++++
@@ -544,13 +693,12 @@ Now create a directory for the cluster configuration::
 
 Deploy the initial cluster with the Controller nodes as monitors::
 
-    ceph-deploy new ${CONTROLLERS[@]}
+    ceph-deploy new --public-network 10.6.1.0/24 ${CONTROLLERS[@]}
 
-Open up the ``ceph.conf`` in ``~/ceph-cluster/`` and add the public & cluster
-network settings::
+Open up the ``ceph.conf`` in ``~/ceph-cluster/`` and add the cluster network
+setting::
 
-    public network = 10.5.1.0/24
-    cluster network = 10.6.1.0/24
+    cluster network = 10.7.1.0/24
 
 Install Ceph on the nodes::
 
@@ -678,8 +826,6 @@ Some manual setup is required for highly available controller nodes.  You
 should have only one controller node for this initial setup. Add additional
 controller nodes after setting up the OpenStack cluster for the first time.
 
-TODO: Fix Chrony config & authorization
-
 MySQL
 ------
 
@@ -705,8 +851,6 @@ Then, on any controller node, enable mirroring of all queues::
 
 Pacemaker
 ----------
-
-TODO: Setup VIP on public interface(192.168.1.0/24)
 
 Ansible only installs the Pacemaker & HAProxy packages. You will need to create
 the cluster & Virtual IP address when first creating the OpenStack cluster.
@@ -743,22 +887,20 @@ Create the Virtual IP Address::
 
 Add HAProxy to the cluster & only serve the VIP when HAProxy is running::
 
-    sudo pcs resource create lb-haproxy systemd:haproxy --clone --force
+    sudo pcs resource create lb-haproxy lsb:haproxy --clone
     sudo pcs constraint order start management-vip then lb-haproxy-clone kind=Optional
     sudo pcs constraint colocation add lb-haproxy-clone with management-vip
 
-Add the Keystone service to Pacemaker::
-
-    sudo pcs resource create keystone keystone --clone interleave=true --force
+TODO: Add following after openstack setup, so force not needed?
 
 Add the Glance service to Pacemaker::
 
-    sudo pcs resource create glance-api systemd:glance-api --clone --force
+    sudo pcs resource create glance-api lsb:glance-api --clone --force
 
 Add the Cinder service to Pacemaker::
 
-    sudo pcs resource create cinder-api systemd:cinder-api --clone interleave=true --force
-    sudo pcs resource create cinder-scheduler systemd:cinder-scheduler --clone interleave=true --force
+    sudo pcs resource create cinder-api lsb:cinder-api --clone interleave=true --force
+    sudo pcs resource create cinder-scheduler lsb:cinder-scheduler --clone interleave=true --force
 
 
 High Availability
@@ -851,11 +993,16 @@ The storage nodes run the following services:
 Network Setup
 --------------
 
-Our public address space is on ``192.168.1.0/24`` while the internal management
-network is on ``10.5.1.0/24`` and the storage network is on ``10.6.1.0/24``. IP
-addressing of nodes is done manually in ``/etc/network/interfaces/``.
+Our public address space is on ``192.168.1.0/24`` while the overlay network is
+on ``10.4.1.0/24``, the internal management network is on ``10.5.1.0/24``, and
+the storage network is on ``10.6.1.0/24``. IP addressing of nodes is done
+manually in ``/etc/network/interfaces/``.
+
+TODO: Expand network ranges so we can have more than 9 of each node.
 
 **Public Network**
+
+TODO: Unecessary when access is enabled on management network by our router.
 
 ``192.168.1.0/24``
 
@@ -864,19 +1011,35 @@ addressing of nodes is done manually in ``/etc/network/interfaces/``.
 * ``194`` to ``196`` are the Compute nodes.
 * ``197`` to ``199`` are the Storage nodes.
 
+**Overlay Network**
+
+``10.4.1.0/24``
+
+* ``11`` to ``19`` reserved for Controller nodes.
+* ``21`` to ``29`` reserved for Compute nodes.
+
 **Management Network**
 
 ``10.5.1.0/24``
 
-* ``10`` to ``19`` reserved for Controller nodes.
-* ``20`` to ``29`` reserved for Compute nodes.
-* ``30`` to ``39`` reserved for Storage nodes.
+* ``10`` is reserved for the Master Controller's Virtual IP.
+* ``11`` to ``19`` reserved for Controller nodes.
+* ``21`` to ``29`` reserved for Compute nodes.
+* ``31`` to ``39`` reserved for Storage nodes.
 
 **Storage Network**
 
 ``10.6.1.0/24``
 
-* ``10`` to ``19`` for OSD nodes.
+* ``11`` to ``19`` for Controller nodes.
+* ``21`` to ``29`` for Compute nodes.
+* ``31`` to ``39`` for Storage nodes.
+
+**Storage Sync Network**
+
+``10.7.1.0/24``
+
+* ``11`` to ``19`` for OSD nodes.
 
 
 Ceph
