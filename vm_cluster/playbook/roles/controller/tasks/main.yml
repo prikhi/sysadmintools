@@ -1,9 +1,10 @@
 ---
 
 - include: setup_dependencies.yml
+  tags: [common, initial]
 
 - include: setup_mysql.yml
-  tags: mysql
+  tags: [mysql, initial]
 
 - include: setup_high_availability.yml
   tags: ha

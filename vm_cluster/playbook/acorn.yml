@@ -2,12 +2,12 @@
 
 - hosts: all
   roles:
-    - { name: common, tags: common }
+    - { name: common, tags: [common, initial] }
   any_errors_fatal: True
 
 - hosts: all
   serial: 1
-  tags: common
+  tags: [common, initial]
   tasks:
     - name: Check if Reboot is Necessary
       stat: path=/var/run/reboot-required
