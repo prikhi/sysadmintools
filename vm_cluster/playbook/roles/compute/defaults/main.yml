@@ -12,6 +12,24 @@ nova_config:
 neutron_config:
   - { section: 'database', option: 'connection', value: ''}
 
+ml2_config:
+  - { section: 'securitygroup', option: 'firewall_driver', value: 'openvswitch' }
+
+ovs_agent_config:
+  - { section: 'ovs', option: 'local_ip', value: '{{ hostvars[ansible_hostname]["ansible_" + overlay_interface].ipv4.address }}' }
+
+dhcp_agent_config:
+  - { option: 'interface_driver', value: 'openvswitch'  }
+  - { option: 'enable_isolated_metadata', value: 'True'  }
+  - { option: 'force_metadata', value: 'True'  }
+
+metadata_agent_config:
+  - { option: 'nova_metadata_ip', value: '{{ master_controller_hostname }}' }
+  - { option: 'metadata_proxy_shared_secret', value: '{{ vaulted_metadata_secret }}' }
+
+l3_agent_config:
+    - { option: 'agent_mode', value: 'dvr' }
+
 ceph_config:
   - { option: 'images_type', value: 'rbd' }
   - { option: 'images_rbd_pool', value: 'vms' }

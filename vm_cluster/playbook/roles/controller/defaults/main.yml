@@ -68,11 +68,9 @@ nova_config:
   - { section: 'libvirt', option: 'rbd_secret_uuid', value: '{{ vaulted_rbd_cinder_uuid }}' }
 
 neutron_config:
-  - { section: 'DEFAULT', option: 'verbose', value: 'True' }
   - { section: 'DEFAULT', option: 'bind_host', value: '{{ management_ip }}' }
   - { section: 'database', option: 'connection',
       value: 'mysql+pymysql://{{ neutron_db_user }}:{{ vaulted_db_password }}@{{ master_controller_hostname }}/{{ neutron_db_name }}' }
-  - { section: 'DEFAULT', option: 'core_plugin', value: 'ml2' }
   - { section: 'DEFAULT', option: 'service_plugins', value: 'router' }
   - { section: 'DEFAULT', option: 'allow_overlapping_ips', value: 'True' }
   - { section: 'DEFAULT', option: 'notify_nova_on_port_status_changes',
@@ -81,21 +79,33 @@ neutron_config:
       value: 'True'}
   - { section: 'DEFAULT', option: 'l3_ha', value: 'True'}
   - { section: 'DEFAULT', option: 'allow_automatic_l3agent_failover', value: 'True'}
-  - { section: 'DEFAULT', option: 'min_l3_agents_per_router', value: '1'}
   - { section: 'DEFAULT', option: 'max_l3_agents_per_router', value: '5'}
-  - { section: 'nova', option: 'auth_url',
-      value: 'http://{{ master_controller_hostname }}:35357' }
+  - { section: 'DEFAULT', option: 'router_distributed', value: 'True' }
+  - { section: 'nova', option: 'auth_url', value: 'http://{{ master_controller_hostname }}:35357' }
   - { section: 'nova', option: 'auth_type', value: 'password' }
   - { section: 'nova', option: 'project_domain_id', value: 'default' }
   - { section: 'nova', option: 'user_domain_id', value: 'default' }
   - { section: 'nova', option: 'region_name', value: 'RegionOne' }
-  - { section: 'nova', option: 'project_name',
-      value: '{{ service_os_project }}' }
-  - { section: 'nova', option: 'username',
-      value: '{{ nova_os_user }}' }
-  - { section: 'nova', option: 'password',
-      value: '{{ vaulted_nova_os_password }}' }
-  - { section: 'agent', option: 'dhcp_agents_per_network', value: '3' }
+  - { section: 'nova', option: 'project_name', value: '{{ service_os_project }}' }
+  - { section: 'nova', option: 'username', value: '{{ nova_os_user }}' }
+  - { section: 'nova', option: 'password', value: '{{ vaulted_nova_os_password }}' }
+  - { section: 'agent', option: 'dhcp_agents_per_network', value: '1' } # TODO: Change to 2 when have 2 compute nodes
+
+ml2_config:
+  - { section: 'ml2', option: 'type_drivers', value: 'flat,vlan,vxlan' }
+  - { section: 'ml2', option: 'tenant_network_types', value: 'vxlan' }
+  - { section: 'ml2', option: 'mechanism_drivers', value: 'openvswitch,l2population' }
+  - { section: 'ml2', option: 'extension_drivers', value: 'port_security' }
+  - { section: 'ml2_type_flat', option: 'flat_networks', value: 'provider' }
+  - { section: 'ml2_type_vlan', option: 'network_vlan_ranges', value: 'provider' }
+  - { section: 'ml2_type_vxlan', option: 'vni_ranges', value: '500:1500' }
+  - { section: 'securitygroup', option: 'firewall_driver', value: 'openvswitch' }
+
+ovs_agent_config:
+  - { section: 'ovs', option: 'local_ip', value: '{{ hostvars[ansible_hostname]["ansible_" + overlay_interface].ipv4.address }}' }
+
+l3_agent_config:
+    - { option: 'agent_mode', value: 'dvr_snat' }
 
 cinder_config:
   - { section: 'DEFAULT', option: 'host', value: '{{ master_controller_hostname }}' }

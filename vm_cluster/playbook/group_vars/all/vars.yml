@@ -78,30 +78,22 @@ common_nova_config:
 
 # Neutron
 common_neutron_config:
+  - { section: 'DEFAULT', option: 'core_plugin', value: 'ml2' }
   - { section: 'keystone_authtoken', option: 'username',
       value: '{{ neutron_os_user }}' }
   - { section: 'keystone_authtoken', option: 'password',
       value: '{{ vaulted_neutron_os_password }}' }
 
-ml2_config:
-  - { section: 'DEFAULT', option: 'verbose', value: 'True' }
-  - { section: 'ml2', option: 'type_drivers', value: 'flat,vlan,vxlan' }
-  - { section: 'ml2', option: 'tenant_network_types', value: 'vxlan' }
-  - { section: 'ml2', option: 'mechanism_drivers', value: 'linuxbridge,l2population' }
-  - { section: 'ml2', option: 'extension_drivers', value: 'port_security' }
-  - { section: 'ml2_type_flat', option: 'flat_networks', value: 'provider' }
-  - { section: 'ml2_type_vxlan', option: 'vni_ranges', value: '1:1000' }
-  - { section: 'securitygroup', option: 'enable_ipset', value: 'True' }
+common_ovs_config:
+  - { section: 'DEFAULT', option: 'enable_distributed_routing', value: 'True' }
+  - { section: 'agent', option: 'l2_population', value: 'True' }
+  - { section: 'agent', option: 'tunnel_types', value: 'vxlan' }
+  - { section: 'ovs', option: 'bridge_mappings', value: 'provider:br-provider' }
+  - { section: 'securitygroup', option: 'firewall_driver', value: 'openvswitch' }
 
-linux_bridge_agent_config:
-  - { section: 'linux_bridge', option: 'physical_interface_mappings',
-      value: 'provider:{{ public_interface }}' }
-  - { section: 'vxlan', option: 'enable_vxlan', value: 'True' }
-  - { section: 'vxlan', option: 'local_ip', value: '{{ management_ip }}' }
-  - { section: 'vxlan', option: 'l2_population', value: 'True' }
-  - { section: 'securitygroup', option: 'enable_security_group', value: 'True' }
-  - { section: 'securitygroup', option: 'firewall_driver',
-      value: 'neutron.agent.linux.iptables_firewall.IptablesFirewallDriver' }
+common_l3_agent_config:
+    - { option: 'interface_driver', value: 'openvswitch' }
+    - { option: 'external_network_bridge', value: '' }
 
 common_nova_neutron_config:
   - { option: 'url', value: 'http://{{ master_controller_hostname }}:9696' }

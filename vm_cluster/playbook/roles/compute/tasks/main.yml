@@ -1,5 +1,7 @@
 ---
 
+# TODO: Getting big enough that it should be split into multiple files
+
 - name: Ensure the Ceph Dependencies are Installed
   apt: name={{ item }}
   become: yes
@@ -41,7 +43,12 @@
   tags: nova
 
 - name: Ensure OpenStack Neutron is Installed
-  apt: name=neutron-linuxbridge-agent
+  apt: name="{{ item }}"
+  with_items:
+    - neutron-dhcp-agent
+    - neutron-l3-agent
+    - neutron-metadata-agent
+    - neutron-openvswitch-agent
   become: yes
   tags: neutron
 
@@ -50,16 +57,53 @@
             option="{{ item.option }}" value="{{ item.value }}"
   with_items: "{{ common_auth_config + common_rabbit_config + common_neutron_config + neutron_config }}"
   become: yes
-  notify: restart linux bridge agent
+  notify:
+    - restart ovs agent
+    - restart dhcp agent
+    - restart metadata agent
   tags: neutron
 
-- name: Ensure the Linux Bridge Agent is Correctly Configured
-  ini_file: dest=/etc/neutron/plugins/ml2/linuxbridge_agent.ini
+- name: Ensure the Neutron ML2 Plugin is Correctly Configured
+  ini_file: dest=/etc/neutron/plugins/ml2/ml2_conf.ini
             section="{{ item.section }}" option="{{ item.option }}"
             value="{{ item.value }}"
-  with_items: "{{ linux_bridge_agent_config }}"
+  with_items: "{{ ml2_config }}"
   become: yes
-  notify: restart linux bridge agent
+  tags: neutron
+
+- name: Ensure the Open vSwitch Agent is Correctly Configured
+  ini_file: dest=/etc/neutron/plugins/ml2/openvswitch_agent.ini
+            section="{{ item.section }}" option="{{ item.option }}"
+            value="{{ item.value }}"
+  with_items: "{{ common_ovs_config + ovs_agent_config }}"
+  become: yes
+  notify: restart ovs agent
+  tags: neutron
+
+- name: Ensure the DHCP Agent is Correctly Configured
+  ini_file: dest=/etc/neutron/dhcp_agent.ini
+            section="DEFAULT" option="{{ item.option }}"
+            value="{{ item.value }}"
+  with_items: "{{ dhcp_agent_config }}"
+  become: yes
+  notify: restart dhcp agent
+  tags: neutron
+
+- name: Ensure the Metadata Agent is Correctly Configured
+  ini_file: dest=/etc/neutron/metadata_agent.ini
+            section="DEFAULT" option="{{ item.option }}"
+            value="{{ item.value }}"
+  with_items: "{{ metadata_agent_config }}"
+  become: yes
+  notify: restart metadata agent
+  tags: neutron
+
+- name: Ensure the Layer-3 Agent is Correctly Configured
+  ini_file: dest=/etc/neutron/l3_agent.ini section=DEFAULT
+            option="{{ item.option }}" value="{{ item.value }}"
+  with_items: "{{ common_l3_agent_config + l3_agent_config }}"
+  become: yes
+  notify: restart l3 agent
   tags: neutron
 
 - name: Ensure Nova is Configured to Use Neutron

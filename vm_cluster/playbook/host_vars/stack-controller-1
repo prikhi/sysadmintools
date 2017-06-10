@@ -1,4 +1,4 @@
 ---
 
 management_interface: 'enp0s8'
-public_interface: 'enp0s9'
+overlay_interface: 'enp0s10'

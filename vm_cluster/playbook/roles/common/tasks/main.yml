@@ -68,3 +68,13 @@
                   filename=ceph
   become: yes
   tags: ceph
+
+- name: Ensure Open vSwitch is Installed
+  apt: name="{{ item }}"
+  with_items:
+    - ovn-central
+    - ovn-common
+  become: yes
+  when: inventory_hostname in groups['controllers'] or
+        inventory_hostname in groups['compute']
+  tags: neutron

@@ -7,7 +7,7 @@
 
 - name: Ensure the Provider Network Exists
   shell: openstack network create --share --provider-physical-network provider
-         --provider-network-type flat provider
+         --external --provider-network-type flat provider
   when: os_networks.stdout.find("provider") == -1
 
 - name: Retrieve a List of OpenStack Subnets

@@ -1,5 +1,4 @@
 ---
 
 management_interface: 'enp0s8'
-public_interface: 'enp0s9'
 storage_interface: 'enp0s10'

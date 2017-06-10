@@ -89,3 +89,5 @@
 - name: Ensure the Default Nova Database is Removed
   file: state=absent path=/var/lib/nova/nova.sqlite
   become: yes
+
+- meta: flush_handlers
