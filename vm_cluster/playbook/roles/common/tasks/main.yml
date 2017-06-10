@@ -24,7 +24,7 @@
 
 - name: Ensure the the default NTP Servers are Removed
   replace: dest=/etc/chrony/chrony.conf
-           regexp='^server .\.debian\.pool\.ntp\.org.*$' replace=""
+           regexp='^(server|pool) .\.debian\.pool\.ntp\.org.*$' replace=""
   become: yes
 
 - name: Ensure the Correct NTP Server is Set
@@ -32,6 +32,13 @@
               line="server {{ ntp }} iburst"
   notify: restart chrony
   become: yes
+
+- name: Ensure the Controllers Can Serve Time to Other Nodes
+  lineinfile: dest=/etc/chrony/chrony.conf regexp='^allow .*$' state=present
+              line="allow all 10.5.1"
+  notify: restart chrony
+  become: yes
+  when: inventory_hostname in groups['controllers']
 
 - name: Ensure Apt Utilities are Installed
   apt: name=software-properties-common
