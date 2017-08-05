@@ -107,7 +107,7 @@ Install & deploy Ceph on the new controller node::
 
     # On stack-controller-1
     cd ~/storage-cluster
-    ceph-deploy install --release kraken stack-controller-3
+    ceph-deploy install --repo-url http://download.ceph.com/debian-kraken stack-controller-3
     ceph-deploy admin stack-controller-3
 
 Setup the new controller as a Ceph monitor::
@@ -182,7 +182,11 @@ Then use ``ceph-deploy`` on the master controller to install Ceph on the new
 node::
 
     cd ~/storage-cluster
-    ceph-deploy install --release kraken stack-storage-3
+    ceph-deploy install --repo-url http://download.ceph.com/debian-kraken stack-storage-3
+
+Note that we use ``--repo-url`` here instead of the ``--release`` flag, so that
+packages are downloaded through HTTP instead of HTTPS, which allows them to be
+cached by our web proxy.
 
 Deploy an OSD to each new storage disk. It's recommended to split the journals
 out on a separate SSD with a partition for each OSD::
@@ -190,34 +194,5 @@ out on a separate SSD with a partition for each OSD::
     ceph-deploy disk list stack-storage-3
     ceph-deploy osd create stack-storage-3:/dev/sdc:/dev/sdb1 stack-storage-3:/dev/sdd:/dev/sdb2
 
-Copy the configuration file & admin key to the new node & set the correct
-permissions::
-
-    # On stack-controller-1
-    ceph-deploy admin stack-storage-3
-
-    # On stack-storage-3
-    sudo chmod +r /etc/ceph/ceph.client.admin.keyring
-
-Then copy the Cinder auth key to the new node::
-
-    # TODO: Needed now that cinder-volume is on Controllers?
-    # On stack-controller-1
-    ceph auth get-or-create client.cinder | ssh stack-storage-3 sudo tee /etc/ceph/ceph.client.cinder.keyring
-    ssh stack-storage-3 sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
-
 You can monitor the rebalancing progress by running ``ceph -w`` on
 stack-controller-1.
-
-Restart the ``cinder-volume`` service so that it picks up the Ceph cluster::
-
-    sudo systemctl restart cinder-volume
-
-List the discovered volume services from stack-controller-1 to ensure OpenStack
-sees the new node::
-
-    . ~/admin-openrc.sh
-    openstack volume service list
-
-You should see ``cinder-volume`` up and running on your new node.
-

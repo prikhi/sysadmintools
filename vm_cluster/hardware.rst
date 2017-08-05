@@ -113,8 +113,6 @@ The OS drive is in the leftmost bay.
 NICs
 -----
 
-TODO: Check ethernet numbering & networks match up to plan(4=top?,3=bottom?)
-
 =====================   =========   ==========      ============
 rear panel location     interface   network         ip range
 =====================   =========   ==========      ============

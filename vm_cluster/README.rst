@@ -7,7 +7,6 @@ VM cluster, which runs on `OpenStack Newton`_ with Ubuntu nodes.
 
 
 TODO: Update OpenStack to Ocata
-TODO: Putting cinder-volume on controller nodes as well.
 TODO: Setup & test routing between mgmt network, user lan, & wan
 
 
