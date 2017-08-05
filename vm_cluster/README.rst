@@ -700,9 +700,11 @@ setting::
 
     cluster network = 10.5.1.0/24
 
-Install Ceph on the nodes::
+Install Ceph on the nodes(we specify the full repo URL instead of just using
+``--release kraken`` to avoid HTTPS, allowing packages to be cached by our web
+proxy)::
 
-    ceph-deploy install --release kraken ${CONTROLLERS[@]} ${STORAGE[@]}
+    ceph-deploy install --repo-url http://download.ceph.com/debian-kraken ${CONTROLLERS[@]} ${STORAGE[@]}
 
 Then create the initial monitors & start them on boot::
 
