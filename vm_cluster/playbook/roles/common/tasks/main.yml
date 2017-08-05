@@ -35,7 +35,7 @@
 
 - name: Ensure the Controllers Can Serve Time to Other Nodes
   lineinfile: dest=/etc/chrony/chrony.conf regexp='^allow .*$' state=present
-              line="allow all 10.5.1"
+              line="allow all 10.2.1"
   notify: restart chrony
   become: yes
   when: inventory_hostname in groups['controllers']

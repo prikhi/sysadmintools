@@ -16,7 +16,7 @@ cinder_db_name: "cinder"
 cinder_db_user: "cinder"
 
 master_controller_hostname: "stack-master-controller"
-master_controller_ip: "10.5.1.10"
+master_controller_ip: "10.2.1.10"
 
 public_network_options:
     cidr: "192.168.1.0/24"
@@ -30,7 +30,7 @@ private_network_options:
     gateway: "10.0.5.1"
     dns: "{{ public_network_options.dns }}"
 
-management_network_cidr: "10.5.1.0/24"
+management_network_cidr: "10.2.1.0/24"
 
 rabbit_hosts:
     "{% for host in groups.controllers %}{{ mq_user }}:{{ vaulted_mq_password }}@{{ host }}{% if not loop.last %},{% endif %}{% endfor %}"

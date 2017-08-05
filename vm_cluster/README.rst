@@ -64,7 +64,7 @@ The management network must be setup by manually editing
     # The Management Network Interface
     auto enp0s8
     iface enp0s8 inet static
-        address 10.5.1.11
+        address 10.2.1.11
         netmask 255.255.255.0
 
 On controller & compute nodes, add the Provider & Overlay Network Interfaces::
@@ -78,7 +78,7 @@ On controller & compute nodes, add the Provider & Overlay Network Interfaces::
     # The Overlay Network Interface
     auto enp0s10
     iface enp0s10 inet static
-        address 10.4.1.11
+        address 10.3.1.11
         netmask 255.255.255.0
 
 
@@ -86,14 +86,14 @@ On controller, compute, & storage nodes, add the Storage Network Interface::
 
     auto enp0s11
     iface enp0s11 inet static
-        address 10.6.1.11
+        address 10.4.1.11
         netmask 255.255.255.0
 
 On storage nodes, add the Storage Sync Network::
 
     auto enp0s12
     iface enp0s12 inet static
-        address 10.7.1.11
+        address 10.5.1.71
         netmask 255.255.255.0
 
 Then restart the networking service::
@@ -693,12 +693,12 @@ Now create a directory for the cluster configuration::
 
 Deploy the initial cluster with the Controller nodes as monitors::
 
-    ceph-deploy new --public-network 10.6.1.0/24 ${CONTROLLERS[@]}
+    ceph-deploy new --public-network 10.4.1.0/24 ${CONTROLLERS[@]}
 
 Open up the ``ceph.conf`` in ``~/ceph-cluster/`` and add the cluster network
 setting::
 
-    cluster network = 10.7.1.0/24
+    cluster network = 10.5.1.0/24
 
 Install Ceph on the nodes::
 
@@ -880,7 +880,7 @@ TODO: Instructions for re-enabling STONITH
 Create the Virtual IP Address::
 
     sudo pcs resource create management-vip ocf:heartbeat:IPaddr2 \
-        params ip="10.5.1.10" cidr_netmask="24" op monitor interval="30s"
+        params ip="10.2.1.10" cidr_netmask="24" op monitor interval="30s"
 
 Add HAProxy to the cluster & only serve the VIP when HAProxy is running::
 
@@ -1008,35 +1008,35 @@ TODO: Unecessary when access is enabled on management network by our router.
 * ``194`` to ``196`` are the Compute nodes.
 * ``197`` to ``199`` are the Storage nodes.
 
-**Overlay Network**
-
-``10.4.1.0/24``
-
-* ``11`` to ``19`` reserved for Controller nodes.
-* ``21`` to ``29`` reserved for Compute nodes.
-
 **Management Network**
 
-``10.5.1.0/24``
+``10.2.1.0/24``
 
 * ``10`` is reserved for the Master Controller's Virtual IP.
-* ``11`` to ``19`` reserved for Controller nodes.
-* ``21`` to ``29`` reserved for Compute nodes.
-* ``31`` to ``39`` reserved for Storage nodes.
+* ``11`` to ``40`` reserved for Controller nodes.
+* ``41`` to ``70`` reserved for Compute nodes.
+* ``71`` to ``100`` reserved for Storage nodes.
+
+**Overlay Network**
+
+``10.3.1.0/24``
+
+* ``11`` to ``40`` reserved for Controller nodes.
+* ``41`` to ``70`` reserved for Compute nodes.
 
 **Storage Network**
 
-``10.6.1.0/24``
+``10.4.1.0/24``
 
-* ``11`` to ``19`` for Controller nodes.
-* ``21`` to ``29`` for Compute nodes.
-* ``31`` to ``39`` for Storage nodes.
+* ``11`` to ``40`` for Controller nodes.
+* ``41`` to ``70`` for Compute nodes.
+* ``71`` to ``100`` for Storage nodes.
 
 **Storage Sync Network**
 
-``10.7.1.0/24``
+``10.5.1.0/24``
 
-* ``11`` to ``19`` for OSD nodes.
+* ``71`` to ``100`` for OSD nodes.
 
 
 Ceph
