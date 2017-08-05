@@ -4,6 +4,7 @@
   apt: name={{ item }}
   become: yes
   with_items:
+    - ceph-common
     - ceph-deploy
     - python-rbd
     - python-ceph

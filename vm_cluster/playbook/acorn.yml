@@ -37,8 +37,3 @@
     - compute
   roles:
     - { name: compute, tags: compute }
-
-- hosts:
-    - storage
-  roles:
-    - { name: storage, tags: storage }

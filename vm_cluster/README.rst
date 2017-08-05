@@ -723,9 +723,9 @@ OSD(``/dev/sdb#``), and an HDD for each OSD::
         ceph-deploy osd create $SRV:/dev/sdc:/dev/sdb1 $SRV:/dev/sdd:/dev/sdb2
     done
 
-Now copy the configuraton file & admin key to the controller & storage nodes::
+Now copy the configuraton file & admin key to the controller nodes::
 
-    ceph-deploy admin ${CONTROLLERS[@]} ${STORAGE[@]}
+    ceph-deploy admin ${CONTROLLERS[@]}
 
 And set the correct permissions on the admin key::
 
@@ -762,12 +762,13 @@ Then copy them to your nodes::
     done
 
     # Copy cinder key to compute & storage nodes
-    for SRV in "${COMPUTE[@]}" "${STORAGE[@]}"; do
+    # TODO: Controller now that volume is there instead of Storage nodes?
+    for SRV in "${CONTROLLERS[@]}" "${COMPUTE[@]}"; do
         ceph auth get-or-create client.cinder | ssh $SRV sudo tee /etc/ceph/ceph.client.cinder.keyring
     done
 
-    # Set the correct permissions on storage nodes
-    for SRV in "${STORAGE[@]}"; do
+    # Set the correct permissions on controller nodes
+    for SRV in "${CONTROLLERS[@]}"; do
         ssh $SRV sudo chown cinder:cinder /etc/ceph/ceph.client.cinder.keyring
     done
 
@@ -793,16 +794,12 @@ Finally, restart the OpenStack services::
     # On Controller
     for SRV in "${CONTROLLERS[@]}"; do
         ssh $SRV sudo systemctl restart glance-api
+        ssh $SRV sudo systemctl restart cinder-volume
     done
 
     # On Compute
     for SRV in "${COMPUTE[@]}"; do
         ssh $SRV sudo systemctl restart nova-compute
-    done
-
-    # On Storage
-    for SRV in "${STORAGE[@]}"; do
-        ssh $SRV sudo systemctl restart cinder-volume
     done
 
 Test the setup::
@@ -964,7 +961,8 @@ The controller nodes run the following services:
 
 * cinder-api
 * cinder-scheduler
-* conva-novncproxy
+* cinder-volume
+* tgt
 * glance-api
 * glance-registry
 * neutron-dhcp-agent
@@ -975,6 +973,7 @@ The controller nodes run the following services:
 * nova-api
 * nova-conductor
 * nova-consoleauth
+* nova-novncproxy
 * nova-scheduler
 
 The compute nodes run the following services:
@@ -986,8 +985,6 @@ The storage nodes run the following services:
 
 * ceph-mon
 * ceph-osd
-* cinder-volume
-* tgt
 
 
 Network Setup

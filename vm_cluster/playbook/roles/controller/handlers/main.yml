@@ -100,6 +100,10 @@
   become_user: cinder
   when: inventory_hostname in groups['master-controller']
 
+- name: restart tgt service
+  service: name=tgt state=restarted
+  become: yes
+
 - name: restart cinder service
   service: name={{ item }} state=restarted
   with_items:

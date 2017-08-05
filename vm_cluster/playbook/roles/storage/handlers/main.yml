@@ -1,9 +1,0 @@
----
-
-- name: restart tgt service
-  service: name=tgt state=restarted
-  become: yes
-
-- name: restart cinder service
-  service: name=cinder-volume state=restarted
-  become: yes

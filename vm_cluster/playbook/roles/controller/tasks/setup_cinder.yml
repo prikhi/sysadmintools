@@ -70,6 +70,7 @@
   with_items:
     - cinder-api
     - cinder-scheduler
+    - cinder-volume
   become: yes
 
 - name: Ensure Cinder is Correctly Configured
@@ -79,6 +80,7 @@
   with_items: "{{ common_auth_config + common_rabbit_config + common_cinder_config + cinder_config }}"
   notify:
     - sync cinder database
+    - restart tgt service
     - restart cinder service
 
 - name: Ensure Nova is Correctly Configured
