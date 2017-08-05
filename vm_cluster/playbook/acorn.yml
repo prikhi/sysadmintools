@@ -25,6 +25,7 @@
           host={{ ansible_ssh_host }} port={{ ansible_port }}
           delay=30 timeout=120
       when: reboot_required.stat.exists
+  any_errors_fatal: True
 
 - hosts:
     - master-controller
@@ -32,8 +33,10 @@
   roles:
     - { name: controller, tags: controller }
   environment: "{{ stack_env }}"
+  any_errors_fatal: True
 
 - hosts:
     - compute
   roles:
     - { name: compute, tags: compute }
+  any_errors_fatal: True
