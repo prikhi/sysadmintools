@@ -18,6 +18,9 @@ The ``Ansible`` and ``Fabric`` dependencies may also be installed via ``pip``::
 
     pip install ansible Fabric
 
+TODO: Add playbooks for VM servers
+TODO: Move documentation to Sphinx & RTFD.org
+
 
 .. include:: slackware_servers/README.rst
 
