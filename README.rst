@@ -32,7 +32,11 @@ You can build the documentation yourself by using `Sphinx`_, also installed via
 You can run just ``make`` to see all the formats you can build. You might want
 ``make latexpdf`` to generate a PDF of the documentation.
 
-TODO: Add playbooks for VM servers
+If you are writing documentation, run ``make livehtml`` to open the docs in
+your browser, and automatically rebuild the documentation & refresh the page
+when a source file is modified.
+
+TODO: Add playbooks for VMs
 
 
 .. _Ansible: http://www.ansible.com/home
