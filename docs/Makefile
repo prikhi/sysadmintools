@@ -17,7 +17,7 @@ help:
 
 # Watch source, automatically rebuild & refresh browser
 livehtml:
-	sphinx-autobuild -B -b html $(ALLSPHINXOPTS) "$(SOURCEDIR)" "$(BUILDDIR)/html"
+	sphinx-autobuild -B -H 0.0.0.0 -b html $(ALLSPHINXOPTS) "$(SOURCEDIR)" "$(BUILDDIR)/html"
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).

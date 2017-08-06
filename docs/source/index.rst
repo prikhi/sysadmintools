@@ -14,6 +14,8 @@ TODO: Add Chart for Seed Office Jack <-> Patch Panel Port Mapping
    :maxdepth: 2
    :caption: Contents:
 
+   architecture
+   guides
    servers/slackware
    office_workstation
    vm_cluster/index
