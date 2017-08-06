@@ -1,6 +1,7 @@
-==============================
-Acorn VM Cluster Setup Trials
-==============================
+=================================
+Appendix: Notes From Setup Trials
+=================================
+
 
 These are notes from various initial setup attempts we went through as we built
 our final configuration.
@@ -32,8 +33,6 @@ by image listing. Image creation does not work due to ceph not being setup.
 Updated nova's tasks & config for controller HA.
 
 Failed at nova re-run due to existing service but wrong endpoints.
-
-TODO: Fix service/endpoint tasks to decouple service & endpoint creation.
 
 Failed at nova addresses already bound. Fixed by setting
 ``osapi_compute_listen``, ``novncproxy_host``, & ``metadata_listen_host`` to
@@ -253,6 +252,7 @@ Verified everything, failed at assigning floating ip, had to restart
 some playbook tweaks & debugging but ended up rolling back to snapshot.
 Probably old config messing stuff up.
 
+
 6/7/17 Test
 ============
 
@@ -271,15 +271,11 @@ Ran ``pcs resource cleanup`` to refresh pacemaker status.
 
 Setup Ceph. Verified operation, can SSH into instance & ping internet.
 
+
 8/4/17 Test
 ============
 
 Test moving cinder-volume to controller nodes. 2 controllers, 1 compute, 2
 storage.
 
-Followed ``Initial Cluster Setup`` section.
-
-Ran playbook.
-
-
-
+Followed :ref:`cluster-initialization`. Verified as working.

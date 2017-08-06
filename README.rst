@@ -6,11 +6,11 @@ Acorn System Administration Tools
     :target: http://acorn-networking.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-This repository contains files/scripts for the automated administration of
-Acorn's Linux servers(Slackware) & workstations(Debian).
+This repository contains files, scripts, & documentation for the automated
+administration of Acorn's Linux servers(Slackware), workstations(Debian), & VM
+cluster(OpenStack).
 
-You can read all the associated documentation at
-http://acorn-networking.rtfd.org.
+You can read all the documentation at http://acorn-networking.rtfd.org.
 
 The main applications we use are `Ansible`_ and `Fabric`_.
 
@@ -33,14 +33,6 @@ You can run just ``make`` to see all the formats you can build. You might want
 ``make latexpdf`` to generate a PDF of the documentation.
 
 TODO: Add playbooks for VM servers
-TODO: Move documentation to Sphinx & RTFD.org
-
-
-.. include:: slackware_servers/README.rst
-
-.. include:: office_workstation/README.rst
-
-.. include:: vm_cluster/README.rst
 
 
 .. _Ansible: http://www.ansible.com/home

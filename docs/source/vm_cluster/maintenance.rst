@@ -1,24 +1,25 @@
-=============================
-Acorn VM Cluster Maintenance
-=============================
+.. _cluster-maintenance:
 
+===================
 Cluster Maintenance
-====================
+===================
 
-Shutting Down
---------------
 
-If you need to shutdown the cluster(e.g., in case of a power outage), do so in
-the following order:
+Automated Maintenance
+======================
 
-* VMs
-* Compute Nodes
-* Storage Nodes
-* Backup Controller Nodes
-* Master Controller Node
+There is a `Fabric`_ file that can be used to automatically update and upgrade
+the cluster servers::
+
+    fab upgrade
+
+TODO: Fabric command to check & bootstrap inactive galera cluster?
+
+.. _Fabric:                         http://www.fabfile.org/
+
 
 Starting Up
-------------
+============
 
 If you ever need to start a stopped cluster:
 
@@ -31,9 +32,21 @@ If you ever need to start a stopped cluster:
 * Once everything has booted up, you should be able to start the VMs from the
   dashboard.
 
-TODO: Use apcupsd to shutdown VMs & nodes on power loss.
+
+Shutting Down
+==============
+
+If you need to shutdown the cluster(e.g., in case of a power outage), do so in
+the following order:
+
+* VMs
+* Compute Nodes
+* Storage Nodes
+* Backup Controller Nodes
+* Master Controller Node
 
 
+.. _cluster-expansion:
 
 Cluster Expansion
 ==================
@@ -41,10 +54,11 @@ Cluster Expansion
 Adding additional controller, compute, or storage nodes to a cluster is fairly
 straightforward.
 
-For every node, you should first follow the ``Pre-Seed``, ``Sudo``, &
-``Network`` sections in the README. Then add the host to a group in the
-``cluster-servers`` file & add a config file in ``host_vars/`` (base it off of
-the configs for other hosts in that group). Then run the full ansible playbook::
+For every node, you should first follow the :ref:`node-setup` section. Then add
+the host to a group in the ``cluster-servers`` file & add a config file in
+``host_vars/`` (base it off of the configs for other hosts in that group).
+
+Then run the full ansible playbook::
 
     ansible-playbook acorn.yml
 
@@ -78,20 +92,20 @@ Pacemaker
 You'll need to authenticate the new node from the master controller::
 
     # On stack-controller-1
-    sudo pcs cluster auth -u hacluster stack-controller-2
+    sudo pcs cluster auth -u hacluster stack-controller-4
 
 Next, remove the default cluster from the new node::
 
-    # On stack-controller-2
+    # On stack-controller-4
     sudo pcs cluster destroy
 
 Add the new node using the master controller and start the service on the new
 node::
 
     # On stack-controller-1
-    sudo pcs cluster node add stack-controller-2
+    sudo pcs cluster node add stack-controller-4
 
-    # On stack-controller-2
+    # On stack-controller-4
     sudo pcs cluster start
     sudo pcs cluster enable
 
@@ -101,31 +115,31 @@ Ceph
 Copy the SSH key from the master controller to the new controller::
 
     # On stack-controller-1
-    ssh-copy-id stack-controller-3
+    ssh-copy-id stack-controller-4
 
 Install & deploy Ceph on the new controller node::
 
     # On stack-controller-1
     cd ~/storage-cluster
-    ceph-deploy install --repo-url http://download.ceph.com/debian-kraken stack-controller-3
-    ceph-deploy admin stack-controller-3
+    ceph-deploy install --repo-url http://download.ceph.com/debian-kraken stack-controller-4
+    ceph-deploy admin stack-controller-4
 
 Setup the new controller as a Ceph monitor::
 
-    ceph-deploy mon add stack-controller-3
+    ceph-deploy mon add stack-controller-4
 
 
 Copy the Glance Key to the new controller node::
 
     # On stack-controller-1
-    ceph auth get-or-create client.glance | ssh stack-controller-3 sudo tee /etc/ceph/ceph.client.glance.keyring
-    ssh stack-controller-3 sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
+    ceph auth get-or-create client.glance | ssh stack-controller-4 sudo tee /etc/ceph/ceph.client.glance.keyring
+    ssh stack-controller-4 sudo chown glance:glance /etc/ceph/ceph.client.glance.keyring
 
 **Extra Deploy Node**
 
 Copy the SSH key from each existing controller to the new controller::
 
-    ssh-copy-id stack-controller-3
+    ssh-copy-id stack-controller-4
 
 Then initialize a key on the new server & copy it to the existing controller
 and storage nodes::
@@ -133,6 +147,10 @@ and storage nodes::
     ssh-keygen -t ecdsa -b 521
     ssh-copy-id stack-controller-1
     ssh-copy-id stack-controller-2
+    ssh-copy-id stack-controller-3
+    ssh-copy-id stack-compute-1
+    ssh-copy-id stack-compute-2
+    ssh-copy-id stack-compute-3
     ssh-copy-id stack-storage-1
     ssh-copy-id stack-storage-2
     ssh-copy-id stack-storage-3
@@ -176,13 +194,13 @@ new node and any new storage drives to our Ceph cluster.
 Start by pushing the SSH key from the master controller to the new node::
 
     # On stack-controller-1
-    ssh-copy-id stack-storage-3
+    ssh-copy-id stack-storage-4
 
 Then use ``ceph-deploy`` on the master controller to install Ceph on the new
 node::
 
     cd ~/storage-cluster
-    ceph-deploy install --repo-url http://download.ceph.com/debian-kraken stack-storage-3
+    ceph-deploy install --repo-url http://download.ceph.com/debian-kraken stack-storage-4
 
 Note that we use ``--repo-url`` here instead of the ``--release`` flag, so that
 packages are downloaded through HTTP instead of HTTPS, which allows them to be
@@ -191,8 +209,8 @@ cached by our web proxy.
 Deploy an OSD to each new storage disk. It's recommended to split the journals
 out on a separate SSD with a partition for each OSD::
 
-    ceph-deploy disk list stack-storage-3
-    ceph-deploy osd create stack-storage-3:/dev/sdc:/dev/sdb1 stack-storage-3:/dev/sdd:/dev/sdb2
+    ceph-deploy disk list stack-storage-4
+    ceph-deploy osd create stack-storage-4:/dev/sdc:/dev/sdb1 stack-storage-4:/dev/sdd:/dev/sdb2
 
 You can monitor the rebalancing progress by running ``ceph -w`` on
 stack-controller-1.

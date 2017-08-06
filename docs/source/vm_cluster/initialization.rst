@@ -1,6 +1,8 @@
-================================
-Acorn VM Cluster Initialization
-================================
+.. _cluster-initialization:
+
+======================
+Cluster Initialization
+======================
 
 This details the process we went through the to initialize all cluster
 components for the first time. This requires some additional steps compared to
@@ -11,31 +13,27 @@ starting an initialized cluster, or adding nodes to an existing cluster(see
 Initial Cluster Setup
 ======================
 
-Start up all of your Controller, Compute, & Storage Nodes and use the preseed
-file to install Ubuntu on them. Once the basic OS is installed, follow the Sudo
-& Network setup instructions in the README..
+Setup the OS, sudo access, & networking for all of your Controller, Compute, &
+Storage Nodes according to the :ref:`node-setup` section.
 
-Write down which interface connects to which network on each node(or have
-``hardware.rst`` open for reference), this will be useful as you won't have to
-keep checking the config file. Add any extra files to the ``host_vars``
-directory - look at similar hosts to see what variables need to be defined.
+Add variables file for all of your nodes to the ``host_vars`` directory - look
+at hosts in the same group to see what variables need to be defined.
 
 Next run the ansible playbook with the ``initial`` tag::
 
     ansible-playbook acorn.yml -t initial
 
 This will fail when mysql is restarted because there is no running cluster for
-the nodes to join. On your first controller, run ``sudo galera_new_cluster`` to
-start a one-node cluster, then run ``sudo systemctl start mysql`` on the other
-controllers to have them join that cluster.
+the nodes to join - but that's OK because restarting MySQL is the last task in
+the ``initial`` tag.
 
 Now run the playbook with the ``ha`` tag to install the High Availability
 dependencies::
 
     ansible-playbook acorn.yml -t ha
 
-Follow the instructions in the ``High Availability Initialization`` section to
-setup the Master Controller Virtual IP Address & HAProxy.
+Follow the instructions in the :ref:`ha-initialization` section to
+setup the MySQL Cluster, Master Controller Virtual IP Address, & HAProxy.
 
 On your controllers, add the Open vSwitch Bridge::
 
@@ -51,7 +49,7 @@ Now run the entire playbook::
 
     ansible-playbook acorn.yml
 
-Once that's finished, follow the instructions in the ``Ceph Initialization``
+Once that's finished, follow the instructions in the :ref:`ceph-initialization`
 section.
 
 You should be set now, you can verify by running the following commands on the
@@ -95,21 +93,28 @@ first controller node::
     # Should be able to ssh in as `cirros` w/ password `cubswin:)`
 
 
+.. _ha-initialization:
 
 High Availability Initialization
 =================================
 
-Some manual setup is required for highly available controller nodes.  You
-should have only one controller node for this initial setup. Add additional
-controller nodes after setting up the OpenStack cluster for the first time.
+Some manual setup is required for highly available controller nodes. All your
+Controller nodes should be online during this process & you should have already
+run the Ansible playbook with the ``ha`` tag.
 
 MySQL
 ------
 
-Stop the mysql server on the controller node & start it as a cluster::
+Stop the mysql server on the first controller node & start it as a cluster::
 
+    # On stack-controller-1
     sudo systemctl stop mysql
     sudo galera_new_cluster
+
+Once that has finished, you can start mysql on the other controller nodes::
+
+    # On stack-controller-2, stack-controller-3
+    sudo systemctl start mysql
 
 RabbitMQ
 ---------
@@ -136,13 +141,13 @@ Start by removing the initial config file & authenticating the controller
 node::
 
     sudo pcs cluster destroy
-    sudo pcs cluster auth stack-controller-1 stack-controller-2 \
+    sudo pcs cluster auth stack-controller-1 stack-controller-2 stack-controller-3 \
         -u hacluster -p PASSWORD
 
 Create, start, & enable the cluster::
 
     sudo pcs cluster setup --start --enable --name acorn-controller-cluster \
-        --force stack-controller-1 stack-controller-2
+        --force stack-controller-1 stack-controller-2 stack-controller-3
 
 Set some basic properties::
 
@@ -168,8 +173,6 @@ Add HAProxy to the cluster & only serve the VIP when HAProxy is running::
     sudo pcs constraint order start management-vip then lb-haproxy-clone kind=Optional
     sudo pcs constraint colocation add lb-haproxy-clone with management-vip
 
-TODO: Add following after openstack setup, so force not needed?
-
 Add the Glance service to Pacemaker::
 
     sudo pcs resource create glance-api lsb:glance-api --clone --force
@@ -180,15 +183,13 @@ Add the Cinder service to Pacemaker::
     sudo pcs resource create cinder-scheduler lsb:cinder-scheduler --clone interleave=true --force
 
 
-
+.. _ceph-initialization:
 
 Ceph Initialization
 ====================
 
-Ansible only installs the ``ceph-deploy`` tool on controller nodes, Ceph
-cluster initialization must be done manually, but only on creation of the
-OpenStack cluster. If you are simply adding additional nodes to an existing
-cluster, you can skip this section.
+Ansible only installs the ``ceph-deploy`` tool on controller nodes, the Ceph
+storage cluster must be manually initialized.
 
 Ceph Setup
 -----------
@@ -197,8 +198,8 @@ Start by SSHing into the master controller, we'll make running repeated
 commands easier by setting some array variables::
 
     # On stack-controller-1
-    CONTROLLERS=('stack-controller-1' 'stack-controller-2')
-    COMPUTE=('stack-compute-1')
+    CONTROLLERS=('stack-controller-1' 'stack-controller-2' 'stack-controller-3)
+    COMPUTE=('stack-compute-1' 'stack-compute-2' 'stack-compute-3')
     STORAGE=('stack-storage-1' 'stack-storage-2' 'stack-storage-3')
 
 Then generate an SSH key & copy it to the Controller & Storage nodes::
@@ -251,7 +252,7 @@ Now copy the configuraton file & admin key to the controller nodes::
 
 And set the correct permissions on the admin key::
 
-    for SRV in "${CONTROLLERS[@]}" "${STORAGE[@]}"; do
+    for SRV in "${CONTROLLERS[@]}"; do
         ssh $SRV sudo chmod +r /etc/ceph/ceph.client.admin.keyring
     done
 
@@ -322,16 +323,3 @@ Finally, restart the OpenStack services::
     for SRV in "${COMPUTE[@]}"; do
         ssh $SRV sudo systemctl restart nova-compute
     done
-
-Test the setup::
-
-    # On Controller
-    source acorn-openrc.sh
-
-    # Add an Image
-    openstack image create cirros --file cirros.raw --disk-format raw --container-format bare --public
-    rbd -p images ls
-
-    # Create a Volume
-    openstack volume create --size 10 test-vol
-    rbd -p volumes ls

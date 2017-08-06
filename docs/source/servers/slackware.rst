@@ -1,6 +1,6 @@
-================================
-Fabric Slackware Administration
-================================
+===============================
+Slackware Server Administration
+===============================
 
 `Fabric`_ is used to automate package installation and upgrades on Acorn's
 Slackware servers. The ``slackware_servers`` module includes a ``fabfile.py``

@@ -1,6 +1,8 @@
-==========================
-Acorn VM Cluster Hardware
-==========================
+.. _cluster-hardware:
+
+================
+Cluster Hardware
+================
 
 Acorn runs a 9-node cluster with 3 controller, 3 compute, & 3 storage nodes.
 
@@ -14,7 +16,7 @@ Console KMM.
 We have a combination of USB & PS/2 KVM Ethernet Cables, the Controllers use
 USB cables while the Compute & Storage nodes use PS/2.
 
-TODO: Double check ^that's true
+TODO: Double check the above is true
 
 
 Network Hardware
