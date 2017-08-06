@@ -116,7 +116,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'AcornNetworkSystemAdministrationDocumentationdoc'
+htmlhelp_basename = 'AcornSystemAdministrationdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -143,7 +143,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'AcornNetworkSystemAdministrationDocumentation.tex', 'Acorn Network \\& System Administration Documentation Documentation',
+    (master_doc, 'AcornSystemAdministration.tex', 'Acorn System Administration Documentation',
      'Pavan Rikhi', 'manual'),
 ]
 
@@ -153,7 +153,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'acornnetworksystemadministrationdocumentation', 'Acorn Network & System Administration Documentation Documentation',
+    (master_doc, 'acornnetworksystemadministrationdocumentation', 'Acorn System Administration Documentation',
      [author], 1)
 ]
 
@@ -164,8 +164,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'AcornNetworkSystemAdministrationDocumentation', 'Acorn Network & System Administration Documentation Documentation',
-     author, 'AcornNetworkSystemAdministrationDocumentation', 'One line description of project.',
+    (master_doc, 'AcornSystemAdministration', 'Acorn System Administration Documentation',
+     author, 'AcornNetworkSystemAdministration', 'One line description of project.',
      'Miscellaneous'),
 ]
 
