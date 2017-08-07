@@ -11,6 +11,69 @@ Administration & Maintenance Guides
 Networking
 ==========
 
+Add Static IPs
+--------------
+
+You can assign a host a static IP address from Cerberus. You'll need the MAC
+address of the host's network interface. The available static IP range is
+``150`` to ``189``.
+
+Start by editing ``/usr/local/etc/dhcpd.conf``::
+
+    sudo nano /usr/local/etc/dhcpd.conf
+
+In the ``group { }`` section, add a new ``host { }`` section(ensuring the IP
+addresses are in ascending order)::
+
+    host ComputerHostname {
+        fixed-address 192.168.1.183
+        hardware ethernet AA:BB:CC:11:22:33;
+    }
+
+Check your config by running ``dhcpd -t``. If there are no errors, restart the
+``isc-dhcpd`` service::
+
+    sudo service isc-dhcpd restart
+
+
+Killing A Host's Network Access
+-------------------------------
+
+If a computer is hogging the internet & you don't know whose it is, you might
+just want to kill their network access. You can do this from Cerberus & you
+need either their hostname(``MyCarKeys.acorn``), or their IP address.
+
+If you need to figure out who is hogging the internet, try running ``sudo
+iftop`` or check http://cerberus.acorn/bandwidth/.
+
+If you only have their hostname, figure out their IP addresses using ``dig``::
+
+    $ dig MyCarKeys.acorn | grep 192.168.1
+    MyCarKeys.acorn.	3600	IN	A	192.168.1.36
+    cerberus.acorn.		86400	IN	A	192.168.1.254
+
+Now open up ``/etc/pf.conf`` and add the following between the ``block drop log
+on $ext_if all`` line and the ``antispoof for $ext_if int`` line::
+
+    block log quick from <HOSTS_IP> to any
+    # For Example: block log quick from 192.168.1.36 to any
+
+Now run the ``pf_reconfig`` command(which is just an alias for ``sudo pfctl -f
+/etc/pf.conf``) to refresh PF.
+
+This will only block new connections from the Host, you also need to use
+``pfctl`` to kill all their current connections::
+
+    $ sudo pfctl -k MyCarKeys.acorn
+    # Or use their IP
+    $ sudo pfctl -k 192.168.1.36
+
+You might need to run this two or three times to kill all the connections.
+
+To unblock their network access, simply remove or comment out the line you
+added to ``/etc/pf.conf`` and re-run ``pf_reconfig``.
+
+
 Add or Modify DNS Entries
 -------------------------
 
@@ -507,7 +570,7 @@ Set the following options:
 * Templates - OS Windows Workstation. Be sure to click add before clicking save!
 * Inventory - Set to manual or automatic and add any relevant details that you know.
 
-Save the new host. 
+Save the new host.
 
 After a short while, the host's Z icon should turn blue, this means the host is
 being monitored correctly.  You can check the latest data by selecting

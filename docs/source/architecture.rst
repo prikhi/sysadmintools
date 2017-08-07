@@ -34,7 +34,7 @@ There's a guide available from the terminal, SSH into cerberus, then run
 ``cerberus_help`` for a long guide & ``cerberus_quick`` for a quick reference
 of config files & useful commands.
 
-TODO: Move that documentation over here!
+TODO: Move that documentation over here! Configs, Services, Commands, CLI Guide
 
 There are a couple of bandwidth graphs:
 
@@ -50,9 +50,7 @@ These links might be helpful:
 * Newbie Guide for PF on OpenBSD: http://www.thedeepsky.com/howto/newbie_pf_guide.php
 * TCP/IP Primer: http://www.ipprimer.com/
 
-TODO: Add maintenance documentation: adding static ips, killing someones internet
-
-TODO: Buy a server w/ a lotta ram, ssd, & a 10Gb nic and replace cerberus
+TODO: Buy a server w/ a lotta ram, ssd, & a 10Gb nic(for squid) and upgrade cerberus!
 
 
 Aphrodite
