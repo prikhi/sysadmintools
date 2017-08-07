@@ -4,12 +4,40 @@ Administration & Maintenance Guides
 
 
 .. contents::
+    :depth: 2
     :local:
 
 
 
 Networking
 ==========
+
+Disabling the Squid Proxy
+-------------------------
+
+To save bandwidth, we use a transparent Squid proxy as a network-wide web
+cache. Sometime some software doesn't like to play nice with this & you might
+need to temporarily disable the re-routing of HTTP requests to the proxy and
+just send them straight out of the WAN.
+
+You can do this from Cerberus.
+
+Start by commenting the following line in ``/etc/pf.conf`` (by adding a ``#``
+to the front of it)::
+
+    rdr pass on $int_if inet proto tcp from any to any port www -> 192.168.1.254 port 3128
+
+That line is responsible for redirecting all HTTP traffic to the proxy. With it
+commented out, you can refresh PF by running ``pf_reconfig`` & the proxy should
+be bypassed.
+
+You can verify this by looking at the `Squid Proxy Screen`_ on Zabbix.
+
+To re-enable the Squid proxy, simply remove the ``#`` from the line in
+``/etc/pf.conf`` & re-run ``pf_reconfig``.
+
+.. _Squid Proxy Screen: http://monitor.acorn/screens.php?sid=228d1b693ac113fa
+
 
 Add Static IPs
 --------------
