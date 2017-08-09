@@ -13,14 +13,19 @@ Console Hardware
 We use a Dell PowerEdge 2160AS 16-Port KVM Console Switch w/ a PowerEdge 15FP
 Console KMM.
 
-We have a combination of USB & PS/2 KVM Ethernet Cables, the Controllers use
-USB cables while the Compute & Storage nodes use PS/2.
+We have a combination of USB & PS/2 KVM Ethernet Cables, the Computes use
+USB cables while the Controller & Storage nodes use PS/2.
+
+To switch between hosts, press ``PrintScreen`` to pop up the selection window,
+arrow keys to navigate, and ``Enter`` to select a host.
 
 TODO: Double check the above is true
 
 
 Network Hardware
 =================
+
+TODO: Move this or most of this to the general Architecture page
 
 We have 6 networks:
 
