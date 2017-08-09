@@ -113,7 +113,6 @@ You will need the keyname & secret for DNS updates from
 
 .. code::
 
-    $ ssh admin@cerberus.acorn
     $ nsupdate -y KEYNAME:KEYSECRET
     > update add <Domain> <TTL> <Type> <Destination>
     > send
@@ -240,7 +239,7 @@ Arch Linux
 LAN Package Cache
 -----------------
 
-We have a shared Arch Linux package cache at ``ssh://admin@aphrodite.acorn:/mnt/DataShare/Misc/Cache/pacman/pkg``.
+We have a shared Arch Linux package cache at ``ssh://cache@aphrodite.acorn:/mnt/DataShare/Misc/Cache/pacman/pkg``.
 
 You can follow these steps to link your Arch Linux workstation up to the shared
 cache::
@@ -249,9 +248,9 @@ cache::
     sudo -i
     # create ssh key, copy to aphrodite.acorn
     ssh-keygen -t ecdsa
-    ssh-copy-id admin@aphrodite.acorn
+    ssh-copy-id cache@aphrodite.acorn
     # add mountpoint to fstab
-    echo 'admin@aphrodite.acorn:/mnt/DataShare/Misc/Cache/pacman/pkg  /var/cache/pacman/pkg   fuse.sshfs  defaults,_netdev,allow_other    0   0' >> /etc/fstab
+    echo 'cache@aphrodite.acorn:/mnt/DataShare/Misc/Cache/pacman/pkg  /var/cache/pacman/pkg   fuse.sshfs  defaults,_netdev,allow_other    0   0' >> /etc/fstab
 
 Clearing pacman's cache will delete all packages except those that are
 currently installed. In a shared cache where computers may have different
