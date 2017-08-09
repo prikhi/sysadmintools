@@ -26,8 +26,8 @@ public_network_options:
     end_ip: "192.168.1.219"
 
 private_network_options:
-    cidr: "10.0.5.0/24"
-    gateway: "10.0.5.1"
+    cidr: "10.0.1.0/24"
+    gateway: "10.0.1.1"
     dns: "{{ public_network_options.dns }}"
 
 management_network_cidr: "10.2.1.0/24"
