@@ -117,6 +117,8 @@ Controller Nodes
 **RAM**               32GB
 ====================  ========================================================
 
+The chassis' top cover has a locking screw on it's front-right side.
+
 The OS drive is in the leftmost bay.
 
 NICs
@@ -144,6 +146,8 @@ Compute Nodes
 **RAM**               48GB
 ====================  ========================================================
 
+The chassis' top cover has no locking screw.
+
 The OS drive is in the leftmost bay.
 
 NICs
@@ -161,7 +165,7 @@ fiber right             ens1f1      storage         10.4.1.41-70
 =====================   =========   ==========      ============
 
 Eventually, we might use the spare 2x 1GB NICs as failovers for the fiber
-links.
+links, or a fatter overlay pipe.
 
 
 
@@ -183,6 +187,8 @@ http://florian.ca/ceph-calculator/
 **RAID Controller**   8-Ports via Adaptec ASR-5805, 4-Ports via ASR-5405Z
 **RAM**               48GB
 ====================  ========================================================
+
+The chassis' top cover has a locking screw on it's back-left side.
 
 NICs
 -----
