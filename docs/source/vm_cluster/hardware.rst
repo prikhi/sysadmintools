@@ -22,25 +22,33 @@ TODO: Double check the above is true
 Network Hardware
 =================
 
-We have 4 networks:
+We have 6 networks:
 
-* User LAN @ 192.168.1.0/24
-* VM Management @ 10.2.1.0/24
-* VM Overlay @ 10.3.1.0/24
-* VM Storage @ 10.4.1.0/24
-* VM Sync @ 10.5.1.0/24
+==================      ==============
+Network                 IP CIDR
+==================      ==============
+Public LAN              192.168.1.0/24
+VM LAN                  10.0.1.0/24
+Cluster Management      10.2.1.0/24
+Cluster Overlay         10.3.1.0/24
+Cluster Storage         10.4.1.0/24
+Cluster Sync            10.5.1.0/24
+==================      ==============
 
 IP addressing of cluster nodes is done manually, using static IPs.
 
 We use the following color-coding for ethernet cabling:
 
-* RED - Phone Lines
-* YELLOW - Power over Ethernet
-* BLACK - WAN Line
-* ORANGE - VM Management
-* WHITE - VM Overlay
-* PURPLE - VM Provider
-* GREY - VM Storage
+==========  ===================
+**RED**     Phone Lines
+**YELLOW**  Power over Ethernet
+**BLACK**   WAN Line
+**GREEN**   Router Link
+**ORANGE**  Cluster Management
+**WHITE**   Cluster Overlay
+**PURPLE**  Cluster Provider
+**GREY**    Cluster Storage
+==========  ===================
 
 All the Fiber cables are 50/125 OM3, which are aqua colored. We use Juniper
 Networks EX-SFP-10GE-SR fiber transceivers.
@@ -56,16 +64,20 @@ There is an internal LB6M(``LB6M-2-STORAGE``) connected to the controllers,
 computes & storage nodes. This is used for internal data transfer & syncing, it
 is not exposed to the User LAN.
 
-The User LAN is our public address space, it is routed to the WAN & to the VM
-Mangagement network.
+The User LAN is our public address space, it is routed to the WAN & to the
+Cluster Mangagement network.
 
-The VM Mangaement network is used for cluster nodes to talk to each other & the
-WAN. The VM Overlay network is used for internal communication between VMs.
-They reside on the same hardware, ``LB4M-3-MGMT``.
+The VM LAN is the OpenStack network that the Virtual Machines connect to.
+There is no physical hardware, it reside completely within OpenStack. OpenStack
+maps these addresses to a User LAN address when you assign a VM a floating IP.
 
-The VM Storage network is used for communication between the Storage nodes &
-the Compute & Controller nodes. The VM Sync network is used for syncing the
-Storage nodes. The Storage & Sync networks reside ``LB6M-2-STORAGE``.
+The Cluster Management network is used for cluster nodes to talk to each other
+& the WAN(via Cerberus). The Cluster Overlay network is used for internal
+communication between VMs. They reside on the same hardware, ``LB4M-3-MGMT``.
+
+The Cluster Storage network is used for communication between the Storage nodes
+& the Compute & Controller nodes. The Cluster Sync network is used for syncing
+the Storage nodes. The Storage & Sync networks reside ``LB6M-2-STORAGE``.
 
 
 
