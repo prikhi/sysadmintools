@@ -192,8 +192,8 @@ rear panel location     interface   network         ip range
 ===================     =========   ==========      =============
 ethernet left           enp10s0f0   management      10.2.1.71-100
 ethernet right          enp10s0f1   not used
-fiber top               enp3s0f0    storage         10.4.1.71-100
-fiber bottom            enp3s0f1    sync            10.5.1.71-100
+fiber top               enp9s0f0    storage         10.4.1.71-100
+fiber bottom            enp9s0f1    sync            10.5.1.71-100
 ===================     =========   ==========      =============
 
 Eventually, we might use the spare 1GB NIC as a failover for a fiber link.
