@@ -59,8 +59,10 @@ All the Fiber cables are 50/125 OM3, which are aqua colored. We use Juniper
 Networks EX-SFP-10GE-SR fiber transceivers.
 
 The office ethernet ports terminate in patch panels(labelled ``A`` & ``B``),
-and are connected to 2 Quanta LB4Ms(``LB4M-1`` && ``LB4M-2``). These LB4Ms
-connect to a Quanta LB6M(``LB6M-1-PUBLIC``) used as our public LAN's backbone.
+and are connected to 2 Quanta LB4Ms(``LB4M-1`` && ``LB4M-2``, :download:`manual
+<_files/LB4M_manual.pdf>`). These LB4Ms connect to a Quanta
+LB6M(``LB6M-1-PUBLIC``, :download:`manual <_files/LB6M_manual.pdf>`) which is
+used as our public LAN's backbone.
 
 ``LB6M-1-PUBLIC`` also connects the managment & overlay switch(``LB4M-3-MGMT``)
 to provide nodes internet access.
