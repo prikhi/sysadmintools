@@ -36,9 +36,13 @@ If you are writing documentation, run ``make livehtml`` to open the docs in
 your browser, and automatically rebuild the documentation & refresh the page
 when a source file is modified.
 
+The diagrams in the documentation are made with `Pencil`_, the source file is
+located at ``docs/source/diagrams.epgz``.
+
 TODO: Add playbooks for VMs
 
 
 .. _Ansible: http://www.ansible.com/home
 .. _Fabric:  http://www.fabfile.org/
 .. _Sphinx:  http://www.sphinx-doc.org/
+.. _Pencil:  http://www.github.com/evolus/pencil

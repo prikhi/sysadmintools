@@ -85,6 +85,23 @@ The Cluster Storage network is used for communication between the Storage nodes
 the Storage nodes. The Storage & Sync networks reside ``LB6M-2-STORAGE``.
 
 
+.. figure:: _images/LB4M-1_LB4M-2.png
+    :alt: The assigned networks for each port on the LB4M-1 & LB4M-2 switches.
+    :align: center
+
+.. figure:: _images/LB4M-3-MGMT.png
+    :alt: The assigned networks for each port on the LB4M-3-MGMT switch.
+    :align: center
+
+.. figure:: _images/LB6M-1-PUBLIC.png
+    :alt: The assigned networks for each port on the LB6M-1-PUBLIC switch.
+    :align: center
+
+.. figure:: _images/LB6M-2-STORAGE.png
+    :alt: The assigned networks for each port on the LB6M-2-STORAGE switch.
+    :align: center
+
+
 
 Controller Nodes
 =================
