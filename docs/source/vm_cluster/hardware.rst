@@ -84,22 +84,126 @@ The Cluster Storage network is used for communication between the Storage nodes
 & the Compute & Controller nodes. The Cluster Sync network is used for syncing
 the Storage nodes. The Storage & Sync networks reside ``LB6M-2-STORAGE``.
 
+Switch Layout
+-------------
+
+The following figures show our tentative plans on subdividing the switch ports
+between networks. Tables follow, showing which nodes are currently hooked up to
+which ports.
 
 .. figure:: _images/LB4M-1_LB4M-2.png
-    :alt: The assigned networks for each port on the LB4M-1 & LB4M-2 switches.
+    :target: ../_images/LB4M-1_LB4M-2.png
     :align: center
+    :alt: The assigned networks for each port on the LB4M-1 & LB4M-2 switches.
+
+There will eventually be a map of the Seed Office here showing what jack each
+of the Public LAN ports hook up to.
+
+**LB4M-1**
+
+=====       ====================
+Port        Host
+=====       ====================
+SFP 1       LB6M-1-PUBLIC Port 1
+SFP 2       LB6M-1-PUBLIC Port 2
+=====       ====================
+
+**LB4M-2**
+
+=====       ====================
+Port        Host
+=====       ====================
+SFP 1       LB6M-1-PUBLIC Port 3
+SFP 2       LB6M-1-PUBLIC Port 4
+=====       ====================
 
 .. figure:: _images/LB4M-3-MGMT.png
-    :alt: The assigned networks for each port on the LB4M-3-MGMT switch.
+    :target: ../_images/LB4M-3-MGMT.png
     :align: center
+    :alt: The assigned networks for each port on the LB4M-3-MGMT switch.
+
+=====   ===================         =====   ====================
+Port    Host                        Port    Host
+=====   ===================         =====   ====================
+1       stack-controller-1          25      stack-controller-1
+2       stack-controller-2          26      stack-controller-2
+3       stack-controller-3          27      stack-controller-3
+4       stack-compute-1             28      stack-compute-1
+5       stack-compute-2             29      stack-compute-2
+6       stack-compute-3             30      stack-compute-3
+7       stack-storage-1             31
+8       stack-storage-2             32
+9       stack-storage-3             33
+10                                  34
+11                                  35
+12                                  36
+13                                  37
+14                                  38
+15                                  39
+16                                  40
+17                                  41
+18                                  42
+19                                  43
+20                                  44
+21                                  45
+22                                  46
+23                                  47
+24                                  48      Cerberus
+_       _                           SFP 1   LB6M-1-PUBLIC Port 1
+_       _                           SFP 2   LB6M-1-PUBLIC Port 2
+=====   ===================         =====   ====================
 
 .. figure:: _images/LB6M-1-PUBLIC.png
-    :alt: The assigned networks for each port on the LB6M-1-PUBLIC switch.
+    :target: ../_images/LB6M-1-PUBLIC.png
     :align: center
+    :alt: The assigned networks for each port on the LB6M-1-PUBLIC switch.
+
+=====   ===================         =====   ====================
+Port    Host                        Port    Host
+=====   ===================         =====   ====================
+1       LB4M-1 SFP 1                13
+2       LB4M-1 SFP 2                14
+3       LB4M-2 SFP 1                15      stack-compute-1
+4       LB4M-2 SFP 2                16      stack-compute-2
+5                                   17      stack-compute-3
+6                                   18
+7                                   19
+8                                   20
+9                                   21
+10                                  22
+11                                  23
+12                                  24
+_       _                           25      stack-controller-1
+_       _                           26      stack-controller-2
+_       _                           27      stack-controller-3
+_       _                           28
+=====   ===================         =====   ====================
 
 .. figure:: _images/LB6M-2-STORAGE.png
-    :alt: The assigned networks for each port on the LB6M-2-STORAGE switch.
+    :target: _images/LB6M-2-STORAGE.png
     :align: center
+    :alt: The assigned networks for each port on the LB6M-2-STORAGE switch.
+
+=====   =========================   =====   =========================
+Port    Host                        Port    Host
+=====   =========================   =====   =========================
+1       stack-compute-1             13      stack-storage-3 (storage)
+2       stack-compute-2             14      stack-storage-3 (sync)
+3       stack-compute-3             15
+4                                   16
+5                                   17
+6                                   18
+7                                   19
+8                                   20
+9       stack-storage-1 (storage)   21
+10      stack-storage-1 (sync)      22
+11      stack-storage-2 (storage)   23
+12      stack-storage-2 (sync)      24
+_       _                           25      stack-controller-1
+_       _                           26      stack-controller-2
+_       _                           27      stack-controller-3
+_       _                           28
+=====   =========================   =====   =========================
 
 
 
