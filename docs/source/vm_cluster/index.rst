@@ -22,7 +22,6 @@ TODO: Investigate Cinder Backup
     :maxdepth: 2
     :titlesonly:
 
-    architecture
     setup
     maintenance
     initialization
