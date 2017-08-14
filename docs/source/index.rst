@@ -15,6 +15,7 @@ TODO: Add Chart for Seed Office Jack <-> Patch Panel Port Mapping
    :caption: Contents:
 
    architecture
+   hardware
    guides
    servers/slackware
    office_workstation

@@ -1,6 +1,6 @@
-=====================
-Acorn IT Architecture
-=====================
+===============
+IT Architecture
+===============
 
 
 Our local network is run on a 10Gb/s switch that splits out to 1Gb ethernet
@@ -23,9 +23,13 @@ yearly to Adonis.
 We currently have one public Linux workstation, ``SewingMachine``, that runs
 Debian & KDE - but the setup has been automated to make it easier to expand.
 
+Servers
+=======
+
+.. _cerberus:
 
 Cerberus
-========
+--------
 
 Cerberus is our router that runs FreeBSD, serves ``.acorn`` DNS requests,
 provides DHCP & WINS, & caches HTTP requests.
@@ -54,7 +58,7 @@ TODO: Buy a server w/ a lotta ram, ssd, & a 10Gb nic(for squid) and upgrade cerb
 
 
 Aphrodite
-=========
+---------
 
 Aphrodite is a general-purpose Slackware server that runs the following services:
 
@@ -70,7 +74,132 @@ Aphrodite is a general-purpose Slackware server that runs the following services
 
 
 Adonis
-======
+------
 
 Adonis is our Slackware backup server, that hosts daily, monthly, & yearly
 backups of the Business, Community, & Personal shares.
+
+
+Buildings
+=========
+
+.. _seed-office:
+
+Seed Office
+-----------
+
+The seed office is where our backbone switch lives & where the WAN line comes
+in.
+
+The office's ethernet jacks terminate in patch panels(labelled ``A`` & ``B``),
+and are connected to 2 Quanta LB4Ms(``LB4M-1`` && ``LB4M-2``, :download:`manual
+<_files/LB4M_manual.pdf>`). These LB4Ms connect to a Quanta
+LB6M(``LB6M-1-PUBLIC``, :download:`manual <_files/LB6M_manual.pdf>`) which is
+used as our public LAN's backbone.
+
+``LB6M-1-PUBLIC`` also connects our public LAN to the VM Cluster. See the
+:ref:`network-architecture` section for more information & the :ref:`Switch
+Hardware <switch-hardware>` section for port layouts/assignments of the
+switches.
+
+There will eventually be a map of the Seed Office here showing what jack each
+of the Public LAN ports hook up to.
+
+
+Heartwood
+---------
+
+Heartwood is connected to the Seed Office via a pair of ENH202 wifi points. The
+wifi line enters from the dining room & is switched to an AP and the switch in
+the living room. The upstairs switch feeds to workstations, 2 other switches
+that also feed to workstations, & 2 ENH202s(one for the BarnYard wifi, one for
+the Trailer connection).
+
+The closet office computer connects to the AP.
+
+
+Farmhouse
+---------
+
+The Farmhouse is connected to the Seed Office via an ENH202 wifi point, which
+goes to a switch that has an AP and runs to workstations.
+
+
+Trailer
+-------
+
+The Trailer get's it internet access from Heartwood via an ENH202 wifi point.
+
+
+.. _network-architecture:
+
+Networking
+==========
+
+We have 6 networks:
+
+==================      ==============
+Network                 IP CIDR
+==================      ==============
+Public LAN              192.168.1.0/24
+VM LAN                  10.0.1.0/24
+Cluster Management      10.2.1.0/24
+Cluster Overlay         10.3.1.0/24
+Cluster Storage         10.4.1.0/24
+Cluster Sync            10.5.1.0/24
+==================      ==============
+
+Hosted across 3 LB4M(:download:`manual <_files/LB4M_manual.pdf>`) & 2
+LB6M(:download:`manual <_files/LB6M_manual.pdf>`) switches:
+
+* :ref:`lb4m-1`
+* :ref:`lb4m-2`
+* :ref:`lb4m-3-mgmt`
+* :ref:`lb6m-1-public`
+* :ref:`lb6m-2-storage`
+
+:ref:`cerberus` provides DHCP to the Public LAN & all addressing of cluster
+nodes is done manually, using static IPs.
+
+We use the following color-coding for ethernet cabling:
+
+==========  ===================
+**RED**     Phone Lines
+**YELLOW**  Power over Ethernet
+**BLACK**   WAN Line
+**GREEN**   Router Link
+**BLUE**    Public LAN
+**ORANGE**  Cluster Management
+**WHITE**   Cluster Overlay
+**PURPLE**  Cluster Provider
+**GREY**    Cluster Storage
+==========  ===================
+
+All the Fiber cables are 50/125 OM3, which are aqua colored. We use Juniper
+Networks EX-SFP-10GE-SR fiber transceivers.
+
+The Public LAN is what our workstations connect to. It is routed to the
+internet and the Cluster Management network by :ref:`cerberus`. Only HTTP & SSH
+connections to the Management's controller nodes are allowed. It is hosted by
+:ref:`lb4m-1`, :ref:`lb4m-2`, & :ref:`lb6m-1-public`.
+
+The VM LAN is a virtual network hosted by OpenStack, it's the network that all
+running VMs connect to. OpenStack maps addresses on this network to a range of
+addresses on the Public LAN when you assign a VM a Floating IP.
+
+The Cluster Management network is used for cluster nodes to talk to each other
+& the WAN(via :ref:`cerberus`). The Cluster Overlay network is used for
+internal communication between VMs. These two networks reside on the same
+hardware, :ref:`lb4m-3-mgmt`.
+
+The Cluster Storage network provides nodes with access to the distributed
+storage cluster. The Cluster Sync network is used for syncing the Storage
+nodes. Both the Storage & Sync networks reside on :ref:`lb6m-2-storage`.
+
+.. seealso::
+
+    :ref:`cluster-hardware` for the interfaces & ip ranges each node type uses
+    for each Network.
+
+    :ref:`switch-hardware` for the Network allocation & port connections for
+    each switch.

@@ -9,6 +9,17 @@ Administration & Maintenance Guides
 
 
 
+Server Rack
+===========
+
+Switching KVM Ports
+-------------------
+
+To switch between hosts on the KVM, press ``PrintScreen`` on the keyboard to
+pop up the selection window, then the up/down arrow keys to navigate the host
+list, and ``Enter`` to select a host.
+
+
 Networking
 ==========
 

@@ -23,7 +23,6 @@ TODO: Investigate Cinder Backup
     :titlesonly:
 
     architecture
-    hardware
     setup
     maintenance
     initialization
