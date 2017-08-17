@@ -17,6 +17,10 @@ KMM(:download:`install guide <_files/Poweredge_15FP_install.pdf>`,
 We have a combination of USB & PS/2 KVM Ethernet Cables, the Computes use
 USB cables while the Controller & Storage nodes use PS/2.
 
+.. seealso::
+
+    :ref:`How to Switch Between Hosts on the KVM <switch-hosts-guide>`
+
 
 .. _switch-hardware:
 

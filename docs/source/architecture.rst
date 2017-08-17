@@ -213,6 +213,7 @@ VM Cluster
 Currently, we use 3 Controllers, 3 Computes, & 3 Storage nodes in a High
 Availability configuration. Neutron is setup to support self-service networks.
 
+TODO: Explain a little about how openstack works.
 
 High Availability
 ------------------
@@ -243,6 +244,8 @@ use other nodes as failovers, while MySQL uses Galera for replication & HAProxy
 for handling failovers.
 
 TODO: Do memcached urls for openstack service auth & horizon need configuration?
+
+TODO: Add stuff about Open vSwitch distributed networking
 
 
 .. warning::

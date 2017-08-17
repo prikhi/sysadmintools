@@ -12,6 +12,8 @@ Administration & Maintenance Guides
 Server Rack
 ===========
 
+.. _switch-hosts-guide:
+
 Switching KVM Ports
 -------------------
 
