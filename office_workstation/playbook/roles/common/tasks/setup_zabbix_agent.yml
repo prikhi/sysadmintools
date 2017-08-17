@@ -2,7 +2,7 @@
 
 - name: Install the Zabbix Agent
   apt:  name=zabbix-agent state=present
-  sudo: yes
+  become: yes
   tags: zabbix
 
 - name:       Configure the Zabbix Agent
@@ -14,10 +14,10 @@
     - { regexp: '^(# )?Hostname=(.*)', line: '# Hostname=\1' }
     - { regexp: '^(# )?HostnameItem=system\.hostname$', line: 'HostnameItem=system.hostname' }
   notify: restart zabbix_agent
-  sudo: yes
+  become: yes
   tags: zabbix
 
 - name: Enable the Zabbix Agent
   service: name=zabbix-agent enabled=yes
-  sudo: yes
+  become: yes
   tags: zabbix

@@ -1,0 +1,10 @@
+[General]
+EditableUrl=true
+ShowFullPath=true
+
+[MainWindow]
+MenuBar=Enabled
+ToolBarsMovable=Disabled
+
+[PreviewSettings]
+Plugins=directorythumbnail,imagethumbnail,jpegthumbnail,ffmpegthumbs

@@ -1,8 +1,11 @@
 [General]
-BrowserApplication[$e]=iceweasel.desktop
+BrowserApplication[$e]=firefox-esr.desktop
+XftAntialias=true
+XftHintStyle=hintmedium
+XftSubPixel=none
 
 [KDE]
-SingleClick[$i]=false
+SingleClick=false
 
 [Locale]
 DateFormatShort=%n/%d/%Y

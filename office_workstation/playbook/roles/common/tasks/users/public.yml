@@ -4,33 +4,45 @@
   user: name={{ public_username }} state=present shell=/bin/bash append=yes createhome=yes
         groups=cdrom,floppy,audio,dip,video,plugdev,netdev,scanner,lpadmin
         home=/home/{{ public_username }} password=$6$OZuDgBCMU$HXQe4DIBX6OcrKJEAtjcHTQM69etnsV2t8IJuLVzpC1mCjBydqvvpLlyqydyoxXfgIolWwxN6bXD2IqfTqBd4.
-  sudo:  yes
+  become:  yes
   tags:
     - public_user
     - users
 
+- name: Authorize Pavan's SSH keys
+  authorized_key: user="{{ public_username }}" key="{{ item }}"
+  with_file:
+    - pavan/rsa.pub
+    - pavan/ecdsa.pub
+  become: yes
+  become_user: "{{ public_username }}"
+  tags:
+    - pavan
+    - users
+
+
 # Desktop Configuration
 - name:  Set the Public User's Default XSession to KDE
-  shell: echo "[Desktop]\nSession=kde-plasma" > ~/.dmrc creates=/home/{{ public_username }}/.dmrc
-  sudo:  yes
-  sudo_user: "{{ public_username }}"
+  shell: echo "[Desktop]\nSession=plasma" > ~/.dmrc creates=/home/{{ public_username }}/.dmrc
+  become:  yes
+  become_user: "{{ public_username }}"
   tags:
     - public_user
     - users
 
 - name: Copy the Public User's Desktop Configuration Files
-  copy: src=public_home/{{ item }} dest=/home/{{ public_username }}/
+  synchronize: src=public_home/{{ item }} dest=/home/{{ public_username }}/
+               checksum=True rsync_path=/usr/bin/rsync
   with_items:
-    - .config
+    #- .config
     - .kde
     - .local
     - .mozilla
     - .face.icon
-    - .gtk-bookmarks
-    - .gtkrc-2.0
     - Desktop
-  sudo: yes
-  sudo_user: "{{ public_username }}"
+  become: yes
+  become_user: "{{ public_username }}"
+  remote_user: "{{ public_username }}"
   tags:
     - public_user
     - users
@@ -43,7 +55,7 @@
     - .local
     - .mozilla
     - Desktop
-  sudo: yes
+  become: yes
   tags:
     - public_user
     - users
@@ -52,35 +64,34 @@
   file: path=/home/{{ public_username }}/{{ item }} owner={{ public_username }} group={{ public_username }}
   with_items:
     - .face.icon
-    - .gtk-bookmarks
-    - .gtkrc-2.0
-  sudo: yes
+  become: yes
   tags:
     - public_user
     - users
 
 - name:  Mark Desktop Shortcuts as Executable
   shell: chmod u+x -v ~/Desktop/*.desktop
-  sudo: yes
-  sudo_user: "{{ public_username }}"
+  become: yes
+  become_user: "{{ public_username }}"
   tags:
     - public_user
     - users
 
-- name: Link the GTK Customization File to the GTK-KDE Integration File
-  file: path=/home/{{ public_username }}/.gtkrc-2.0-kde4
-        src=/home/{{ public_username }}/.gtkrc-2.0 state=link
-  sudo: yes
-  sudo_user: "{{ public_username }}"
+- name: Ensure the Desktop is Correctly Configured
+  copy: src=public_home/plasma-org.kde.plasma.desktop-appletsrc dest=/home/{{ public_username }}/.config
+        force=no
+  become: yes
+  become_user: "{{ public_username }}"
   tags:
     - public_user
     - users
+
 
 # Mumble
 - name: Make the Mumble Configuration Directory
   shell: mkdir -p /home/{{ public_username }}/.config/Mumble || /bin/true
-  sudo: yes
-  sudo_user: "{{ public_username }}"
+  become: yes
+  become_user: "{{ public_username }}"
   tags:
     - mumble
     - public_user
@@ -88,8 +99,8 @@
 
 - name:     Copy over the Mumble Configuration File
   template: src=Mumble.conf.j2 dest=/home/{{ public_username }}/.config/Mumble/Mumble.conf
-  sudo: yes
-  sudo_user: "{{ public_username }}"
+  become: yes
+  become_user: "{{ public_username }}"
   tags:
     - mumble
     - public_user
@@ -98,30 +109,34 @@
 - name: Ensure the Mumble Data Directory Exists
   stat: path=/home/{{ public_username }}/.local/share/data/Mumble/Mumble
   register: mumble_data_dir
-  sudo:  yes
-  sudo_user: "{{ public_username }}"
+  become:  yes
+  become_user: "{{ public_username }}"
+  tags:
+    - mumble
+    - public_user
+    - user
 
 - name:  Check if Mumble has any Favorite Servers
   shell: echo 'select count(*) from servers;' | sqlite3 .mumble.sqlite
          chdir=/home/{{ public_username }}/.local/share/data/Mumble/Mumble/
   register: mumble_favorties_count
   when:  setup_mumble and mumble_data_dir.stat.isdir is defined and mumble_data_dir.stat.isdir
-  sudo:  yes
-  sudo_user: "{{ public_username }}"
+  become:  yes
+  become_user: "{{ public_username }}"
   tags:
     - mumble
     - public_user
     - user
 
 - name:  Add a Favorite Server to Mumble
-  shell: echo 'insert into servers (id, name, hostname, port, username) values
+  shell: echo 'insert into servers (id, name, hostname, port, username, password, url) values
          (372, "{{ mumble_server_name }}", "{{ mumble_server }}", {{ mumble_server_port }},
-         "{{ ansible_hostname }}");' | sqlite3 .mumble.sqlite
+         "{{ ansible_hostname }}", "", "");' | sqlite3 .mumble.sqlite
          chdir=/home/{{ public_username }}/.local/share/data/Mumble/Mumble/
   register: temp_var
   when:  setup_mumble and mumble_data_dir.stat.isdir is defined and mumble_data_dir.stat.isdir and mumble_favorties_count.stdout == '0'
-  sudo:  yes
-  sudo_user: "{{ public_username }}"
+  become:  yes
+  become_user: "{{ public_username }}"
   tags:
     - mumble
     - public_user
@@ -131,19 +146,19 @@
 - name: Check if the Tor Browser Bundle is Installed
   stat: path=/home/{{ public_username }}/.torbundle/
   register: torbundle_folder
-  sudo: yes
-  sudo_user: "{{ public_username }}"
+  become: yes
+  become_user: "{{ public_username }}"
   tags:
     - public_user
     - users
     - tor
 
 - name:  Check the Current Version of the Tor Browser Bundle
-  shell: cat /home/{{ public_username }}/.torbundle/Docs/ChangeLog.txt | head -n 1 | cut -d ' ' -f 4
+  shell: head -n 1 /home/{{ public_username }}/.torbundle/Browser/TorBrowser/Docs/ChangeLog.txt | cut -d ' ' -f 3
   register: current_tor_version
   when:  torbundle_folder.stat.exists == true
-  sudo:  yes
-  sudo_user: "{{ public_username }}"
+  become:  yes
+  become_user: "{{ public_username }}"
   tags:
     - public_user
     - users
@@ -159,8 +174,8 @@
          rmdir tor-browser_*
          chdir=/home/{{ public_username }}
   when:  torbundle_folder.stat.exists == false or tor_version != current_tor_version.stdout
-  sudo:  yes
-  sudo_user: "{{ public_username }}"
+  become:  yes
+  become_user: "{{ public_username }}"
   tags:
     - public_user
     - users

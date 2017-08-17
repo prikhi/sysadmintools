@@ -2,36 +2,36 @@
 
 - name:    restart zabbix_agent
   service: name=zabbix-agent state=restarted
-  sudo:    yes
+  become:  yes
 
 - name:    restart smbd
   service: name=smbd state=restarted
-  sudo:    yes
+  become:  yes
 
 - name:    restart nmbd
   service: name=nmbd state=restarted
-  sudo:    yes
+  become:  yes
 
-- name:    restart kdm
-  service: name=kdm state=restarted
-  sudo:    yes
+- name:    restart sddm
+  service: name=sddm state=restarted
+  become:  yes
 
 - name:    restart cups
   service: name=cups state=restarted
-  sudo:    yes
+  become:  yes
 
 - name:    update package cache
   apt:     update_cache=yes
-  sudo:    yes
+  become:  yes
 
 - name:    update grub
   shell:   update-grub
-  sudo:    yes
+  become:  yes
 
 - name:    start unattended upgrades
   service: name=unattended-upgrades state=started
-  sudo:    yes
+  become:  yes
 
 - name:    restart network manager
   service: name=network-manager state=restarted
-  sudo:    yes
+  become:  yes

@@ -20,7 +20,7 @@ prepare_ms_office: True
 
 ## General Configuration
 # The URL of the Apt Mirror to Use
-apt_mirror: http://http.us.debian.org/debian/
+apt_mirror: http://http.us.debian.org/debian
 # Install KDE & Roguelike Games
 install_games: True
 # Remove the XFCE4 Desktop Environment
@@ -28,7 +28,7 @@ remove_xfce: True
 # The Username of the Public Account
 public_username: sese
 # The Version of the Tor Browser Bundle to Download and Install
-tor_version: 6.0.2
+tor_version: 7.0.4
 # The Full Version of the Tor Browser Bundle, Including OS and Language
 tor_full_version: linux64-{{ tor_version }}_en-US
 

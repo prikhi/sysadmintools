@@ -2,19 +2,24 @@
 
 - name:     Set the Debian Apt Mirror
   template: dest=/etc/apt/sources.list src=sources.list.j2 backup=yes
-  sudo:     yes
+  become:     yes
   tags:     configure
+
+- name: Add the Palemoon Apt Key
+  apt_key: url="http://download.opensuse.org/repositories/home:stevenpusser/Debian_9.0/Release.key"
+  become: yes
+  tags: configure
 
 - name: Update the Apt Cache
   apt:  update_cache=yes
-  sudo: yes
+  become: yes
   tags:
     - apps
     - configure
 
 - name: Copy Over the rc.local File
   copy: src=rc.local dest=/etc/rc.local
-  sudo: yes
+  become: yes
   tags: configure
 
 - name: Configure Grub
@@ -23,9 +28,9 @@
       # Skip the Grub Menu
     - { regex: '^GRUB_TIMEOUT=', line: 'GRUB_TIMEOUT=0' }
       # IOMMU interferes with some workstations suspend/hibernate functions
-    - { regex: '^GRUB_CMDLINE_LINUX_DEFAULT=', line: 'GRUB_CMDLINE_LINUX_DEFAULT=\"quiet iommu=pt\"' }
+    - { regex: '^GRUB_CMDLINE_LINUX_DEFAULT=', line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet iommu=pt"' }
   notify: update grub
-  sudo: yes
+  become: yes
   tags: configure
 
 # Install the Correct Graphics Driver
@@ -56,8 +61,8 @@
   stat:  path=/home/{{ public_username }}/.PlayOnLinux
   register: pol_folder
   when:  prepare_ms_office
-  sudo:  yes
-  sudo_user: "{{ public_username }}"
+  become:  yes
+  become_user: "{{ public_username }}"
   tags:  msoffice
 
 # Setup Dependencies for Running Microsoft Office 2007
@@ -70,33 +75,37 @@
 - name: Disable Suspend & Hibernate When Multiple Users Are Logged In
   copy: src=disable_multi_session_powersaving.pkla
         dest=/etc/polkit-1/localauthority/30-site.d/30-disable-multi-session-powersave.pkla
-  sudo: yes
+  become: yes
   tags: configure
 
+# TODO: Unattended Upgrades need some extra configuration, see the wiki
 - name:    Enable Unattended Upgrades
   service: name=unattended-upgrades enabled=yes
   notify:  start unattended upgrades
-  sudo:    yes
+  become:    yes
   tags:    configure
 
 - name: Ensure NetworkManager Manages Connections
   lineinfile: dest=/etc/NetworkManager/NetworkManager.conf
-              regexp="^managed=" line="managed=true"
+              regexp="^managed=" line="managed=true" create=yes
   notify:  restart network manager
-  sudo: yes
+  become: yes
   tags: configure
 
-- name: Configure the KDM Login Manager
-  lineinfile: dest=/etc/kde4/kdm/kdmrc regexp="{{ item.regexp }}" line="{{ item.line }}"
+- name: Ensure the SDDM Configuration File Exists
+  shell: "sddm --example-config > /etc/sddm.conf"
+  args:
+    creates: "/etc/sddm.conf"
+  become: yes
+
+- name: Configure the SDDM Login Manager
+  ini_file: path=/etc/sddm.conf section="{{ item.section }}" option="{{ item.option }}"
+            value="{{ item.value }}"
   with_items:
-      # Automatically Login as the Public User
-    - { regexp: '^#?AutoLoginEnable=',  line: 'AutoLoginEnable=true' }
-    - { regexp: '^#?AutoLoginUser=',    line: 'AutoLoginUser={{ public_username }}' }
-    - { regexp: '^#?AutoLoginDelay=',   line: 'AutoLoginDelay=0' }
-      # Always Preopoulate the User Field with the Public User
-    - { regexp: '^#?PreselectUser=',    line: 'PreselectUser=Default' }
-    - { regexp: '^DefaultUser=',        line: 'DefaultUser={{ public_username }}' }
-    - { regexp: '^#?NumLock=',          line: 'NumLock=On' }
-  notify: restart kdm
-  sudo: yes
+    - { section: "General", option: "Numlock", value: "on" }
+    - { section: "Autologin", option: "User", value: "{{ public_username }}" }
+    - { section: "Autologin", option: "Session", value: "plasma.desktop" }
+    - { section: "Users", option: "HideUsers", value: "seseadmin,prikhi" }
+  notify: restart sddm
+  become: yes
   tags: kde

@@ -6,18 +6,19 @@ The ``office_workstation`` folder contains files used for automated
 installation, configuration and maintenance of Acorn's Linux Workstations,
 which run `Debian Linux`_.
 
+
 Quickstart
 ===========
 
-#. Download the `Debian Jessie Netinstall Image`_.
+#. Download the `Debian Stretch Netinstall Image`_.
 #. Copy the ISO to a USB Stick::
 
-    dd if=debian-jessie.iso of=/dev/sdg
+    dd if=debian-stretch.iso of=/dev/sdg
 
 #. Boot the new workstation from the USB stick. When the installer menu pops
    up, hit escape and enter the following::
 
-    auto hostname=NewWorkstation url=http://lucy.acorn/~prikhi/preseed.cfg
+    auto hostname=NewWorkstation url=http://lucy.acorn/workstation-preseed.cfg
 
 #. After installation is complete, jump to your workstation and install
    ansible::
@@ -28,6 +29,10 @@ Quickstart
 
     echo 'NewWorkstation.acorn' >> playbook/workstations
 
+#. Copy your SSH key over to the new workstation::
+
+    ssh-copy-id seseadmin@NewWorkstation.acorn
+
 #. Run the playbook::
 
     cd playbook; ansible-playbook acorn.yml
@@ -37,17 +42,28 @@ Quickstart
 #. Once the playbook finishes, you should be logged in as the Public User and
    Mumble should have popped up.
 
+#. Go through Mumble's Audio Wizard, complete the Certificate Wizard.  To get
+   our Mumble server to show up in the favorites, you will have to rerun the
+   playbook with the ``mumble`` tag::
+
+    ansible-playbook acorn.yml -t mumble
+
+#. Right-click the Desktop & hit ``Unlock Widget``, then ``Configure Desktop``.
+   Change the ``Wallpaper`` tab's ``Layout`` option to ``Folder View``.
+
+#. You might need to do some our layout tweaks, like rearranging the Desktop
+   Icons, or increasing the height of the Task Bar(``Right-Click Task Bar ->
+   Panel Options -> Panel Settings``). Afterards, right-click the Desktop again
+   and choose ``Lock Widgets``.
+
 #. Open PlayOnLinux and hit ``Run a Local Script``. Choose the
    ``PlayOnLinux_msoffice.sh`` file in the Home directory.
 
-#. Open up Konsole, switch to an admin account and update & reboot::
+#. Cleanup by removing the MS Office ISO and the PlayOnLinux script and
+   shortcut from the Public User's home folder.
 
-    su seseadmin
-    sudo apt-get update && sudo apt-get dist-upgrade
-    sudo reboot
+#. Reboot the workstation.
 
-#. You can do a little bit of cleanup by removing the MS Office ISO and the
-   PlayOnLinux script and shortcut from the Public User's home folder.
 
 Automated Installs
 ===================
@@ -62,20 +78,20 @@ url=<preseed_url>``. For example, if you wanted the new workstation to be named
 ``HelloWorld`` and your preseed was hosted at
 http://lucy.acorn/~prikhi/preseed.cfg, you would type::
 
-    auto hostname=HelloWorld url=http://lucy.acorn/~prikhi/preseed.cfg
+    auto hostname=NewWorkstation url=http://lucy.acorn/workstation-preseed.cfg
 
 This will automatically partition the drives and setup an SSH server along with
 an ``seseadmin`` admin user.
 
 The `Ansible`_ playbook may then be used for further configuration.
 
-Generate Password Hashes
--------------------------
+.. note::
 
-You can use the `mkpasswd` command to generate crypted passwords for the
-pre-seed file::
+    You can use the `mkpasswd` command to generate crypted passwords for the
+    pre-seed file::
 
-    printf "mypassword" | mkpasswd -s -m sha-512
+        printf "someSecurePassword" | mkpasswd -s -m sha-512
+
 
 Ansible Setup
 ==============
@@ -151,8 +167,8 @@ Office 2007 using `PlayOnLinux`_. This will mount the install ISO, copy over
 patch files and create a PlayOnLinux script in the Public User's home
 directory. The script must still be run manually.
 
-Finally, we configure KDM, the KDE Display Manager, to automatically login as
-the Public User.
+Finally, we configure SDDM, the Display/Login Manager, to automatically login
+as the Public User.
 
 Microsoft Office 2007
 ----------------------
@@ -170,6 +186,8 @@ A network share containing the following files is required:
   using PlayOnLinux to get a copy of these)
 * The `wine-gecko`_ install file
 * The `XP SP3`_ patch file
+
+The Playbook will copy these files to the proper directories & mount the ISO.
 
 Customization
 --------------
@@ -193,6 +211,7 @@ The main issue tracker lives at http://bugs.sleepanarchy.com/projects/sysadmin,
 feel free to create a new issue(attach a patch file if you have one). Pull
 requests are also accepted from our github mirror at
 https://github.com/prikhi/sysadmintools.
+
 
 
 Automated Maintenance with Fabric
@@ -220,16 +239,23 @@ To upgrade all packages **and** install any new dependencies, use
 
     fab full_upgrade
 
+
 To Do
 ======
 
 * Abstract KDE specificities into a separate role
-* Change some of the Public User's config files into templates, especially ones
-  that have the ``sese`` user hardcoded in them.
+* Change some of the Public User's config files into templates or tasks,
+  especially ones that have the ``sese`` user hardcoded in them.
 * Add a role that uses a lightweight DE along with customizations for the
-  Public User
+  Public User(for low-power comps or laptops).
+* Refactor the "iommu=pt" grub option needed for SewingMachine into a
+  ``host_var`` file.
+* Address deprecation warnings.
+* Update public user files for debian 9 & new KDE.
+* Use Ansible Vault for password hashes.
+* Pre-configure mumble so the audio wizard isn't required.
 
-.. _Debian Jessie Netinstall Image: https://www.debian.org/CD/netinst/
+.. _Debian Stretch Netinstall Image: https://www.debian.org/CD/netinst/
 .. _Debian Linux:                   https://www.debian.org/
 .. _Debian Automated Installer:
 .. _Debian Automated Install:       https://www.debian.org/releases/stable/i386/apb.html

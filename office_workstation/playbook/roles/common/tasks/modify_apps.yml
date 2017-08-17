@@ -3,7 +3,6 @@
 - name: Ensure Base Applications are Installed
   apt:  name={{ item }} state=present install_recommends=yes
   with_items:
-    - alsa-base
     - alsa-utils
     - anacron
     - avahi-daemon
@@ -11,26 +10,28 @@
     - firmware-linux
     - hddtemp
     - iw
+    - kmod
     - libgl1-mesa-dri
     - libnss-mdns
     - p7zip-full
     - pm-utils
     - sudo
-    - udisks
+    - udisks2
     - unattended-upgrades
     - upower
     - xdg-user-dirs
     - xdg-utils
     - xorg
-  sudo: yes
+  become: yes
   tags: apps
 
 # Built from `kde-full` backwards, eliminating uneccesary apps
 - name: Ensure KDE Applications are Installed
   apt:  name={{ item }} state=present install_recommends=yes
   with_items:
-    - kdm
+    - sddm
     - polkit-kde-1
+    - kde-baseapps
     - kde-plasma-desktop
     - kdeaccessibility
     - kdeadmin
@@ -38,30 +39,28 @@
     - kdeedu
     - kdegames
     - kdegraphics
-    - kdegraphics-strigi-analyzer
     - kdegraphics-thumbnailers
-    - kdegraphics
     - svgpart
     - ffmpegthumbs
+    - network-manager
     - kio-audiocd
-    - kmix
     - kscd
     - kde-config-cddb
+    - kdemultimedia
     - kdenetwork
     - kdenetwork-filesharing
     - kde-zeroconf
-    - kdenetwork-strigi-analyzers
     - kdeutils
     - print-manager
-    - kdeplasma-addons
-    - plasma-widget-networkmanagement
-    - plasma-widget-folderview
+    - plasma-widgets-addons
+    - plasma-dataengines-addons
+    - plasma-runners-addons
+    - plasma-wallpapers-addons
     - system-config-printer
-    - baloo4
     - kate
     - k3b
     - kdesudo
-  sudo: yes
+  become: yes
   tags:
     - apps
     - kde
@@ -70,9 +69,8 @@
   apt:  name={{ item }} state=present
   with_items:
     - kde-config-gtk-style
-    - gtk2-engines-oxygen
-    - gtk3-engines-oxygen
-  sudo: yes
+    - gtk3-engines-breeze
+  become: yes
   tags:
     - apps
     - kde
@@ -82,12 +80,11 @@
   with_items:
     - chromium
     - filezilla
-    - flashplugin-nonfree
     - icedtea-plugin
     - iceweasel
     - mumble
-    - pepperflashplugin-nonfree
-  sudo: yes
+    - browser-plugin-freshplayer-pepperflash
+  become: yes
   tags: apps
 
 - name: Ensure LibreOffice is Installed
@@ -97,10 +94,11 @@
     - libreoffice-help-en-us
     - libreoffice-kde
     - libreoffice-pdfimport
+    - libreoffice-style-breeze
     - mythes-en-us
     - hunspell-en-us
     - hyphen-en-us
-  sudo: yes
+  become: yes
   tags: apps
 
 - name: Ensure Multimedia Codecs are Installed
@@ -113,9 +111,7 @@
     - gstreamer1.0-plugins-ugly
     - gstreamer1.0-pulseaudio
     - libavcodec-extra
-    - libgstreamer-interfaces-perl
-    - libgstreamer-perl
-  sudo: yes
+  become: yes
   tags: apps
 
 - name: Ensure Miscellaneous Applications and Utilities are Installed
@@ -128,5 +124,6 @@
     - sqlite3
     - tumbler
     - tumbler-plugins-extra
-  sudo: yes
+    - vlc
+  become: yes
   tags: apps

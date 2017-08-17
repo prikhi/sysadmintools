@@ -5,18 +5,18 @@
   with_items:
     - cups
     - cups-client
-  sudo: yes
+  become: yes
   tags:
     - apps
     - cups
 
 - name:    Disable the Local CUPS Server
   service: name=cups enabled=no
-  sudo:    yes
+  become:  yes
   tags:    cups
 
 - name:   Configure CUPS to Use Acorn's Print Server
   copy:   dest=/etc/cups/client.conf content='ServerName {{ cups_server }}\nEncryption IfRequested'
   notify: restart cups
-  sudo:   yes
+  become: yes
   tags:   cups

@@ -2,7 +2,7 @@
 
 - name: Install Samba
   apt:  name=samba state=present
-  sudo: yes
+  become: yes
   tags: samba
 
 - name:    Enable the Samba Daemons
@@ -10,13 +10,13 @@
   with_items:
     - smbd
     - nmbd
-  sudo:    yes
+  become: yes
   tags:    samba
 
 - name:   Set the Samba Client's Workgroup
   lineinfile: dest=/etc/samba/smb.conf regexp=';?\s*workgroup ='
               line='   workgroup = {{ smb_workgroup }}'
-  sudo:   yes
+  become: yes
   notify:
     - restart smbd
     - restart nmbd
@@ -26,7 +26,7 @@
   lineinfile: dest=/etc/samba/smb.conf regexp=';?\s*wins server ='
               line='   wins server = {{ wins_server }}'
   when:   use_wins_server
-  sudo:   yes
+  become: yes
   notify:
     - restart smbd
     - restart nmbd
@@ -35,33 +35,33 @@
 - name: Install CIFS and Samba FileSystem Packages
   apt:  name=cifs-utils state=present
   when: mount_personal_share or mount_community_share
-  sudo: yes
+  become: yes
   tags: samba
 
 # Personal Share
 - name:  Make a Folder for the Personal Share
   shell: mkdir -p {{ personal_share_directory }}
   when:  mount_personal_share
-  sudo:  yes
+  become: yes
   tags:  samba
 
 - name: Automatically Mount the Personal Share
   lineinfile: dest=/etc/fstab regexp="{{ personal_share_directory }}"
               line="{{ personal_share_fstab }}"
   when: mount_personal_share
-  sudo: yes
+  become: yes
   tags: samba
 
 # Community Share
 - name:  Make a Folder for the Community Share
   shell: mkdir -p {{ community_share_directory }}
   when:  mount_community_share
-  sudo:  yes
+  become: yes
   tags:  samba
 
 - name: Automatically Mount the Community Share
   lineinfile: dest=/etc/fstab regexp="{{ community_share_directory }}"
               line="{{ community_share_fstab }}"
   when: mount_community_share
-  sudo: yes
+  become: yes
   tags: samba

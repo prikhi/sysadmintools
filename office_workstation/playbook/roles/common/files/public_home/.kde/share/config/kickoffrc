@@ -1,8 +1,0 @@
-[Favorites]
-FavoriteURLs=/usr/share/applications/iceweasel.desktop,/usr/share/applications/chromium.desktop,/usr/share/applications/kde4/dolphin.desktop,/usr/share/applications/kde4/kcalc.desktop,/usr/lib/libreoffice/share/xdg/writer.desktop,/usr/lib/libreoffice/share/xdg/calc.desktop,/usr/lib/libreoffice/share/xdg/impress.desktop,/usr/share/applications/kde4/kate.desktop,/usr/share/applications/vlc.desktop,/usr/share/applications/kde4/kolourpaint.desktop,/home/sese/.local/share/applications/Tor Browser.desktop,/usr/share/applications/kde4/systemsettings.desktop
-
-[KRunner]
-loadAll=false
-
-[KRunner][PlasmaRunnerManager]
-pluginWhiteList=places,shell,services,bookmarks,recentdocuments,locations
