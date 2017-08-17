@@ -41,7 +41,7 @@ LB4M-1
 ------
 
 .. figure:: _images/LB4M-1_LB4M-2.png
-    :target: ../_images/LB4M-1_LB4M-2.png
+    :target: _images/LB4M-1_LB4M-2.png
     :align: center
     :alt: The assigned networks for each port on the LB4M-1 & LB4M-2 switches.
 
@@ -61,7 +61,7 @@ LB4M-2
 ------
 
 .. figure:: _images/LB4M-1_LB4M-2.png
-    :target: ../_images/LB4M-1_LB4M-2.png
+    :target: _images/LB4M-1_LB4M-2.png
     :align: center
     :alt: The assigned networks for each port on the LB4M-1 & LB4M-2 switches.
 
@@ -81,7 +81,7 @@ LB4M-3-MGMT
 -----------
 
 .. figure:: _images/LB4M-3-MGMT.png
-    :target: ../_images/LB4M-3-MGMT.png
+    :target: _images/LB4M-3-MGMT.png
     :align: center
     :alt: The assigned networks for each port on the LB4M-3-MGMT switch.
 
@@ -125,7 +125,7 @@ LB6M-1-PUBLIC
 -------------
 
 .. figure:: _images/LB6M-1-PUBLIC.png
-    :target: ../_images/LB6M-1-PUBLIC.png
+    :target: _images/LB6M-1-PUBLIC.png
     :align: center
     :alt: The assigned networks for each port on the LB6M-1-PUBLIC switch.
 
