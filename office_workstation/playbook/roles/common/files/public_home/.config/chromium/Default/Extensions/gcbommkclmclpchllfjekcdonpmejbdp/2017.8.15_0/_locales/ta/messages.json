@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Add New Rule"
+   },
+   "about_and": {
+      "message": ", and"
+   },
+   "about_created_by": {
+      "message": "உருவாக்கப்பட்டது"
+   },
+   "about_donate_eff": {
+      "message": "EFF நன்கொடை"
+   },
+   "about_donate_tor": {
+      "message": "Tor நன்கொடை"
+   },
+   "about_ext_description": {
+      "message": "வலை Encrypt! தானாகவே பல தளங்களில் HTTPS பாதுகாப்பு பயன்படுத்த."
+   },
+   "about_ext_name": {
+      "message": "எல்லா இடங்களிலும் HTTPS"
+   },
+   "about_librarians": {
+      "message": "Ruleset நூலகர்கள்"
+   },
+   "about_many_contributors": {
+      "message": "Many many contributors, including"
+   },
+   "about_noscript": {
+      "message": "Also, portions of HTTPS Everywhere are based on code from NoScript, by Giorgio Maone and others.  We are grateful for their excellent work!"
+   },
+   "about_or": {
+      "message": "அல்லது"
+   },
+   "about_thanks": {
+      "message": "நன்றிகள்"
+   },
+   "about_title": {
+      "message": "எல்லா இடங்களிலும் HTTPS பற்றி"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "பதிப்பு"
+   },
+   "chrome_add_new_rule": {
+      "message": "Add a new rule for this site"
+   },
+   "chrome_add_rule": {
+      "message": "Add a rule for this site"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Always use https for this host"
+   },
+   "chrome_experimental_rules": {
+      "message": "Experimental rules"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "May cause warnings or breakage. Disabled by default."
+   },
+   "chrome_hide_advanced": {
+      "message": "Hide advanced"
+   },
+   "chrome_host": {
+      "message": "Host:"
+   },
+   "chrome_redirect_to": {
+      "message": "Redirect to"
+   },
+   "chrome_regex": {
+      "message": "Matching regex"
+   },
+   "chrome_rule_name": {
+      "message": "Rule name"
+   },
+   "chrome_show_advanced": {
+      "message": "Show advanced"
+   },
+   "chrome_stable_rules": {
+      "message": "Stable rules"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Force encrypted connections to these websites:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "ரத்துசெய்"
+   },
+   "menu_about": {
+      "message": "எல்லா இடங்களிலும் HTTPS பற்றி"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Block all unencrypted requests"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Donate to EFF"
+   },
+   "menu_globalDisable": {
+      "message": "எல்லா இடங்களிலும் HTTPS முடக்கு"
+   },
+   "menu_globalEnable": {
+      "message": "எல்லா இடங்களிலும் HTTPS செயலாக்கு"
+   },
+   "menu_observatory": {
+      "message": "SSL அவதான விருப்பங்கள்"
+   },
+   "menu_showCounter": {
+      "message": "காட்டு கருமபீடம்"
+   },
+   "menu_viewAllRules": {
+      "message": "அனைத்து விதிகள் காண்கவும்"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "அனைத்தும் முடக்கு"
+   },
+   "prefs_enable_all": {
+      "message": "அனைத்தும் செயலாக்கு"
+   },
+   "prefs_enabled": {
+      "message": "இயக்கப்பட்டது"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "இங்கே"
+   },
+   "prefs_list_caption": {
+      "message": "எந்த HTTPS திருப்பிவிடுதல் விதிகளை விண்ணப்பிக்க வேண்டும்?"
+   },
+   "prefs_notes": {
+      "message": "குறிப்புகள்"
+   },
+   "prefs_reset_default": {
+      "message": "இயல்புநிலைக்கு மீட்டமை"
+   },
+   "prefs_reset_defaults": {
+      "message": "இயல்புநிலைக்கு மீட்டமை"
+   },
+   "prefs_ruleset_howto": {
+      "message": "நீங்கள் உங்கள் சொந்த rulesets (பிற இணைய தளங்கள் ஆதரவு சேர்க்க) எழுத எப்படி அறிய முடியும்"
+   },
+   "prefs_search": {
+      "message": "தேடு"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "தளம்"
+   },
+   "prefs_title": {
+      "message": "HTTPS எல்லா இடங்களிலும் விருப்பங்கள்"
+   },
+   "prefs_toggle": {
+      "message": "மாற்று"
+   },
+   "prefs_view_xml_source": {
+      "message": "XML மூலத்தை காண"
+   }
+}

@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Tilføj ny regel"
+   },
+   "about_and": {
+      "message": " og"
+   },
+   "about_created_by": {
+      "message": "Oprettet af"
+   },
+   "about_donate_eff": {
+      "message": "give et bidrag til EFF"
+   },
+   "about_donate_tor": {
+      "message": "give et bidrag til Tor"
+   },
+   "about_ext_description": {
+      "message": "Kryptér webbet! Brug HTTPS-sikkerhed automatisk på mange websteder."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Regelsæt-bibliotekarer"
+   },
+   "about_many_contributors": {
+      "message": "Mange, mange bidragsydere, herunder"
+   },
+   "about_noscript": {
+      "message": "Derudover er dele af HTTPS Everywhere baseret på kode fra NoScript af Giorgio Maone og andre. Vi er taknemmelige for deres fremragende arbejde!"
+   },
+   "about_or": {
+      "message": "eller at"
+   },
+   "about_thanks": {
+      "message": "Tak til"
+   },
+   "about_title": {
+      "message": "Om HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "da"
+   },
+   "about_version": {
+      "message": "Version"
+   },
+   "chrome_add_new_rule": {
+      "message": "Tilføj en ny regel for dette websted"
+   },
+   "chrome_add_rule": {
+      "message": "Tilføj en regel for dette websted"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Brug altid HTTPS for dette værtsnavn"
+   },
+   "chrome_experimental_rules": {
+      "message": "Eksperimentelle regler"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Kan give anledning til advarsler og fejl. Deaktiveret som standardindstilling."
+   },
+   "chrome_hide_advanced": {
+      "message": "Skjul avancerede indstillinger"
+   },
+   "chrome_host": {
+      "message": "Værtsnavn:"
+   },
+   "chrome_redirect_to": {
+      "message": "Viderestilles til"
+   },
+   "chrome_regex": {
+      "message": "Alt der matcher det regulære udtryk"
+   },
+   "chrome_rule_name": {
+      "message": "Regelnavn"
+   },
+   "chrome_show_advanced": {
+      "message": "Vis avancerede indstillinger"
+   },
+   "chrome_stable_rules": {
+      "message": "Stabile regler"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Sørg for at forbindelserne krypteres til følgende websteder:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Annuller"
+   },
+   "menu_about": {
+      "message": "Om HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Bloker alle ukrypterede forespørgsler"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Doner til EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Deaktivér HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Aktivér HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "Præferencer for SSL-observatoriet"
+   },
+   "menu_showCounter": {
+      "message": "Vis tæller"
+   },
+   "menu_viewAllRules": {
+      "message": "Se samtlige regler"
+   },
+   "options_import": {
+      "message": "Importér"
+   },
+   "options_importSettings": {
+      "message": "Importér indstillinger"
+   },
+   "options_imported": {
+      "message": "Dine indstillinger er blevet importeret."
+   },
+   "prefs_disable_all": {
+      "message": "Deaktivér alle"
+   },
+   "prefs_enable_all": {
+      "message": "Aktivér alle"
+   },
+   "prefs_enabled": {
+      "message": "Aktiveret"
+   },
+   "prefs_export_settings": {
+      "message": "Eksportér indstillinger"
+   },
+   "prefs_here_link": {
+      "message": "her"
+   },
+   "prefs_list_caption": {
+      "message": "Hvilke HTTPS-regler skal anvendes?"
+   },
+   "prefs_notes": {
+      "message": "Noter"
+   },
+   "prefs_reset_default": {
+      "message": "Nulstil til standardindstilling"
+   },
+   "prefs_reset_defaults": {
+      "message": "Nulstil til standardindstillinger"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Du kan lære, hvordan du skriver dine egne regelsæt (for at føje understøttelse til andre websteder)"
+   },
+   "prefs_search": {
+      "message": "Søg"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Klik venligst på 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Tilpasset stedregler"
+   },
+   "prefs_settings_global": {
+      "message": "Globale præferencer"
+   },
+   "prefs_settings_toggle": {
+      "message": "Pr. sted til/fra-indstilling"
+   },
+   "prefs_settings_warning": {
+      "message": "Advarsel:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "nedenfor for at sikre dig at dine indstillinger gemmes. Når HTTPS Everywhere opgraderes vil du senere skulle importere disse indstillinger i udvidelsens valgmuligheder-sektion."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Nogle af dine HTTPS Everywhere-indstillinger er ved at blive slettet!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "Denne udvidelse vil blive opgraderet betydeligt i nærmeste fremtid. Hvis du ikke eksportere dine indstillinger vil du miste en eller flere af følgende:"
+   },
+   "prefs_site": {
+      "message": "Sted"
+   },
+   "prefs_title": {
+      "message": "Præferencer for HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "Slå til/fra"
+   },
+   "prefs_view_xml_source": {
+      "message": "Vis XML-kilde"
+   }
+}

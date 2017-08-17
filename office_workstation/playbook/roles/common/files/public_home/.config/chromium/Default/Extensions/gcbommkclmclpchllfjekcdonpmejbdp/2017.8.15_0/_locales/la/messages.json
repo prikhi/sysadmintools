@@ -1,0 +1,191 @@
+{
+    "about_add_new_rule": {
+        "message": "Legem novam addere"
+    }, 
+    "about_and": {
+        "message": ", et"
+    }, 
+    "about_created_by": {
+        "message": "Factum de"
+    }, 
+    "about_donate_eff": {
+        "message": "Ad EFFem donatur"
+    }, 
+    "about_donate_tor": {
+        "message": "Ad Tor donare"
+    }, 
+    "about_ext_description": {
+        "message": "Late coniunctionem computatorum! Per ipse usa certitudinem de HTTPS in multis paginis."
+    }, 
+    "about_ext_name": {
+        "message": "HTTPS in omnibus locis"
+    }, 
+    "about_librarians": {
+        "message": "Librtariae collationum legum"
+    }, 
+    "about_many_contributors": {
+        "message": "Multi inportatores, in eos sunt"
+    }, 
+    "about_noscript": {
+        "message": "Partes programmatis HTTPS In Omnibus Locis in initio programma de NoScript de Giorgio Maone et aliis habet. Gratiam eis habemus, quia bene scripserunt!"
+    }, 
+    "about_or": {
+        "message": "aut"
+    }, 
+    "about_thanks": {
+        "message": "Gratias ad"
+    }, 
+    "about_title": {
+        "message": "De HTTPS in omnibus locis"
+    }, 
+    "about_tor_lang_code": {
+        "message": "en"
+    }, 
+    "about_version": {
+        "message": "Versio"
+    }, 
+    "chrome_add_new_rule": {
+        "message": "Legem novam pro ea pagina addere"
+    }, 
+    "chrome_add_rule": {
+        "message": "Legem pro ea pagina addere"
+    }, 
+    "chrome_always_https_for_host": {
+        "message": "Semper HTTPS pro ea depositione usare"
+    }, 
+    "chrome_experimental_rules": {
+        "message": "Leges in probatione"
+    }, 
+    "chrome_experimental_rules_description": {
+        "message": "Vitia facere potest. In initio deest."
+    }, 
+    "chrome_hide_advanced": {
+        "message": "Praeferentias longiores latere"
+    }, 
+    "chrome_host": {
+        "message": "Depositio"
+    }, 
+    "chrome_redirect_to": {
+        "message": "Directionem mutare ad"
+    }, 
+    "chrome_regex": {
+        "message": "Regex idoneum"
+    }, 
+    "chrome_rule_name": {
+        "message": "Nomen legis"
+    }, 
+    "chrome_show_advanced": {
+        "message": "Praeferentias longiores ostendere"
+    }, 
+    "chrome_stable_rules": {
+        "message": "Leges states"
+    }, 
+    "chrome_stable_rules_description": {
+        "message": "Coniunctiones ad eas paginas latetae esse debent"
+    }, 
+    "chrome_status_cancel_button": {
+        "message": "Claudere"
+    }, 
+    "menu_about": {
+        "message": "De HTTPS omniubi"
+    }, 
+    "menu_blockUnencryptedRequests": {
+        "message": "Omnes rogationes non latetas non accipere"
+    }, 
+    "menu_donate_eff_imperative": {
+        "message": "Ad EFFem donare"
+    }, 
+    "menu_globalDisable": {
+        "message": "HTTPS In Omnibus Locis finire"
+    }, 
+    "menu_globalEnable": {
+        "message": "HTTPS In Omnibus Locis inire"
+    }, 
+    "menu_observatory": {
+        "message": "Praeferentiae observandi SSL"
+    }, 
+    "menu_showCounter": {
+        "message": "Numeratorem ostendere"
+    }, 
+    "menu_viewAllRules": {
+        "message": "Omnes leges videre"
+    }, 
+    "options_import": {
+        "message": "Import"
+    }, 
+    "options_importSettings": {
+        "message": "Import Settings"
+    }, 
+    "options_imported": {
+        "message": "Your settings have been imported."
+    }, 
+    "prefs_disable_all": {
+        "message": "Omnes finire"
+    }, 
+    "prefs_enable_all": {
+        "message": "Omnes inire"
+    }, 
+    "prefs_enabled": {
+        "message": "Adest"
+    }, 
+    "prefs_export_settings": {
+        "message": "Export Settings"
+    }, 
+    "prefs_here_link": {
+        "message": "hic"
+    }, 
+    "prefs_list_caption": {
+        "message": "Quae leges redirectionis HTTPS usetur?"
+    }, 
+    "prefs_notes": {
+        "message": "Commentarii"
+    }, 
+    "prefs_reset_default": {
+        "message": "Ad initium reponere"
+    }, 
+    "prefs_reset_defaults": {
+        "message": "Ad initium reponere"
+    }, 
+    "prefs_ruleset_howto": {
+        "message": "Discere potes, quomodo collationes legum scribuntur (pro possibilitate usandi in paginis aliis)"
+    }, 
+    "prefs_search": {
+        "message": "Quaerere"
+    }, 
+    "prefs_settings_click_ok": {
+        "message": "Please click 'OK'"
+    }, 
+    "prefs_settings_custom": {
+        "message": "Custom site rules"
+    }, 
+    "prefs_settings_global": {
+        "message": "Global preferences"
+    }, 
+    "prefs_settings_toggle": {
+        "message": "Per-site on/off setting"
+    }, 
+    "prefs_settings_warning": {
+        "message": "Warning:"
+    }, 
+    "prefs_settings_warning_closing": {
+        "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+    }, 
+    "prefs_settings_warning_delete": {
+        "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+    }, 
+    "prefs_settings_warning_explain": {
+        "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+    }, 
+    "prefs_site": {
+        "message": "Pagina"
+    }, 
+    "prefs_title": {
+        "message": "Praeferentiae de HTTPS In Omnibus Locis"
+    }, 
+    "prefs_toggle": {
+        "message": "Addicere"
+    }, 
+    "prefs_view_xml_source": {
+        "message": "Initium XML videre"
+    }
+}

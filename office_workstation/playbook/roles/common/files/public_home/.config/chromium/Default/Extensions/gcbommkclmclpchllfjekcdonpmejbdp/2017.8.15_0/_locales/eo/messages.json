@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Aldoni novan regulon"
+   },
+   "about_and": {
+      "message": ", kaj"
+   },
+   "about_created_by": {
+      "message": "Kreita de"
+   },
+   "about_donate_eff": {
+      "message": "Donaci al EFF"
+   },
+   "about_donate_tor": {
+      "message": "Donaci al Tor"
+   },
+   "about_ext_description": {
+      "message": "Ĉifrigu la reton! Aŭtomate uzu HTTPS‐sekurecon ĉe multaj retejoj."
+   },
+   "about_ext_name": {
+      "message": "HTTPS-Ĉie"
+   },
+   "about_librarians": {
+      "message": "Bibliotekoj de regularo"
+   },
+   "about_many_contributors": {
+      "message": "Plej pli da kontribuintoj, inklude"
+   },
+   "about_noscript": {
+      "message": "Krom tio, partoj de HTTPS-Ĉie estas bazitaj sur kodo de NoScript de Giorgio MANOE kaj aliaj. Ni danku por ilia bonega laboro!"
+   },
+   "about_or": {
+      "message": "aŭ"
+   },
+   "about_thanks": {
+      "message": "Dankojn al"
+   },
+   "about_title": {
+      "message": "Pri HTTPS-Ĉie"
+   },
+   "about_tor_lang_code": {
+      "message": "eo"
+   },
+   "about_version": {
+      "message": "Versio"
+   },
+   "chrome_add_new_rule": {
+      "message": "Aldoni novan regulon por ĉi tiu retejo"
+   },
+   "chrome_add_rule": {
+      "message": "Aldoni regulon por ĉi tiu retejo"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Ĉiam uzi https por ĉi tiu retejo"
+   },
+   "chrome_experimental_rules": {
+      "message": "Eksperimentaj reguloj"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Povas kaŭzi avertojn aŭ malfunkciojn. Apriore malŝaltita."
+   },
+   "chrome_hide_advanced": {
+      "message": "Kaŝi altnivelajn"
+   },
+   "chrome_host": {
+      "message": "Servilo"
+   },
+   "chrome_redirect_to": {
+      "message": "Aldirekti al"
+   },
+   "chrome_regex": {
+      "message": "Kongrua regula esprimo"
+   },
+   "chrome_rule_name": {
+      "message": "Nomo de regulo"
+   },
+   "chrome_show_advanced": {
+      "message": "Montri altnivelajn"
+   },
+   "chrome_stable_rules": {
+      "message": "Stabilaj reguloj"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Devigi ĉifritan konekton al tiuj retejoj"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Rezigni"
+   },
+   "menu_about": {
+      "message": "Pri HTTPS-Ĉie"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Bloki ĉiujn neĉifritajn petojn"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Donaci al EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Malŝalti HTTPS-Ĉie"
+   },
+   "menu_globalEnable": {
+      "message": "Enŝalti HTTPS-Ĉie"
+   },
+   "menu_observatory": {
+      "message": "Agordoj de SSL-Observejo"
+   },
+   "menu_showCounter": {
+      "message": "Montri nombrilon"
+   },
+   "menu_viewAllRules": {
+      "message": "Montri ĉiujn regulojn"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Malŝalti ĉiujn"
+   },
+   "prefs_enable_all": {
+      "message": "Enŝalti ĉiujn"
+   },
+   "prefs_enabled": {
+      "message": "Enŝaltita"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "ĉi tie"
+   },
+   "prefs_list_caption": {
+      "message": "Kiuj reguloj pri HTTPS-alidirektado aplikiĝi?"
+   },
+   "prefs_notes": {
+      "message": "Notoj"
+   },
+   "prefs_reset_default": {
+      "message": "Restarigi apriorajn"
+   },
+   "prefs_reset_defaults": {
+      "message": "Reŝargi al aprioraj"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Vi povas lerni kiel krei viajn proprajn regularojn (por aldoni subtenon por aliaj retejoj)"
+   },
+   "prefs_search": {
+      "message": "Serĉi"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Retejo"
+   },
+   "prefs_title": {
+      "message": "Agordoj de HTTPS-Ĉie"
+   },
+   "prefs_toggle": {
+      "message": "Ŝalti"
+   },
+   "prefs_view_xml_source": {
+      "message": "Vidi XML-fonton"
+   }
+}

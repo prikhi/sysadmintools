@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Add New Rule"
+   },
+   "about_and": {
+      "message": ", และ"
+   },
+   "about_created_by": {
+      "message": "สร้างโดย"
+   },
+   "about_donate_eff": {
+      "message": "บริจาคให้กับ EFF"
+   },
+   "about_donate_tor": {
+      "message": "บริจาคให้กับ Tor"
+   },
+   "about_ext_description": {
+      "message": "เข้ารหัสเว็บ! ใช้ความปลอดภัย HTTPS โดยอัตโนมัติกับหลายเว็บไซต์"
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "คลังกฎ"
+   },
+   "about_many_contributors": {
+      "message": "Many many contributors, including"
+   },
+   "about_noscript": {
+      "message": "Also, portions of HTTPS Everywhere are based on code from NoScript, by Giorgio Maone and others.  We are grateful for their excellent work!"
+   },
+   "about_or": {
+      "message": "หรือ"
+   },
+   "about_thanks": {
+      "message": "ขอบคุณ"
+   },
+   "about_title": {
+      "message": "เกี่ยวกับ HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "รุ่น"
+   },
+   "chrome_add_new_rule": {
+      "message": "Add a new rule for this site"
+   },
+   "chrome_add_rule": {
+      "message": "Add a rule for this site"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Always use https for this host"
+   },
+   "chrome_experimental_rules": {
+      "message": "Experimental rules"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "May cause warnings or breakage. Disabled by default."
+   },
+   "chrome_hide_advanced": {
+      "message": "Hide advanced"
+   },
+   "chrome_host": {
+      "message": "Host:"
+   },
+   "chrome_redirect_to": {
+      "message": "Redirect to"
+   },
+   "chrome_regex": {
+      "message": "Matching regex"
+   },
+   "chrome_rule_name": {
+      "message": "Rule name"
+   },
+   "chrome_show_advanced": {
+      "message": "แสดงแบบขั้นสูง"
+   },
+   "chrome_stable_rules": {
+      "message": "Stable rules"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Force encrypted connections to these websites:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "ยกเลิก"
+   },
+   "menu_about": {
+      "message": "เกี่ยวกับ HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "บล็อคทุกคำขอที่ไม่ได้เข้ารหัส"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Donate to EFF"
+   },
+   "menu_globalDisable": {
+      "message": "ปิดใช้ HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "เปิดใช้ HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "ปรับแต่งหอสำรวจ SSL"
+   },
+   "menu_showCounter": {
+      "message": "แสดงตัวนับผู้ดู"
+   },
+   "menu_viewAllRules": {
+      "message": "ดูกติกาทั้งหมด"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "ปิดใช้ทั้งหมด"
+   },
+   "prefs_enable_all": {
+      "message": "เปิดใช้ทั้งหมด"
+   },
+   "prefs_enabled": {
+      "message": "เปิดใช้"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "ที่นี่"
+   },
+   "prefs_list_caption": {
+      "message": "กฎ HTTPS redirection อันไหนที่ควรใช้?"
+   },
+   "prefs_notes": {
+      "message": "โน้ต"
+   },
+   "prefs_reset_default": {
+      "message": "คืนค่าเริ่มต้น"
+   },
+   "prefs_reset_defaults": {
+      "message": "ล้างเป็นค่าตั้งต้น"
+   },
+   "prefs_ruleset_howto": {
+      "message": "คุณสามารถเรียนรู้วิธีการเขียนกฎเอง (เพื่อให้รองรับเว็บไซต์อื่นๆ เพิ่มขึ้น)"
+   },
+   "prefs_search": {
+      "message": "ค้นหา"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "ไซต์"
+   },
+   "prefs_title": {
+      "message": "ปรับแต่ง HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "สลับ"
+   },
+   "prefs_view_xml_source": {
+      "message": "ดูซอร์ส XML"
+   }
+}

@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "افزودن قانون جدید"
+   },
+   "about_and": {
+      "message": "، و"
+   },
+   "about_created_by": {
+      "message": "نوشته‌شده توسط"
+   },
+   "about_donate_eff": {
+      "message": "به EFF کمک مالی کنید."
+   },
+   "about_donate_tor": {
+      "message": "به Tor کمک مالی کنید."
+   },
+   "about_ext_description": {
+      "message": "وب را رمزگذاری کنید! از امنیت HTTPS بصورت خودکار برای بسیاری از وب‌سایت‌ها استفاده کنید."
+   },
+   "about_ext_name": {
+      "message": "HTTPS سراسری"
+   },
+   "about_librarians": {
+      "message": "کتابداران قوانین"
+   },
+   "about_many_contributors": {
+      "message": "بسیار زیادی همکار، از جمله"
+   },
+   "about_noscript": {
+      "message": "همچنین، تکه‌کدهایی از HTTPS Everywhere براساس کد NoScript توسط Giorgio Maone و دیگران نوشته شده است. ما از کار فوق‌العاده‌شان سپاسگذاریم!"
+   },
+   "about_or": {
+      "message": "يا"
+   },
+   "about_thanks": {
+      "message": "با تشکر از"
+   },
+   "about_title": {
+      "message": "درباره HTTPS سراسری"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "نسخه"
+   },
+   "chrome_add_new_rule": {
+      "message": "اضافه کردن یک قانون جدید برای این سایت"
+   },
+   "chrome_add_rule": {
+      "message": "اضافه کردن یک قانون برای این سایت"
+   },
+   "chrome_always_https_for_host": {
+      "message": "همیشه از https برای این میزبان استفاده شود"
+   },
+   "chrome_experimental_rules": {
+      "message": "قوانین تجربی"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "ممکن است علت، هشدار و یا شکستگی باشد. غیر فعال به طور پیش فرض."
+   },
+   "chrome_hide_advanced": {
+      "message": "مخفی‌کردن پیشرفته"
+   },
+   "chrome_host": {
+      "message": "ميزبان:"
+   },
+   "chrome_redirect_to": {
+      "message": "تغییر مسیر به"
+   },
+   "chrome_regex": {
+      "message": "عبارت‌های منظم منطبق شده"
+   },
+   "chrome_rule_name": {
+      "message": "نام قانون"
+   },
+   "chrome_show_advanced": {
+      "message": "نمایش پیشرفته"
+   },
+   "chrome_stable_rules": {
+      "message": "قوانین پایدار"
+   },
+   "chrome_stable_rules_description": {
+      "message": "اتصالات رمزگذاری برای این وبگاه ها را اجباری کن :"
+   },
+   "chrome_status_cancel_button": {
+      "message": "لغو"
+   },
+   "menu_about": {
+      "message": "درباره HTTPS سراسری"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "مسدود کردن تمامی درخواست های کدگذاری نشده"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "به EFF کمک مالی کنید."
+   },
+   "menu_globalDisable": {
+      "message": "HTTPS سراسری را غیرفعال کنید"
+   },
+   "menu_globalEnable": {
+      "message": "HTTPS سراسری را فعال کنید "
+   },
+   "menu_observatory": {
+      "message": "تنظیم‌های رصدخانه‌ی SSL"
+   },
+   "menu_showCounter": {
+      "message": "نمایش شمارنده"
+   },
+   "menu_viewAllRules": {
+      "message": "نمایش همه قوانین "
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "همه‌ی موارد را غیرفعال کنید"
+   },
+   "prefs_enable_all": {
+      "message": "همه‌ی موارد را فعال کنید"
+   },
+   "prefs_enabled": {
+      "message": "فعال"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "اینجا"
+   },
+   "prefs_list_caption": {
+      "message": "کدام قوانین تغییر مسیر HTTPS باید اعمال گردد؟"
+   },
+   "prefs_notes": {
+      "message": "یادداشت‌ها"
+   },
+   "prefs_reset_default": {
+      "message": "بازنشانی به پیشفرض"
+   },
+   "prefs_reset_defaults": {
+      "message": "بازنشانی به پیشفرض"
+   },
+   "prefs_ruleset_howto": {
+      "message": "شما می‌توانید یادبگیرید که مجموعه روال‌های خود را بنویسید (تا از وب‌سایت‌های دیگر پشتیبانی کنید)"
+   },
+   "prefs_search": {
+      "message": "جستجو"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "پایگاه"
+   },
+   "prefs_title": {
+      "message": "ترجیحات HTTPS سراسری"
+   },
+   "prefs_toggle": {
+      "message": "تغییر"
+   },
+   "prefs_view_xml_source": {
+      "message": "مشاهده منبع XML"
+   }
+}

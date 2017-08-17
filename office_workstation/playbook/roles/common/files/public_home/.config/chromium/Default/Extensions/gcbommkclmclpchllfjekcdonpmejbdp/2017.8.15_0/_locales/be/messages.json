@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Add New Rule"
+   },
+   "about_and": {
+      "message": ", and"
+   },
+   "about_created_by": {
+      "message": "Стваральнікі"
+   },
+   "about_donate_eff": {
+      "message": "ахвяраваць сродкі EFF"
+   },
+   "about_donate_tor": {
+      "message": "ахвяраваць сродкі Tor"
+   },
+   "about_ext_description": {
+      "message": "Шыфраванне Сеціва! Аўтаматычнае выкарыстанне бяспекі HTTPS на розных сайтах"
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Бібліятэкары збораў правілаў"
+   },
+   "about_many_contributors": {
+      "message": "Many many contributors, including"
+   },
+   "about_noscript": {
+      "message": "Also, portions of HTTPS Everywhere are based on code from NoScript, by Giorgio Maone and others.  We are grateful for their excellent work!"
+   },
+   "about_or": {
+      "message": "or"
+   },
+   "about_thanks": {
+      "message": "Падзякі"
+   },
+   "about_title": {
+      "message": "Пра HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "be"
+   },
+   "about_version": {
+      "message": "Версія"
+   },
+   "chrome_add_new_rule": {
+      "message": "Add a new rule for this site"
+   },
+   "chrome_add_rule": {
+      "message": "Add a rule for this site"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Always use https for this host"
+   },
+   "chrome_experimental_rules": {
+      "message": "Experimental rules"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "May cause warnings or breakage. Disabled by default."
+   },
+   "chrome_hide_advanced": {
+      "message": "Hide advanced"
+   },
+   "chrome_host": {
+      "message": "Host:"
+   },
+   "chrome_redirect_to": {
+      "message": "Redirect to"
+   },
+   "chrome_regex": {
+      "message": "Matching regex"
+   },
+   "chrome_rule_name": {
+      "message": "Rule name"
+   },
+   "chrome_show_advanced": {
+      "message": "Show advanced"
+   },
+   "chrome_stable_rules": {
+      "message": "Stable rules"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Force encrypted connections to these websites:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Скасаваць"
+   },
+   "menu_about": {
+      "message": "Пра HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Block all unencrypted requests"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Donate to EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Адключыць HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Уключыць HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "Настáўленні SSL Observatory"
+   },
+   "menu_showCounter": {
+      "message": "Паказаць лічыльнік"
+   },
+   "menu_viewAllRules": {
+      "message": "View All Rules"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Адключыць усе"
+   },
+   "prefs_enable_all": {
+      "message": "Уключыць усе"
+   },
+   "prefs_enabled": {
+      "message": "Уключана"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "тут"
+   },
+   "prefs_list_caption": {
+      "message": "Якія правілы HTTPS-перанакіраванняў трэба задзейнічаць?"
+   },
+   "prefs_notes": {
+      "message": "Нататкі"
+   },
+   "prefs_reset_default": {
+      "message": "Скінуць да стандартнага"
+   },
+   "prefs_reset_defaults": {
+      "message": "Скінуць да стандартных"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Вы можаце навучыцца пісаць уласныя зборы правілаў (каб дадаць падтрымку для іншых вэбсайтаў)"
+   },
+   "prefs_search": {
+      "message": "Пошук"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Сайт"
+   },
+   "prefs_title": {
+      "message": "Настáўленні HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "Пераключыць"
+   },
+   "prefs_view_xml_source": {
+      "message": "Прагляд крынічнага XML-коду"
+   }
+}

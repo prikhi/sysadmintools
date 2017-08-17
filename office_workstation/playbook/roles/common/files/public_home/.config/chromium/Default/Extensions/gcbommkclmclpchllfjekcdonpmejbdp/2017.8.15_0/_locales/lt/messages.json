@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Pridėti naują taisyklę"
+   },
+   "about_and": {
+      "message": "ir"
+   },
+   "about_created_by": {
+      "message": "Sukūrė"
+   },
+   "about_donate_eff": {
+      "message": "Paaukoti EFF"
+   },
+   "about_donate_tor": {
+      "message": "Paaukoti Tor projektui"
+   },
+   "about_ext_description": {
+      "message": "Šifruokite žiniatinklį! Automatiškai naudokite HTTPS apsaugą daugelyje svetainių."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Taisyklių bibliotekininkai"
+   },
+   "about_many_contributors": {
+      "message": "Daugybė pagalbininkų, įskaitant"
+   },
+   "about_noscript": {
+      "message": "Taip pat, dalis HTTPS Everywhere yra paremta ,Giorgio Maone ir kitų kurtu, NoScript kodu. Mes esame dėkingi už jų nuostabų darbą!"
+   },
+   "about_or": {
+      "message": "arba"
+   },
+   "about_thanks": {
+      "message": "Dėkojame"
+   },
+   "about_title": {
+      "message": "Apie HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "lt"
+   },
+   "about_version": {
+      "message": "Versija"
+   },
+   "chrome_add_new_rule": {
+      "message": "Pridėti šiai svetainei naują taisyklę"
+   },
+   "chrome_add_rule": {
+      "message": "Pridėti šiai svetainei taisyklę"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Visuomet šiam serveriui naudoti https"
+   },
+   "chrome_experimental_rules": {
+      "message": "Eksperimentinės taisyklės"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Gali sukelti įspėjimus ar gedimus. Pagal numatymą išjungta."
+   },
+   "chrome_hide_advanced": {
+      "message": "Slėpti išplėstinius"
+   },
+   "chrome_host": {
+      "message": "Serveris:"
+   },
+   "chrome_redirect_to": {
+      "message": "Nukreipti į"
+   },
+   "chrome_regex": {
+      "message": "Atitinkamas reguliarusis reiškinys"
+   },
+   "chrome_rule_name": {
+      "message": "Taisyklės pavadinimas"
+   },
+   "chrome_show_advanced": {
+      "message": "Rodyti išplėstinius"
+   },
+   "chrome_stable_rules": {
+      "message": "Pastovios taisyklės"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Priverstinis prisijungimų šifravimas į šiuos tinklalapius:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Atsisakyti"
+   },
+   "menu_about": {
+      "message": "Apie HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Blokuoti visas nešifruotas užklausas"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Paaukoti EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Išjungti HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Įgalinti HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "SSL Observatorijos nustatymai"
+   },
+   "menu_showCounter": {
+      "message": "Rodyti skaitiklį"
+   },
+   "menu_viewAllRules": {
+      "message": "Žiūrėti visas taisykles"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Uždrausti visas"
+   },
+   "prefs_enable_all": {
+      "message": "Įgalinti visas"
+   },
+   "prefs_enabled": {
+      "message": "Įgalinta"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "čia"
+   },
+   "prefs_list_caption": {
+      "message": "Kurias HTTPS nukreipimo taisykles naudoti?"
+   },
+   "prefs_notes": {
+      "message": "Pastabos"
+   },
+   "prefs_reset_default": {
+      "message": "Atstatyti numatytą"
+   },
+   "prefs_reset_defaults": {
+      "message": "Atstatyti numatytas"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Galite sužinoti, kaip patiems rašyti nukreipimo taisykles (kad pridėtumėte kitų svetainių palaikymą)"
+   },
+   "prefs_search": {
+      "message": "Ieškoti"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Tinklapis"
+   },
+   "prefs_title": {
+      "message": "HTTPS Everywhere nustatymai"
+   },
+   "prefs_toggle": {
+      "message": "Perjungti"
+   },
+   "prefs_view_xml_source": {
+      "message": "Žiūrėti XML šaltinį"
+   }
+}

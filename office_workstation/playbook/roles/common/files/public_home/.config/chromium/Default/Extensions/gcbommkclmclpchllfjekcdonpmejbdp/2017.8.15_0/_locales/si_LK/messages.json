@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Add New Rule"
+   },
+   "about_and": {
+      "message": ", and"
+   },
+   "about_created_by": {
+      "message": "නිර්මිත"
+   },
+   "about_donate_eff": {
+      "message": " EFF වලට ආධාර කරන්න"
+   },
+   "about_donate_tor": {
+      "message": "Tor වලට ආධාර කිරීම"
+   },
+   "about_ext_description": {
+      "message": "බොහෝ වෙබ් අඩවි සඳහා HTTPS ආරක්ෂාව ස්වයංක්‍රීයව පාවිච්චි කරන්න."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Ruleset Librarians"
+   },
+   "about_many_contributors": {
+      "message": "Many many contributors, including"
+   },
+   "about_noscript": {
+      "message": "Also, portions of HTTPS Everywhere are based on code from NoScript, by Giorgio Maone and others.  We are grateful for their excellent work!"
+   },
+   "about_or": {
+      "message": "හෝ"
+   },
+   "about_thanks": {
+      "message": "ස්තුතිය"
+   },
+   "about_title": {
+      "message": "HTTPS Everywhere පිලිබඳව"
+   },
+   "about_tor_lang_code": {
+      "message": "ඉංග්‍රීසි"
+   },
+   "about_version": {
+      "message": "සංස්කරණය"
+   },
+   "chrome_add_new_rule": {
+      "message": "Add a new rule for this site"
+   },
+   "chrome_add_rule": {
+      "message": "Add a rule for this site"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Always use https for this host"
+   },
+   "chrome_experimental_rules": {
+      "message": "Experimental rules"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "May cause warnings or breakage. Disabled by default."
+   },
+   "chrome_hide_advanced": {
+      "message": "Hide advanced"
+   },
+   "chrome_host": {
+      "message": "Host:"
+   },
+   "chrome_redirect_to": {
+      "message": "Redirect to"
+   },
+   "chrome_regex": {
+      "message": "Matching regex"
+   },
+   "chrome_rule_name": {
+      "message": "Rule name"
+   },
+   "chrome_show_advanced": {
+      "message": "Show advanced"
+   },
+   "chrome_stable_rules": {
+      "message": "Stable rules"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Force encrypted connections to these websites:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "අවලංගු කරන්න"
+   },
+   "menu_about": {
+      "message": "HTTPS Everywhere පිලිබඳව"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Block all unencrypted requests"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Donate to EFF"
+   },
+   "menu_globalDisable": {
+      "message": "HTTPS Everywhere ක්‍රියාවිරහිත කරවන්න"
+   },
+   "menu_globalEnable": {
+      "message": "HTTPS Everywhere ක්‍රියාකරවන්න"
+   },
+   "menu_observatory": {
+      "message": "SSL නිරික්ෂණාගාර මනාප "
+   },
+   "menu_showCounter": {
+      "message": "Show Counter"
+   },
+   "menu_viewAllRules": {
+      "message": "View All Rules"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "සියල්ල අබල කරන්න "
+   },
+   "prefs_enable_all": {
+      "message": "සියල්ල සබල කරන්න "
+   },
+   "prefs_enabled": {
+      "message": "සබල කරන ලදී "
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "මෙහි "
+   },
+   "prefs_list_caption": {
+      "message": "කුමන HTTPS හැරවුම් කොන්දේසිය තෝරගන්නද ?    "
+   },
+   "prefs_notes": {
+      "message": "සටහන්"
+   },
+   "prefs_reset_default": {
+      "message": "යථා තත්වයට පත් කරන්න"
+   },
+   "prefs_reset_defaults": {
+      "message": "යථා තත්වයට පත් කරන්න"
+   },
+   "prefs_ruleset_howto": {
+      "message": "ඔබගේ rulesets ලියන ආකාරය පිළිබද ඔබට ඉගෙනගත හැක(අනෙකුත් වෙබ් අඩවි සදහා සහය එකතු කිරීමට) "
+   },
+   "prefs_search": {
+      "message": "සොයන්න"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "අඩවිය"
+   },
+   "prefs_title": {
+      "message": "HTTPS Everywhere මනාප "
+   },
+   "prefs_toggle": {
+      "message": "ටොගලය "
+   },
+   "prefs_view_xml_source": {
+      "message": "XML කේත පෙන්වන්න "
+   }
+}

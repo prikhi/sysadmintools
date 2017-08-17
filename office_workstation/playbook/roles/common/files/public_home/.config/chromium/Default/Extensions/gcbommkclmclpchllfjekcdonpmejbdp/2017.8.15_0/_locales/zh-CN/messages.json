@@ -1,0 +1,155 @@
+{
+    "about_add_new_rule": {
+        "message": "\u6dfb\u52a0\u65b0\u89c4\u5219"
+    }, 
+    "about_and": {
+        "message": "\uff0c\u53ca"
+    }, 
+    "about_created_by": {
+        "message": "\u521b\u5efa\u8005"
+    }, 
+    "about_donate_eff": {
+        "message": "\u6350\u52a9\u7535\u5b50\u524d\u7ebf\u57fa\u91d1\u4f1a (EFF)"
+    }, 
+    "about_donate_tor": {
+        "message": "\u6350\u52a9 Tor"
+    }, 
+    "about_ext_description": {
+        "message": "\u52a0\u5bc6\u7f51\u7edc\u6d4f\u89c8\uff0c\u81ea\u52a8\u4f7f\u7528 HTTPS \u8fde\u63a5\u8bbf\u95ee\u7ad9\u70b9\uff0c\u66f4\u52a0\u5b89\u5168\u3002"
+    }, 
+    "about_ext_name": {
+        "message": "HTTPS Everywhere"
+    }, 
+    "about_librarians": {
+        "message": "\u89c4\u5219\u7ba1\u7406\u5458"
+    }, 
+    "about_many_contributors": {
+        "message": "\u8bb8\u8bb8\u591a\u591a\u7684\u8d21\u732e\u8005\uff0c\u5305\u62ec"
+    }, 
+    "about_noscript": {
+        "message": "\u53e6\u5916\uff0cHTTPS Everywhere \u7684\u90e8\u5206\u6e90\u4ee3\u7801\u57fa\u4e8e NoScript\uff0c\u4f5c\u8005\u662f Giorgio Maone \u7b49\u4eba\u3002\u6211\u4eec\u975e\u5e38\u611f\u8c22\u4ed6\u4eec\u51fa\u8272\u7684\u6210\u679c\uff01"
+    }, 
+    "about_or": {
+        "message": "\u6216"
+    }, 
+    "about_thanks": {
+        "message": "\u81f4\u8c22"
+    }, 
+    "about_title": {
+        "message": "\u5173\u4e8e HTTPS Everywhere"
+    }, 
+    "about_tor_lang_code": {
+        "message": "zh_CN"
+    }, 
+    "about_version": {
+        "message": "\u7248\u672c"
+    }, 
+    "chrome_add_new_rule": {
+        "message": "\u4e3a\u6b64\u7ad9\u70b9\u6dfb\u52a0\u65b0\u89c4\u5219"
+    }, 
+    "chrome_add_rule": {
+        "message": "\u4e3a\u6b64\u7ad9\u70b9\u6dfb\u52a0\u89c4\u5219"
+    }, 
+    "chrome_always_https_for_host": {
+        "message": "\u5bf9\u6b64\u4e3b\u673a\u59cb\u7ec8\u4f7f\u7528 https"
+    }, 
+    "chrome_experimental_rules": {
+        "message": "\u5b9e\u9a8c\u6027\u89c4\u5219"
+    }, 
+    "chrome_experimental_rules_description": {
+        "message": "\u53ef\u80fd\u5f15\u53d1\u8b66\u544a\u6216\u5f02\u5e38\u3002\u9ed8\u8ba4\u88ab\u7981\u7528\u3002"
+    }, 
+    "chrome_hide_advanced": {
+        "message": "\u9690\u85cf\u9ad8\u7ea7\u9009\u9879"
+    }, 
+    "chrome_host": {
+        "message": "\u4e3b\u673a:"
+    }, 
+    "chrome_redirect_to": {
+        "message": "\u91cd\u5b9a\u5411\u5230"
+    }, 
+    "chrome_regex": {
+        "message": "\u6b63\u5219\u8868\u8fbe\u5f0f\u5339\u914d"
+    }, 
+    "chrome_rule_name": {
+        "message": "\u89c4\u5219\u540d\u79f0"
+    }, 
+    "chrome_show_advanced": {
+        "message": "\u663e\u793a\u9ad8\u7ea7\u9009\u9879"
+    }, 
+    "chrome_stable_rules": {
+        "message": "\u7a33\u5b9a\u89c4\u5219"
+    }, 
+    "chrome_stable_rules_description": {
+        "message": "\u5f3a\u5236\u5bf9\u8fd9\u4e9b\u7f51\u7ad9\u52a0\u5bc6\u8fde\u63a5\uff1a"
+    }, 
+    "chrome_status_cancel_button": {
+        "message": "\u53d6\u6d88"
+    }, 
+    "menu_about": {
+        "message": "\u5173\u4e8e HTTPS Everywhere"
+    }, 
+    "menu_blockUnencryptedRequests": {
+        "message": "\u62e6\u622a\u6240\u6709\u672a\u52a0\u5bc6\u8bf7\u6c42"
+    }, 
+    "menu_donate_eff_imperative": {
+        "message": "\u6350\u52a9\u7535\u5b50\u524d\u7ebf\u57fa\u91d1\u4f1a (EFF)"
+    }, 
+    "menu_globalDisable": {
+        "message": "\u7981\u7528 HTTPS Everywhere"
+    }, 
+    "menu_globalEnable": {
+        "message": "\u542f\u7528 HTTPS Everywhere"
+    }, 
+    "menu_observatory": {
+        "message": "SSL Observatory \u9996\u9009\u9879"
+    }, 
+    "menu_showCounter": {
+        "message": "\u663e\u793a\u8ba1\u6570\u5668"
+    }, 
+    "menu_viewAllRules": {
+        "message": "\u67e5\u770b\u6240\u6709\u89c4\u5219"
+    }, 
+    "prefs_disable_all": {
+        "message": "\u5168\u90e8\u7981\u7528"
+    }, 
+    "prefs_enable_all": {
+        "message": "\u5168\u90e8\u542f\u7528"
+    }, 
+    "prefs_enabled": {
+        "message": "\u5df2\u542f\u7528"
+    }, 
+    "prefs_here_link": {
+        "message": "\u8fd9\u91cc"
+    }, 
+    "prefs_list_caption": {
+        "message": "\u5e94\u7528\u54ea\u4e9b HTTPS \u91cd\u5b9a\u5411\u89c4\u5219\uff1f"
+    }, 
+    "prefs_notes": {
+        "message": "\u6ce8\u91ca"
+    }, 
+    "prefs_reset_default": {
+        "message": "\u91cd\u7f6e\u4e3a\u9ed8\u8ba4\u503c"
+    }, 
+    "prefs_reset_defaults": {
+        "message": "\u91cd\u7f6e\u4e3a\u9ed8\u8ba4\u503c"
+    }, 
+    "prefs_ruleset_howto": {
+        "message": "\u60a8\u53ef\u4ee5\u5b66\u4e60\u5982\u4f55\u7f16\u5199\u60a8\u81ea\u5df1\u7684\u89c4\u5219\uff08\u4ee5\u589e\u52a0\u5bf9\u5176\u4ed6\u7f51\u7ad9\u7684\u652f\u6301\uff09"
+    }, 
+    "prefs_search": {
+        "message": "\u641c\u7d22"
+    }, 
+    "prefs_site": {
+        "message": "\u7ad9\u70b9"
+    }, 
+    "prefs_title": {
+        "message": "HTTPS Everywhere \u9996\u9009\u9879"
+    }, 
+    "prefs_toggle": {
+        "message": "\u5207\u6362"
+    }, 
+    "prefs_view_xml_source": {
+        "message": "\u67e5\u770b XML \u683c\u5f0f\u7684\u6e90\u4ee3\u7801"
+    }
+}

@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Pievienot jaunu kārtulu"
+   },
+   "about_and": {
+      "message": ", un"
+   },
+   "about_created_by": {
+      "message": "Autori"
+   },
+   "about_donate_eff": {
+      "message": "ziedot EFF'am"
+   },
+   "about_donate_tor": {
+      "message": "ziedot Tor'am"
+   },
+   "about_ext_description": {
+      "message": "Šifrēt tīmekli! Automātiski lietot HTTPS drošību daudzās vietnēs."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Ruleset Librarians"
+   },
+   "about_many_contributors": {
+      "message": "Daudzi jo daudzi līdzstrādnieki, tostarp"
+   },
+   "about_noscript": {
+      "message": "Bez tam daļa no HTTPS Evertwhere izmanto NoScript kodu. Paldies Džordžio Giorgio Maone un citiem par viņu izcilo darbu!"
+   },
+   "about_or": {
+      "message": "vai"
+   },
+   "about_thanks": {
+      "message": "Pateicoties"
+   },
+   "about_title": {
+      "message": "Par HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "an"
+   },
+   "about_version": {
+      "message": "Versija"
+   },
+   "chrome_add_new_rule": {
+      "message": "Šai vietnei pievienot jaunu kārtulu"
+   },
+   "chrome_add_rule": {
+      "message": "Šai vietnei pievienot kārtulu"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Šim resursdatoram vienmēr lietot https"
+   },
+   "chrome_experimental_rules": {
+      "message": "Eksperimentālas kārtulas"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Var izsaukt brīdinājumus vai darbības pārtraukumus. Pēc noklusējuma ir atspējots."
+   },
+   "chrome_hide_advanced": {
+      "message": "Slēpt lietpratīgās"
+   },
+   "chrome_host": {
+      "message": "Resursdators:"
+   },
+   "chrome_redirect_to": {
+      "message": "Novirzīt uz"
+   },
+   "chrome_regex": {
+      "message": "Atbilstoša regulāra izteiksme jeb regex"
+   },
+   "chrome_rule_name": {
+      "message": "Kārtulas nosaukums"
+   },
+   "chrome_show_advanced": {
+      "message": "Rādīt lietpratīgās"
+   },
+   "chrome_stable_rules": {
+      "message": "Stabilas kārtulas"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Uzspiest šifrētus savienojumus ar šīm tīmekļa vietnēm."
+   },
+   "chrome_status_cancel_button": {
+      "message": "Atcelt"
+   },
+   "menu_about": {
+      "message": "Par HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Bloķēt visus nešifrētus pieprasījumus"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Ziedojiet EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Atspējot HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Iespējot HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "SSL Observatory preferences"
+   },
+   "menu_showCounter": {
+      "message": "Rādījumu skaitītājs"
+   },
+   "menu_viewAllRules": {
+      "message": "Skatīt visas kārtulas"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Atspējot visus"
+   },
+   "prefs_enable_all": {
+      "message": "Iespējot visus"
+   },
+   "prefs_enabled": {
+      "message": "Iespējots"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "te"
+   },
+   "prefs_list_caption": {
+      "message": "Kurus HTTPS pāradresācijas noteikumus lietot?"
+   },
+   "prefs_notes": {
+      "message": "Piezīmes"
+   },
+   "prefs_reset_default": {
+      "message": "Atiestatīt uz noklusējuma vērtībām"
+   },
+   "prefs_reset_defaults": {
+      "message": "Atiestatīt uz noklusējuma vērtībām"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Variet iemācīties kā rakstīt savus noteikumu komplektus (lai pievienotu citu tīmekļa vietņu atbalstu)"
+   },
+   "prefs_search": {
+      "message": "Meklēt"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Vietne"
+   },
+   "prefs_title": {
+      "message": "HTTPS Everywhere preferences"
+   },
+   "prefs_toggle": {
+      "message": "Pārslēgt"
+   },
+   "prefs_view_xml_source": {
+      "message": "Skatīt XML avotu"
+   }
+}

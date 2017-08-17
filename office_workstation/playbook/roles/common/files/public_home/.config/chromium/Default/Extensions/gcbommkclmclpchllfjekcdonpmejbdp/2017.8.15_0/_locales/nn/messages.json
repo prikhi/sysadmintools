@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Legg til ny regel"
+   },
+   "about_and": {
+      "message": ", og"
+   },
+   "about_created_by": {
+      "message": "Laga av"
+   },
+   "about_donate_eff": {
+      "message": "Donera åt EFF"
+   },
+   "about_donate_tor": {
+      "message": "Donera åt Tor"
+   },
+   "about_ext_description": {
+      "message": "Krypter veven! Bruk HTTPS-tryggleik automatisk på mange sider."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Regelsettbibliotekarar"
+   },
+   "about_many_contributors": {
+      "message": "Mange mange bidragsytarar, medrekna"
+   },
+   "about_noscript": {
+      "message": "Dessutan er delar av HTTPS Everywhere basert på kode frå NoScript av Giorgio Maone og andre. Me er takksame for det framifrå arbeidet deira!"
+   },
+   "about_or": {
+      "message": "eller"
+   },
+   "about_thanks": {
+      "message": "Takk til"
+   },
+   "about_title": {
+      "message": "Om HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "Versjon"
+   },
+   "chrome_add_new_rule": {
+      "message": "Legg til ein ny regel for denne nettstaden"
+   },
+   "chrome_add_rule": {
+      "message": "Legg til ein regel for denne nettstaden"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Nytt alltid https for denne verten"
+   },
+   "chrome_experimental_rules": {
+      "message": "Reglar på prøve"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Kan vera årsak åt åtvaringar eller brot. Slegne av som standard."
+   },
+   "chrome_hide_advanced": {
+      "message": "Gøym avansert"
+   },
+   "chrome_host": {
+      "message": "Vert:"
+   },
+   "chrome_redirect_to": {
+      "message": "Omdiriger til"
+   },
+   "chrome_regex": {
+      "message": "Som passar med regex"
+   },
+   "chrome_rule_name": {
+      "message": "Namn på regelen:"
+   },
+   "chrome_show_advanced": {
+      "message": "Vis avansert"
+   },
+   "chrome_stable_rules": {
+      "message": "Støduge reglar"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Tving krypterte tilkoplingar åt desse nettstadane:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Avbryt"
+   },
+   "menu_about": {
+      "message": "Om HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Blokker alle ukrypterde fyrespurnader"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Doner til EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Slå av HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Slå på HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "SSL Observatory Innstillingar"
+   },
+   "menu_showCounter": {
+      "message": "Vis teljar"
+   },
+   "menu_viewAllRules": {
+      "message": "Vis alle reglane"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Slå av alle"
+   },
+   "prefs_enable_all": {
+      "message": "Slå på alle"
+   },
+   "prefs_enabled": {
+      "message": "Slått på"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "her"
+   },
+   "prefs_list_caption": {
+      "message": "Kva for HTTPS vidaresendingsreglar skal gjelde?"
+   },
+   "prefs_notes": {
+      "message": "Merknadar"
+   },
+   "prefs_reset_default": {
+      "message": "Still tilbake til standard"
+   },
+   "prefs_reset_defaults": {
+      "message": "Still tilbake til standard"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Du kan læra korleis du lagar dine eigne regelsett (for å støtta andre vevsider)"
+   },
+   "prefs_search": {
+      "message": "Søk"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Side"
+   },
+   "prefs_title": {
+      "message": "HTTPS Everywhere Innstillingar"
+   },
+   "prefs_toggle": {
+      "message": "Skift mellom"
+   },
+   "prefs_view_xml_source": {
+      "message": "Vis XML-kjelde"
+   }
+}

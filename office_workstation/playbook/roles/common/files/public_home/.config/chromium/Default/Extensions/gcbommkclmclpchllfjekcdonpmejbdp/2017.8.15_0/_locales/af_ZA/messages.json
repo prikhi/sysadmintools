@@ -1,0 +1,125 @@
+{
+   "about_created_by": {
+      "message": "Created by"
+   },
+   "about_donate_eff": {
+      "message": "Donating to EFF"
+   },
+   "about_donate_tor": {
+      "message": "Donating to Tor"
+   },
+   "about_ext_description": {
+      "message": "Encrypt the Web! Automatically use HTTPS security on many sites."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Ruleset Librarians"
+   },
+   "about_thanks": {
+      "message": "Thanks to"
+   },
+   "about_title": {
+      "message": "About HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "Version"
+   },
+   "menu_about": {
+      "message": "About HTTPS Everywhere"
+   },
+   "menu_globalDisable": {
+      "message": "Disable HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Enable HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "SSL Observatory Preferences"
+   },
+   "menu_showCounter": {
+      "message": "Show Counter"
+   },
+   "popup_keep": {
+      "message": "Keep me on the development version"
+   },
+   "popup_paragraph1": {
+      "message": "Oops. You were using the stable version of HTTPS Everywhere, but we might have accidentally upgraded you to the development version in our last release."
+   },
+   "popup_paragraph2": {
+      "message": "Would you like to go back to stable?"
+   },
+   "popup_paragraph3": {
+      "message": "We'd love it if you continued using our development release and helped us make HTTPS Everywhere better! You might find there are a few more bugs here and there, which you can report to https-everywhere@eff.org. Sorry about the inconvenience, and thank you for using HTTPS Everywhere."
+   },
+   "popup_revert": {
+      "message": "Download the latest stable version"
+   },
+   "popup_title": {
+      "message": "HTTPS Everywhere 4.0development.11 notification"
+   },
+   "prefs_disable_all": {
+      "message": "Disable All"
+   },
+   "prefs_enable_all": {
+      "message": "Enable All"
+   },
+   "prefs_enabled": {
+      "message": "Enabled"
+   },
+   "prefs_here_link": {
+      "message": "here"
+   },
+   "prefs_list_caption": {
+      "message": "Which HTTPS redirection rules should apply?"
+   },
+   "prefs_notes": {
+      "message": "Notes"
+   },
+   "prefs_reset_default": {
+      "message": "Reset to Default"
+   },
+   "prefs_reset_defaults": {
+      "message": "Reset to Defaults"
+   },
+   "prefs_ruleset_howto": {
+      "message": "You can learn how to write your own rulesets (to add support for other web sites)"
+   },
+   "prefs_search": {
+      "message": "Search"
+   },
+   "prefs_site": {
+      "message": "Site"
+   },
+   "prefs_title": {
+      "message": "HTTPS Everywhere Preferences"
+   },
+   "prefs_toggle": {
+      "message": "Toggle"
+   },
+   "prefs_view_xml_source": {
+      "message": "View XML Source"
+   },
+   "ruleset_tests_status_cancel_button": {
+      "message": "Cancel"
+   },
+   "ruleset_tests_status_start_button": {
+      "message": "Start"
+   },
+   "ruleset_tests_status_title": {
+      "message": "HTTPS Everywhere Ruleset Tests"
+   },
+   "source_downloading": {
+      "message": "Downloading"
+   },
+   "source_filename": {
+      "message": "Filename"
+   },
+   "source_unable_to_download": {
+      "message": "Unable to download source."
+   }
+}

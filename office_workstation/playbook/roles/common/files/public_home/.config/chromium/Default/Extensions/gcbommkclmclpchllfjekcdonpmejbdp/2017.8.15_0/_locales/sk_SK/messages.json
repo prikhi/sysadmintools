@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Pridať nové pravidlo"
+   },
+   "about_and": {
+      "message": ", a"
+   },
+   "about_created_by": {
+      "message": "Vytvorili"
+   },
+   "about_donate_eff": {
+      "message": "Dar pre EFF"
+   },
+   "about_donate_tor": {
+      "message": "Dar pre Tor"
+   },
+   "about_ext_description": {
+      "message": "Zašifrujte web! Automaticky používajte bezpečnosť HTTPS na mnohých stránkach."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Tvorcovia sád pravidiel"
+   },
+   "about_many_contributors": {
+      "message": "Veľa, veľa prispievateľov, vrátane"
+   },
+   "about_noscript": {
+      "message": "Taktiež, časti HTTPS Everywhere sú založené na kóde z NoScript od Giorgia Maoneho a ďalších. Sme vďační za ich excelentnú prácu!"
+   },
+   "about_or": {
+      "message": "alebo"
+   },
+   "about_thanks": {
+      "message": "Poďakovanie"
+   },
+   "about_title": {
+      "message": "O HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "sk"
+   },
+   "about_version": {
+      "message": "Verzia"
+   },
+   "chrome_add_new_rule": {
+      "message": "Pridať nové pravidlo pre túto stránku."
+   },
+   "chrome_add_rule": {
+      "message": "Pridať pravidlo pre túto stránku."
+   },
+   "chrome_always_https_for_host": {
+      "message": "Vždy používať https pre tohto hostiteľa."
+   },
+   "chrome_experimental_rules": {
+      "message": "Experimentálne pravidlá"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Môže spôsobiť upozornenie alebo chyby. Zakázané vo východzom nastavení."
+   },
+   "chrome_hide_advanced": {
+      "message": "Skryť pokročilé"
+   },
+   "chrome_host": {
+      "message": "Hostiteľ:"
+   },
+   "chrome_redirect_to": {
+      "message": "Presmerovať do"
+   },
+   "chrome_regex": {
+      "message": "Vyhovujúce regulárne výrazy"
+   },
+   "chrome_rule_name": {
+      "message": "Názov pravidla"
+   },
+   "chrome_show_advanced": {
+      "message": "Zobraziť pokročilé"
+   },
+   "chrome_stable_rules": {
+      "message": "Stabilné pravidlá"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Vynútiť šifrované spojenie pre tieto webové stránky:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Zrušiť"
+   },
+   "menu_about": {
+      "message": "O HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Blokovať všetky nešifrované požiadavky"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Darujte EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Vypnúť HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Zapnúť HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "Nastavenia SSL Observatory"
+   },
+   "menu_showCounter": {
+      "message": "Zobraziť počítadlo"
+   },
+   "menu_viewAllRules": {
+      "message": "Zobraziť všetky pravidlá"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Vypnúť všetko"
+   },
+   "prefs_enable_all": {
+      "message": "Zapnúť všetko"
+   },
+   "prefs_enabled": {
+      "message": "Zapnuté"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "tu"
+   },
+   "prefs_list_caption": {
+      "message": "Ktoré pravidlá pre presmerovanie HTTPS uplatniť?"
+   },
+   "prefs_notes": {
+      "message": "Poznámky"
+   },
+   "prefs_reset_default": {
+      "message": "Obnoviť pôvodné"
+   },
+   "prefs_reset_defaults": {
+      "message": "Obnoviť pôvodné"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Môžete sa naučiť, ako písať svoje vlastné sady pravidiel (pre pridanie podpory pre ďalšie stránky)"
+   },
+   "prefs_search": {
+      "message": "Hľadať"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Stránka"
+   },
+   "prefs_title": {
+      "message": "Nastavenia HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "Prepnúť"
+   },
+   "prefs_view_xml_source": {
+      "message": "Zobraziť XML zdroj"
+   }
+}

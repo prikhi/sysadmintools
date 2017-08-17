@@ -1,47 +1,80 @@
 {
-   "checksum": "fb469bcb213b9e11e4c6d8afa5178140",
+   "checksum": "5bdb20ba8a642813bc590884ef1da051",
    "roots": {
       "bookmark_bar": {
          "children": [ {
-            "date_added": "13051587708516209",
-            "id": "7",
+            "date_added": "13147388852387755",
+            "id": "9",
+            "meta_info": {
+               "last_visited_desktop": "13147388852388261"
+            },
             "name": "Acorn Accounting",
             "type": "url",
             "url": "http://accounting.acorn/"
          }, {
-            "date_added": "13051587739404409",
-            "id": "8",
-            "name": "Acorn Project Tracker",
+            "date_added": "13147388859929250",
+            "id": "10",
+            "meta_info": {
+               "last_visited_desktop": "13147388859932501"
+            },
+            "name": "Acorn Library",
             "type": "url",
-            "url": "http://projects.acorn/"
+            "url": "http://library.acorn/"
          }, {
-            "date_added": "13051587777472752",
-            "id": "9",
+            "date_added": "13147388863864772",
+            "id": "11",
+            "meta_info": {
+               "last_visited_desktop": "13147388863865769"
+            },
             "name": "Acorn Wiki",
             "type": "url",
-            "url": "http://aphrodite.acorn:8080/"
+            "url": "http://wiki.acorn/"
          }, {
-            "date_added": "13051588136134930",
-            "id": "10",
-            "name": "Gmail",
+            "date_added": "13147388867068207",
+            "id": "12",
+            "meta_info": {
+               "last_visited_desktop": "13147388867068649"
+            },
+            "name": "SESE",
             "type": "url",
-            "url": "https://accounts.google.com/ServiceLogin?service=mail&continue=https://mail.google.com/mail/"
+            "url": "http://www.southernexposure.com/"
          }, {
-            "date_added": "13051588171898181",
-            "id": "11",
-            "name": "reddit",
+            "date_added": "13147388869445577",
+            "id": "13",
+            "meta_info": {
+               "last_visited_desktop": "13147388869445949"
+            },
+            "name": "Acorn Blog",
             "type": "url",
-            "url": "http://www.reddit.com/"
+            "url": "http://www.acorncommunity.org/"
+         }, {
+            "date_added": "13147388873262781",
+            "id": "14",
+            "meta_info": {
+               "last_visited_desktop": "13147388873263232"
+            },
+            "name": "FEC",
+            "type": "url",
+            "url": "http://www.thefec.org/"
+         }, {
+            "date_added": "13147388875760018",
+            "id": "15",
+            "meta_info": {
+               "last_visited_desktop": "13147388875760572"
+            },
+            "name": "FIC",
+            "type": "url",
+            "url": "http://www.ic.org/"
          } ],
-         "date_added": "13051587641733262",
-         "date_modified": "13051588171898181",
+         "date_added": "13147388456905334",
+         "date_modified": "13147388875760018",
          "id": "1",
          "name": "Bookmarks bar",
          "type": "folder"
       },
       "other": {
          "children": [  ],
-         "date_added": "13051587641733271",
+         "date_added": "13147388456905340",
          "date_modified": "0",
          "id": "2",
          "name": "Other bookmarks",
@@ -49,7 +82,7 @@
       },
       "synced": {
          "children": [  ],
-         "date_added": "13051587641733272",
+         "date_added": "13147388456905343",
          "date_modified": "0",
          "id": "3",
          "name": "Mobile bookmarks",

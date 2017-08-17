@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Add New Rule"
+   },
+   "about_and": {
+      "message": ", and"
+   },
+   "about_created_by": {
+      "message": "Ustvaril"
+   },
+   "about_donate_eff": {
+      "message": "Doniranju EFF"
+   },
+   "about_donate_tor": {
+      "message": "Doniranju Tor projektu"
+   },
+   "about_ext_description": {
+      "message": "Šifrirajte splet! Avtomatska uporaba HTTPS zaščite na različnih straneh."
+   },
+   "about_ext_name": {
+      "message": "HTTPS povsod"
+   },
+   "about_librarians": {
+      "message": "Knjižnice pravil"
+   },
+   "about_many_contributors": {
+      "message": "Many many contributors, including"
+   },
+   "about_noscript": {
+      "message": "Also, portions of HTTPS Everywhere are based on code from NoScript, by Giorgio Maone and others.  We are grateful for their excellent work!"
+   },
+   "about_or": {
+      "message": "ali"
+   },
+   "about_thanks": {
+      "message": "Zahvaljujoč"
+   },
+   "about_title": {
+      "message": "O HTTPS povsod"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "Različica"
+   },
+   "chrome_add_new_rule": {
+      "message": "Add a new rule for this site"
+   },
+   "chrome_add_rule": {
+      "message": "Add a rule for this site"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Always use https for this host"
+   },
+   "chrome_experimental_rules": {
+      "message": "Experimental rules"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "May cause warnings or breakage. Disabled by default."
+   },
+   "chrome_hide_advanced": {
+      "message": "Hide advanced"
+   },
+   "chrome_host": {
+      "message": "Host:"
+   },
+   "chrome_redirect_to": {
+      "message": "Redirect to"
+   },
+   "chrome_regex": {
+      "message": "Matching regex"
+   },
+   "chrome_rule_name": {
+      "message": "Rule name"
+   },
+   "chrome_show_advanced": {
+      "message": "Show advanced"
+   },
+   "chrome_stable_rules": {
+      "message": "Stable rules"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Force encrypted connections to these websites:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Prekliči"
+   },
+   "menu_about": {
+      "message": "O HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Block all unencrypted requests"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Donate to EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Onemogoči HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Omogoči HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "Možnosti SSL Opazovalnice"
+   },
+   "menu_showCounter": {
+      "message": "Prikaži števec"
+   },
+   "menu_viewAllRules": {
+      "message": "Preglej vsa pravila"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Onemogoči vse"
+   },
+   "prefs_enable_all": {
+      "message": "Omogoči vse"
+   },
+   "prefs_enabled": {
+      "message": "Omogočeno"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "tukaj"
+   },
+   "prefs_list_caption": {
+      "message": "Katera HTTPS pravila preusmeritev naj bodo upoštevana?"
+   },
+   "prefs_notes": {
+      "message": "Opombe"
+   },
+   "prefs_reset_default": {
+      "message": "Ponastavi"
+   },
+   "prefs_reset_defaults": {
+      "message": "Ponastavi"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Lahko se naučite pisati svoja pravila (za podporo drugim spletnim stranem)"
+   },
+   "prefs_search": {
+      "message": "Išči"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Mesta"
+   },
+   "prefs_title": {
+      "message": "HTTPS Everywhere možnosti"
+   },
+   "prefs_toggle": {
+      "message": "Preklopi"
+   },
+   "prefs_view_xml_source": {
+      "message": "Ogled XML kode"
+   }
+}

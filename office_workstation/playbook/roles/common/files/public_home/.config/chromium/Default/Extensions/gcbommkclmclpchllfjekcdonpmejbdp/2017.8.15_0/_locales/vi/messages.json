@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Thêm quy định mới"
+   },
+   "about_and": {
+      "message": ", và"
+   },
+   "about_created_by": {
+      "message": "Tạo ra bởi"
+   },
+   "about_donate_eff": {
+      "message": "Đóng góp cho EFF"
+   },
+   "about_donate_tor": {
+      "message": "Đóng góp cho Tor"
+   },
+   "about_ext_description": {
+      "message": "Mã hóa Web! Tự động sử dụng bảo mật HTTPS ở nhiều trang web."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Những người quản lý thư viện quy tắc"
+   },
+   "about_many_contributors": {
+      "message": "Rất rất nhiều người đóng góp, bao gồm cả"
+   },
+   "about_noscript": {
+      "message": "Hơn nữa, những phần của HTTPS Everywhere được dựa trên mã của NoScript, bởi Giorgio Maone và những người khác. Chúng tôi biết ơn vì thành quả xuất sắc của họ."
+   },
+   "about_or": {
+      "message": "hoặc"
+   },
+   "about_thanks": {
+      "message": "Nhờ có"
+   },
+   "about_title": {
+      "message": "Về HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "Phiên bản"
+   },
+   "chrome_add_new_rule": {
+      "message": "Thêm một quy tắc mới cho trang này"
+   },
+   "chrome_add_rule": {
+      "message": "Thêm một quy tắc cho trang này"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Luôn sử dụng https cho host này"
+   },
+   "chrome_experimental_rules": {
+      "message": "Các quy tắc trải nghiệm"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Có thể gây ra các cảnh báo hay hư hại. Mặc định là tắt."
+   },
+   "chrome_hide_advanced": {
+      "message": "Ẩn chi tiết"
+   },
+   "chrome_host": {
+      "message": "Host:"
+   },
+   "chrome_redirect_to": {
+      "message": "Chuyển hướng đến"
+   },
+   "chrome_regex": {
+      "message": "Regex phù hợp"
+   },
+   "chrome_rule_name": {
+      "message": "Tên quy tắc"
+   },
+   "chrome_show_advanced": {
+      "message": "Hiển thị chi tiết"
+   },
+   "chrome_stable_rules": {
+      "message": "Các quy tắc ổn định"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Ép buộc mã hóa các kết nối đến các trang web này:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Hủy bỏ"
+   },
+   "menu_about": {
+      "message": "Thông tin về HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Chặn tất cả những yêu cầu không được mã hóa"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Đóng góp cho EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Tắt HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Bật HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "Các Tùy Chọn Ưu Tiên cho SSL Observatory"
+   },
+   "menu_showCounter": {
+      "message": "Hiển Thị Bộ Đếm"
+   },
+   "menu_viewAllRules": {
+      "message": "Xem Tất Cả Quy Tắc"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Tắt tất cả"
+   },
+   "prefs_enable_all": {
+      "message": "Bật tất cả"
+   },
+   "prefs_enabled": {
+      "message": "Bật"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "tại đây"
+   },
+   "prefs_list_caption": {
+      "message": "Những quy tắc chuyển hướng HTTPS nào nên được áp dụng?"
+   },
+   "prefs_notes": {
+      "message": "Các Lưu Ý"
+   },
+   "prefs_reset_default": {
+      "message": "Khôi phục về Mặc định"
+   },
+   "prefs_reset_defaults": {
+      "message": "Khôi phục về Mặc định"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Bạn có thể tìm hiểu về cách tự viết các quy tắc của riêng bạn (để hỗ trợ cho những trang web khác)"
+   },
+   "prefs_search": {
+      "message": "Tìm kiếm"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Trang web"
+   },
+   "prefs_title": {
+      "message": "Các Tùy Chọn Ưu Tiên Cho HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "Bật tắt"
+   },
+   "prefs_view_xml_source": {
+      "message": "Tìm nguồn XML"
+   }
+}

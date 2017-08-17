@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Añadir nueva regla"
+   },
+   "about_and": {
+      "message": ", y"
+   },
+   "about_created_by": {
+      "message": "Creado por"
+   },
+   "about_donate_eff": {
+      "message": "Donar a EFF"
+   },
+   "about_donate_tor": {
+      "message": "Donar a Tor"
+   },
+   "about_ext_description": {
+      "message": "¡Cifre la Web! Utilice automáticamente la seguridad HTTPS en muchos sitios."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Bibliotecarios de reglas"
+   },
+   "about_many_contributors": {
+      "message": "Muchos muchos colaboradores, incluyendo"
+   },
+   "about_noscript": {
+      "message": "Además, partes de HTTPS Everywhere están basadas en código de NoScript, de Giorgio Maone y otros. ¡Estamos agradecidos por su excelente trabajo!"
+   },
+   "about_or": {
+      "message": "o"
+   },
+   "about_thanks": {
+      "message": "Agradecimientos para"
+   },
+   "about_title": {
+      "message": "Acerca de HTTPS Everywhere (HTTPS en todos lados)"
+   },
+   "about_tor_lang_code": {
+      "message": "es"
+   },
+   "about_version": {
+      "message": "Versión"
+   },
+   "chrome_add_new_rule": {
+      "message": "Añadir una nueva regla para este sitio"
+   },
+   "chrome_add_rule": {
+      "message": "Añadir una regla para este sitio"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Usar siempre https para este servidor"
+   },
+   "chrome_experimental_rules": {
+      "message": "Reglas estables"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Pueden causar advertencias u obstaculizaciones. Deshabilitado por defecto."
+   },
+   "chrome_hide_advanced": {
+      "message": "Ocultar avanzadas"
+   },
+   "chrome_host": {
+      "message": "Servidor:"
+   },
+   "chrome_redirect_to": {
+      "message": "Redirigir a"
+   },
+   "chrome_regex": {
+      "message": "Expresión regular (regex) coincidente"
+   },
+   "chrome_rule_name": {
+      "message": "Nombre de la regla"
+   },
+   "chrome_show_advanced": {
+      "message": "Mostrar avanzadas"
+   },
+   "chrome_stable_rules": {
+      "message": "Reglas estables"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Fuerzan conexiones cifradas a estos sitios web:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Cancelar"
+   },
+   "menu_about": {
+      "message": "Acerca de HTTPS Everywhere (HTTPS en cualquier sitio)"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Bloquear todas las peticiones no cifradas"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Donar a EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Desactivar HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Activar HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "Opciones del Observatorio SSL"
+   },
+   "menu_showCounter": {
+      "message": "Mostrar contador"
+   },
+   "menu_viewAllRules": {
+      "message": "Ver todas las reglas"
+   },
+   "options_import": {
+      "message": "Importar"
+   },
+   "options_importSettings": {
+      "message": "Importar configuración"
+   },
+   "options_imported": {
+      "message": "Se ha importado tu configuración"
+   },
+   "prefs_disable_all": {
+      "message": "Desactivar todo"
+   },
+   "prefs_enable_all": {
+      "message": "Activar todo"
+   },
+   "prefs_enabled": {
+      "message": "Activado"
+   },
+   "prefs_export_settings": {
+      "message": "Exportar configuración"
+   },
+   "prefs_here_link": {
+      "message": "aquí"
+   },
+   "prefs_list_caption": {
+      "message": "¿Qué reglas de redirección HTTPS deberían aplicarse?"
+   },
+   "prefs_notes": {
+      "message": "Notas"
+   },
+   "prefs_reset_default": {
+      "message": "Restablecer configuración predeterminada"
+   },
+   "prefs_reset_defaults": {
+      "message": "Restablecer configuraciones predeterminadas"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Puede aprender a escribir sus propias reglas (para añadir soporte para otros sitios web)"
+   },
+   "prefs_search": {
+      "message": "Buscar"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Por favor, pulsa &quot;OK&quot;"
+   },
+   "prefs_settings_custom": {
+      "message": "Reglas del sitio personalizadas"
+   },
+   "prefs_settings_global": {
+      "message": "Preferencias globales"
+   },
+   "prefs_settings_toggle": {
+      "message": "Configuración per-site on/off"
+   },
+   "prefs_settings_warning": {
+      "message": "Atención"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "Para asegurarte de que la configuración se ha guardado. Una vez actualizado HTTPS Everywhere, has de importar estos ajustes en la sección opciones."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "¡Está a punto de borrarse parte de tu configuración HTTPS Everywhere!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "Esta extensión se actualizará de forma sustancial en el futuro. Si no exportas tu configuración, puedes perder todo o parte de lo que sigue:"
+   },
+   "prefs_site": {
+      "message": "Sitio"
+   },
+   "prefs_title": {
+      "message": "Preferencias de HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "Activar/Desactivar"
+   },
+   "prefs_view_xml_source": {
+      "message": "Ver código XML"
+   }
+}

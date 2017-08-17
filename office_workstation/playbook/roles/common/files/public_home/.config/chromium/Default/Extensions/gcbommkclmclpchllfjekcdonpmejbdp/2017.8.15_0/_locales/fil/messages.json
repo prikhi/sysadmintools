@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Add New Rule"
+   },
+   "about_and": {
+      "message": "at"
+   },
+   "about_created_by": {
+      "message": "Ginawa nina"
+   },
+   "about_donate_eff": {
+      "message": "Mag-donate sa EFF"
+   },
+   "about_donate_tor": {
+      "message": "Mag-donate sa Tor"
+   },
+   "about_ext_description": {
+      "message": "I-encrypt ang Web! Awtomatikong gamitin ang HTTPS security sa maraming sites."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Mga Ruleset Librarian"
+   },
+   "about_many_contributors": {
+      "message": "Maraming maraming contributor, kasama sina"
+   },
+   "about_noscript": {
+      "message": "Gayundin, ang ilang bahagi ng HTTPS Everywhere ay batay sa code mula sa NoScript nina Giorgio Maone at marami pang iba.  Lubos kaming nagpapasalamat sa kanilang mahusay na trabaho!"
+   },
+   "about_or": {
+      "message": "o"
+   },
+   "about_thanks": {
+      "message": "Salamat sa"
+   },
+   "about_title": {
+      "message": "Tungkol sa HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "fil"
+   },
+   "about_version": {
+      "message": "Bersyon"
+   },
+   "chrome_add_new_rule": {
+      "message": "Add a new rule for this site"
+   },
+   "chrome_add_rule": {
+      "message": "Add a rule for this site"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Always use https for this host"
+   },
+   "chrome_experimental_rules": {
+      "message": "Mga experimental na rules"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Maaaring hindi gumana o magkaroon ng mga babala. Default na naka-disable."
+   },
+   "chrome_hide_advanced": {
+      "message": "Hide advanced"
+   },
+   "chrome_host": {
+      "message": "Host:"
+   },
+   "chrome_redirect_to": {
+      "message": "Redirect to"
+   },
+   "chrome_regex": {
+      "message": "Matching regex"
+   },
+   "chrome_rule_name": {
+      "message": "Rule name"
+   },
+   "chrome_show_advanced": {
+      "message": "Show advanced"
+   },
+   "chrome_stable_rules": {
+      "message": "Mga stable na rules"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Puwersahin ang mga naka-encrypt na koneksyon sa mga website na ito:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "I-kansela"
+   },
+   "menu_about": {
+      "message": "Tungkol sa HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Block all unencrypted requests"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Donate to EFF"
+   },
+   "menu_globalDisable": {
+      "message": "I-disable ang HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "I-enable ang HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "Mga Preference sa SSL Observatory"
+   },
+   "menu_showCounter": {
+      "message": "Ipakita ang Counter"
+   },
+   "menu_viewAllRules": {
+      "message": "Tingnan ang Lahat ng Rules"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "I-disable Lahat"
+   },
+   "prefs_enable_all": {
+      "message": "I-enable Lahat"
+   },
+   "prefs_enabled": {
+      "message": "Naka-enable"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "dito"
+   },
+   "prefs_list_caption": {
+      "message": "Aling HTTPS redirection rules ang dapat gamitin?"
+   },
+   "prefs_notes": {
+      "message": "Mga Paunawa"
+   },
+   "prefs_reset_default": {
+      "message": "Ibalik sa Default"
+   },
+   "prefs_reset_defaults": {
+      "message": "Ibalik sa Defaults"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Puwede kang matuto kung paano magsulat ng sarili mong rulesets (para magdagdag ng support para sa iba pang web sites)"
+   },
+   "prefs_search": {
+      "message": "Maghanap"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Site"
+   },
+   "prefs_title": {
+      "message": "Mga Preference sa HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "I-toggle"
+   },
+   "prefs_view_xml_source": {
+      "message": "Tingnan ang XML Source"
+   }
+}

@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Afegeix una nova norma"
+   },
+   "about_and": {
+      "message": ", i"
+   },
+   "about_created_by": {
+      "message": "Creat per"
+   },
+   "about_donate_eff": {
+      "message": "Fer una donació a EFF"
+   },
+   "about_donate_tor": {
+      "message": "Fer una donació a Tor"
+   },
+   "about_ext_description": {
+      "message": "Xifra la Web! Fes servir automàticament la seguretat HTTPS a molts llocs."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Bibliotecaris de normes"
+   },
+   "about_many_contributors": {
+      "message": "Molts, molts contribuïdors, com "
+   },
+   "about_noscript": {
+      "message": "A més a més, parts de l'HTTPS Everywhere estan basades en codi de NoScript, per Giorgio Maone i altres. Agraïm la seva excel·lent feina!"
+   },
+   "about_or": {
+      "message": "o"
+   },
+   "about_thanks": {
+      "message": "Gràcies a"
+   },
+   "about_title": {
+      "message": "Sobre HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "Versió"
+   },
+   "chrome_add_new_rule": {
+      "message": "Afegeix una norma nova per a aquest lloc"
+   },
+   "chrome_add_rule": {
+      "message": "Afegeix una norma per a aquest lloc"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Utilitza sempre https per a aquest host"
+   },
+   "chrome_experimental_rules": {
+      "message": "Normes experimentals"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Pot causar avisos i problemes. Desactivat per defecte."
+   },
+   "chrome_hide_advanced": {
+      "message": "Amaga l'avançat"
+   },
+   "chrome_host": {
+      "message": "Host:"
+   },
+   "chrome_redirect_to": {
+      "message": "Redirecciona a"
+   },
+   "chrome_regex": {
+      "message": "Trobant la regex"
+   },
+   "chrome_rule_name": {
+      "message": "Nom de la norma"
+   },
+   "chrome_show_advanced": {
+      "message": "Mostra l'avançat"
+   },
+   "chrome_stable_rules": {
+      "message": "Normes estables."
+   },
+   "chrome_stable_rules_description": {
+      "message": "Força les connexions encriptades per als llocs web següents:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Cancel·la"
+   },
+   "menu_about": {
+      "message": "Sobre HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Bloca totes les peticions sense xifrar"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Donar a EEF"
+   },
+   "menu_globalDisable": {
+      "message": "Desactiva HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Activa HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "Preferències de SSL Observatory"
+   },
+   "menu_showCounter": {
+      "message": "Mostra el comptador"
+   },
+   "menu_viewAllRules": {
+      "message": "Ensenya totes les regles"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Desactiva-ho tot"
+   },
+   "prefs_enable_all": {
+      "message": "Activa-ho tot"
+   },
+   "prefs_enabled": {
+      "message": "Activat"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "aquí"
+   },
+   "prefs_list_caption": {
+      "message": "Quines regles de redirecció HTTPS voleu aplicar?"
+   },
+   "prefs_notes": {
+      "message": "Notes"
+   },
+   "prefs_reset_default": {
+      "message": "Tornar a la opció per defecte"
+   },
+   "prefs_reset_defaults": {
+      "message": "Torna a les opcions per defecte"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Podeu aprendre com escriure les vostres pròpies normes (per afegir suport a altres webs)"
+   },
+   "prefs_search": {
+      "message": "Cerca"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Lloc"
+   },
+   "prefs_title": {
+      "message": "Preferències d'HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "Canvia"
+   },
+   "prefs_view_xml_source": {
+      "message": "Veure el codi XML"
+   }
+}

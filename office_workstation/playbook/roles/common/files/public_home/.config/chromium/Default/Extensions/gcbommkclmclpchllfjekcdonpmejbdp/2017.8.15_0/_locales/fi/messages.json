@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Lisää Uusi Sääntö"
+   },
+   "about_and": {
+      "message": ", ja"
+   },
+   "about_created_by": {
+      "message": "Tekijät:"
+   },
+   "about_donate_eff": {
+      "message": "Lahjoita EFFille"
+   },
+   "about_donate_tor": {
+      "message": "Lahjoita Tor-sovellukselle."
+   },
+   "about_ext_description": {
+      "message": "Salaa verkko automaattisesti käyttäen HTTPS-suojausta monilla sivuilla!"
+   },
+   "about_ext_name": {
+      "message": "HTTPS Kaikkialla"
+   },
+   "about_librarians": {
+      "message": "Sääntöjen hallinnoijat"
+   },
+   "about_many_contributors": {
+      "message": "Monia myötävaikuttajia, mukaanlukien"
+   },
+   "about_noscript": {
+      "message": "Lisäksi, osia HTTPS Everywhere:stä perustuu Giorgio Maonen ja muiden koodiin NoScriptistä. Olemme kiitollisia heidän mahtavasta työstään!"
+   },
+   "about_or": {
+      "message": "tai"
+   },
+   "about_thanks": {
+      "message": "Kiitokset"
+   },
+   "about_title": {
+      "message": "Tietoja HTTPS Everywheresta"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "Versio"
+   },
+   "chrome_add_new_rule": {
+      "message": "Lisää uusi sääntö sivulle"
+   },
+   "chrome_add_rule": {
+      "message": "Lisää sääntö sivulle"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Käytä aina https tälle isännälle"
+   },
+   "chrome_experimental_rules": {
+      "message": "Kokeelliset käytännöt"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Voi aiheuttaa varoituksia tai hajoamisen. Pois käytöstä oletuksena."
+   },
+   "chrome_hide_advanced": {
+      "message": "Piillota lisäasetukset"
+   },
+   "chrome_host": {
+      "message": "Isäntä:"
+   },
+   "chrome_redirect_to": {
+      "message": "Uudelleenohjaa kohteeseen"
+   },
+   "chrome_regex": {
+      "message": "Sopiva säännöllinen lauseke"
+   },
+   "chrome_rule_name": {
+      "message": "Säännön nimi"
+   },
+   "chrome_show_advanced": {
+      "message": "Näytä lisäasetukset"
+   },
+   "chrome_stable_rules": {
+      "message": "Vakaat käytännöt"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Pakota salatut yhteydet näihin nettisivustoihin:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Peruuta"
+   },
+   "menu_about": {
+      "message": "Tietoja HTTPS Everywheresta"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Estä kaikki salaamatomat pyynnöt"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Lahjoita EFF:lle"
+   },
+   "menu_globalDisable": {
+      "message": "Poista HTTPS Everywhere käytöstä"
+   },
+   "menu_globalEnable": {
+      "message": "Ota HTTPS Everywhere käyttöön"
+   },
+   "menu_observatory": {
+      "message": "SSL Observatoryn asetukset"
+   },
+   "menu_showCounter": {
+      "message": "Näytä laskuri"
+   },
+   "menu_viewAllRules": {
+      "message": "Näytä kaikki säännöt"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Poista kaikki käytöstä"
+   },
+   "prefs_enable_all": {
+      "message": "Ota kaikki käyttöön"
+   },
+   "prefs_enabled": {
+      "message": "Käytössä"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "täällä"
+   },
+   "prefs_list_caption": {
+      "message": "Mitä HTTPS-uudelleenohjauksia tulisi käyttää?"
+   },
+   "prefs_notes": {
+      "message": "Huomautus"
+   },
+   "prefs_reset_default": {
+      "message": "Palauta oletusasetus"
+   },
+   "prefs_reset_defaults": {
+      "message": "Palauta oletusarvoihin"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Voit opetella kirjoittamaan omia sääntöjäsi (laajentaaksesi muiden sivustojen tukea)"
+   },
+   "prefs_search": {
+      "message": "Hae"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Sivusto"
+   },
+   "prefs_title": {
+      "message": "HTTPS Everywheren asetukset"
+   },
+   "prefs_toggle": {
+      "message": "Vaihda tilaa"
+   },
+   "prefs_view_xml_source": {
+      "message": "Katso XML-lähde"
+   }
+}

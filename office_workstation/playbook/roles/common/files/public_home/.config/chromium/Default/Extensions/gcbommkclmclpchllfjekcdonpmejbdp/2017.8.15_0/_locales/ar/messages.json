@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "اضافة قانون جديد"
+   },
+   "about_and": {
+      "message": "، ايضاً"
+   },
+   "about_created_by": {
+      "message": "أنشأه"
+   },
+   "about_donate_eff": {
+      "message": "التبرع للـ EFF"
+   },
+   "about_donate_tor": {
+      "message": "التبرع لتور"
+   },
+   "about_ext_description": {
+      "message": "شفر شبكة الإنترنت! استخدم تلقائيا تقنية HTTPS للأمان مع الكثير من المواقع."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "جامعيْ القواعد"
+   },
+   "about_many_contributors": {
+      "message": "والعديد العديد من المساهمين، شاملا"
+   },
+   "about_noscript": {
+      "message": "وايضا، جزئ من HTTPS Everywhere متمركزه على شفره NoScript، من صنع جورجيو ماوون وآخرين. نشكرهم على عملهم المتقن."
+   },
+   "about_or": {
+      "message": "أو"
+   },
+   "about_thanks": {
+      "message": "شكراً لكل من"
+   },
+   "about_title": {
+      "message": "عن HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "النسخة"
+   },
+   "chrome_add_new_rule": {
+      "message": "اضف استثناء جديد لهذا الموقع"
+   },
+   "chrome_add_rule": {
+      "message": "اضف استثناء لهذا الموقع"
+   },
+   "chrome_always_https_for_host": {
+      "message": "استخدم HTTPS دائما لهذا المضيف"
+   },
+   "chrome_experimental_rules": {
+      "message": "قوانين تجريبية"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "قد يسبب تحذيرات او اخطاء. الوضع الافتراضي معطل."
+   },
+   "chrome_hide_advanced": {
+      "message": "اخفاء الاعدادات المتقدمه"
+   },
+   "chrome_host": {
+      "message": "المضيف"
+   },
+   "chrome_redirect_to": {
+      "message": "اعادة التوجيه لـ"
+   },
+   "chrome_regex": {
+      "message": "مطابقة regex"
+   },
+   "chrome_rule_name": {
+      "message": "اسم الشرط"
+   },
+   "chrome_show_advanced": {
+      "message": "اظهار الاعدادت المتقدمه"
+   },
+   "chrome_stable_rules": {
+      "message": "قوانين متوازنة."
+   },
+   "chrome_stable_rules_description": {
+      "message": "اجبار المواقع التالية بالقيام باتصالات مشفرة:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "إلغاء"
+   },
+   "menu_about": {
+      "message": "عن  HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "منع جميع الطلبات الغير مشفرة"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "تبرع لإي إف إف "
+   },
+   "menu_globalDisable": {
+      "message": "عطّل  HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "فعّل HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "خيارات مرصد SSL"
+   },
+   "menu_showCounter": {
+      "message": "أظهر العداد"
+   },
+   "menu_viewAllRules": {
+      "message": "عرض جميع القواعد"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "عطّل الكل"
+   },
+   "prefs_enable_all": {
+      "message": "فعّل الكل"
+   },
+   "prefs_enabled": {
+      "message": "مفعّل"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "هنا"
+   },
+   "prefs_list_caption": {
+      "message": "أي من قواعد إعادة توجيه HTTPS يجب أن تطبق؟"
+   },
+   "prefs_notes": {
+      "message": "ملاحظات"
+   },
+   "prefs_reset_default": {
+      "message": "استعادة الإعداد الافتراضي"
+   },
+   "prefs_reset_defaults": {
+      "message": "استعادة الإعدادات الافتراضية"
+   },
+   "prefs_ruleset_howto": {
+      "message": "يمكنك تعلم كيفية كتابة قواعد خاصة بك (لإضافة الدعم لمواقع أخرى)"
+   },
+   "prefs_search": {
+      "message": "بحث"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "موقع"
+   },
+   "prefs_title": {
+      "message": "خيارات  HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "بدّل"
+   },
+   "prefs_view_xml_source": {
+      "message": "افحص مصدر XML"
+   }
+}

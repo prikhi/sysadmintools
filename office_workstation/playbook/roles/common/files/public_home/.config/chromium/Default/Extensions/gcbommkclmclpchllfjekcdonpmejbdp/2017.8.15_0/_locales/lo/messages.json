@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "ເພີ່ມກົດໃຫມ່"
+   },
+   "about_and": {
+      "message": ", ແລະ"
+   },
+   "about_created_by": {
+      "message": "ສ້າງໂດຍ"
+   },
+   "about_donate_eff": {
+      "message": "ບໍລິຈາກໃຫ້ແກ່ EFF"
+   },
+   "about_donate_tor": {
+      "message": "ບໍລິຈາກໃຫ້ແກ່ Tor"
+   },
+   "about_ext_description": {
+      "message": "ເຂົ້າລະຫັດເວັບ! ໃຊ້ ຄວາມປອດໄພ HTTPS ໃນຫລາຍໆເວັບໄຊຕ໌"
+   },
+   "about_ext_name": {
+      "message": "HTTPS ທຸກໆບ່ອນ"
+   },
+   "about_librarians": {
+      "message": "ບັນນາລັກ ຊຸດຄຳສັ່ງ"
+   },
+   "about_many_contributors": {
+      "message": "ຜູ້ຮ່ວມໃຫ້ຂໍ້ມູນຫຼາກຫຼາຍ, ຮວມທັງ"
+   },
+   "about_noscript": {
+      "message": "ນອກຈາກນີ້, ບາງສ່ວນຂອງ HTTP ຢູ່ທົ່ວທຸກແຫ່ງ ຈະອີງຕາມລະຫັດ ຈາກ NoScript ໂດຍ Giorgio Maone ແລະ ອື່ນໆ. ພວກເຮົາຮູ້ບຸນຄຸນ ສຳລັບວຽກງານ ທີ່ດີເລີດຂອງພວກເຂົາ!"
+   },
+   "about_or": {
+      "message": "ຫຼື"
+   },
+   "about_thanks": {
+      "message": "ຂອບໃຈ"
+   },
+   "about_title": {
+      "message": "ກ່ຽວກັບ HTTPS ທຸກໆບ່ອນ"
+   },
+   "about_tor_lang_code": {
+      "message": "ອັງກິດ"
+   },
+   "about_version": {
+      "message": "ເວີຊັນ"
+   },
+   "chrome_add_new_rule": {
+      "message": "ໃສ່ກົດໃໝ່ໃຫ້ກັບເວັບໄຊຕ໌ນີ້."
+   },
+   "chrome_add_rule": {
+      "message": "ໃສ່ກົດໃຫ້ກັບເວັບໄຊຕ໌ນີ້."
+   },
+   "chrome_always_https_for_host": {
+      "message": "ໃຊ້ https ໃຫ້ກັບ ໂຮສຕ໌ ນີ້ທຸກໆເທື່ອ."
+   },
+   "chrome_experimental_rules": {
+      "message": "ກົດການທົດລອງ"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "ອາດເກີດມີການເຕືອນ ຫຼື ສະງັກ. ຄ່າເລີ່ມຕົ້ນ ແມ່ນ ປິດໃຊ້ງານ."
+   },
+   "chrome_hide_advanced": {
+      "message": "ເຊື່ອງການສະແດງລວງເລິກ"
+   },
+   "chrome_host": {
+      "message": "Host:"
+   },
+   "chrome_redirect_to": {
+      "message": "ປ່ຽນເສັ້ນທາງໄປສູ່"
+   },
+   "chrome_regex": {
+      "message": "ການຈັບຄູ່ການສະແດງອອກປົກກະຕິ"
+   },
+   "chrome_rule_name": {
+      "message": "ຊື່ກົດ"
+   },
+   "chrome_show_advanced": {
+      "message": "ສະແດງລວງເລິກ"
+   },
+   "chrome_stable_rules": {
+      "message": "ກົດທີ່ໝັ້ນຄົງ"
+   },
+   "chrome_stable_rules_description": {
+      "message": "ບັງຄັບການເຊື່ອມຕໍ່ເຂົ້າລະຫັດໄປຍັງເວັບໄຊເຫຼົ່ານີ້."
+   },
+   "chrome_status_cancel_button": {
+      "message": "ຍົກເລີກ"
+   },
+   "menu_about": {
+      "message": "ກ່ຽວກັບ HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "ກັ້ນທຸກໆການຮ້ອງຂໍທີ່ບໍ່ເຂົ້າລະຫັດ"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "ບໍລິຈາກໃຫ້ແກ່ EFF"
+   },
+   "menu_globalDisable": {
+      "message": "ອັດການໃຊ້ງານ HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "ເປີດໃຊ້ງານ HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "ການຕັ້ງຄ່າສັງເກດການ SSL"
+   },
+   "menu_showCounter": {
+      "message": "ສະແດງເຄື່ອງນັບ"
+   },
+   "menu_viewAllRules": {
+      "message": "ສະແດງເບິ່ງກົດທັງໝົດ"
+   },
+   "options_import": {
+      "message": "ນໍາເຂົ້າ"
+   },
+   "options_importSettings": {
+      "message": "ການຕັ້ງຄ່າການນຳເຂົ້າ"
+   },
+   "options_imported": {
+      "message": "ການຕັ້ງຄ່າຂອງທ່ານໄດ້ຖືກນຳເຂົ້າແລ້ວ."
+   },
+   "prefs_disable_all": {
+      "message": "ປິດນຳໃຊ້ທັງຫມົດ"
+   },
+   "prefs_enable_all": {
+      "message": "ເປີດນຳໃຊ້ທັງຫມົດ"
+   },
+   "prefs_enabled": {
+      "message": "ເປີດນຳໃຊ້ແລ້ວ"
+   },
+   "prefs_export_settings": {
+      "message": "ການຕັ້ງຄ່າການສົ່ງອອກ"
+   },
+   "prefs_here_link": {
+      "message": "ທີ່ນີ້"
+   },
+   "prefs_list_caption": {
+      "message": "ກົດການປ່ຽນທິດທາງໃດ HTTPS ທີ່ຄວນໃຊ້?"
+   },
+   "prefs_notes": {
+      "message": "ໝາຍເຫດ"
+   },
+   "prefs_reset_default": {
+      "message": "ປັບຄືນເປັນຄ່າເລີ່ມຕົ້ນ"
+   },
+   "prefs_reset_defaults": {
+      "message": "ປັບຄືນເປັນຄ່າເລີ່ມຕົ້ນ"
+   },
+   "prefs_ruleset_howto": {
+      "message": "ທ່ານສາມາດຮຽນຂຽນຊຸດກົດຂອງທ່ານເອງໄດ້ (ເພື່ອເພີ່ມການສະໜັບສະໜູນ ໃຫ້ກັບເວັບໄຊຕ໌ອື່ນໆ)"
+   },
+   "prefs_search": {
+      "message": "ຄົ້ນຫາ"
+   },
+   "prefs_settings_click_ok": {
+      "message": "ກະລຸນາ ກົດ 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "ກຳນົດລະບຽບເວັບໄຊຕ໌ເອງ"
+   },
+   "prefs_settings_global": {
+      "message": "ສິ່ງທີ່ມັກໂດຍລວມ"
+   },
+   "prefs_settings_toggle": {
+      "message": "ການຕັ້ງຄ່າ Per-site on/off"
+   },
+   "prefs_settings_warning": {
+      "message": "ແຈ້ງເຕືອນ:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "ຂ້າງລຸ່ມນີ້ ເພື່ອໃຫ້ແນ່ໃຈວ່າ ການຕັ້ງຄ່າຂອງທ່ານຖືກບັນທຶກແລ້ວ. ເມື່ອ HTTPS Everywhere ໄດ້ຮັບການຍົກລະດັບແລ້ວ, ທ່ານຈະຕ້ອງນໍາເຂົ້າ ການຕັ້ງຄ່າເຫຼົ່ານີ້ ໃນສ່ວນຕົວເລືອກ ສ່ວນຂະຫຍາຍ ໃນພາຍຫຼັງ."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "ການຕັ້ງຄ່າ  HTTPS Everywhere ບາງຢ່າງຂອງ ທ່ານ ຈະໄດ້ຖຶກລຶບອອກ!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "ສ່ວຍຂະຫຍາຍນີ້ຈະໄດ້ຮັບການຍົກລະດັບໃຫ້ດີຂຶ້ນໃນອະນາຄົດອັນໃກ້ນີ້. ຖ້າຫາກວ່າທ່ານບໍ່ສົ່ງ ການຕັ້ງຄ່າຂອງທ່ານອອກ, ທ່ານອາດຈະສູນເສຍ ຂໍ້ມູນໜຶ່ງ ຫຼື ຫຼາຍຢ່າງດັ່ງຕໍ່ໄປນີ້:"
+   },
+   "prefs_site": {
+      "message": "ເວັບໄຊຕ໌"
+   },
+   "prefs_title": {
+      "message": "ການຕັ້ງຄ່າ HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "ໄກລັ່ນ"
+   },
+   "prefs_view_xml_source": {
+      "message": "ສະແດງເຍິ່ງ ແຫຼ່ງລະຫັດ XML"
+   }
+}

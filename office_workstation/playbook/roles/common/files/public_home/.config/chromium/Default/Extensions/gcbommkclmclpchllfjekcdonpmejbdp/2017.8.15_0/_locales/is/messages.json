@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "Bæta við nýrri reglu"
+   },
+   "about_and": {
+      "message": " og"
+   },
+   "about_created_by": {
+      "message": "Búið til af"
+   },
+   "about_donate_eff": {
+      "message": "Framlag til EFF"
+   },
+   "about_donate_tor": {
+      "message": "Framlag til Tor"
+   },
+   "about_ext_description": {
+      "message": "Dulkóðaðu vefinn! Notaðu sjálfkrafa HTTPS-öryggi á mörgum vefsvæðum."
+   },
+   "about_ext_name": {
+      "message": "HTTPS Allsstaðar"
+   },
+   "about_librarians": {
+      "message": "&quot;Ruleset Librarians&quot;"
+   },
+   "about_many_contributors": {
+      "message": "gríðarlega mörgum aðilum, þar á meðal"
+   },
+   "about_noscript": {
+      "message": "Ennfremur má geta bað hlutar HTTPS Everywhere eru byggðir á kóða frá NoScript, eftir Giorgio Maone og fleiri.  Við stöndum í þakkarskuld við þá !"
+   },
+   "about_or": {
+      "message": "eða"
+   },
+   "about_thanks": {
+      "message": "Þökk sé"
+   },
+   "about_title": {
+      "message": "Um HTTPS Allsstaðar"
+   },
+   "about_tor_lang_code": {
+      "message": "is"
+   },
+   "about_version": {
+      "message": "Útgáfa"
+   },
+   "chrome_add_new_rule": {
+      "message": "Bæta við nýrri reglu fyrir þetta vefsvæði"
+   },
+   "chrome_add_rule": {
+      "message": "Bæta við reglu fyrir þetta vefsvæði"
+   },
+   "chrome_always_https_for_host": {
+      "message": "Alltaf nota HTTPS fyrir þessa vél"
+   },
+   "chrome_experimental_rules": {
+      "message": "Reglur á tilraunastigi"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "Getur valdið hruni eða viðvörunum. Sjálfgefið óvirkt."
+   },
+   "chrome_hide_advanced": {
+      "message": "Fela ítalegt"
+   },
+   "chrome_host": {
+      "message": "Hýsilvél:"
+   },
+   "chrome_redirect_to": {
+      "message": "Endurbeina á"
+   },
+   "chrome_regex": {
+      "message": "Samsvarandi reglulegri segð"
+   },
+   "chrome_rule_name": {
+      "message": "Heiti reglu"
+   },
+   "chrome_show_advanced": {
+      "message": "Birta ítalegt"
+   },
+   "chrome_stable_rules": {
+      "message": "Stöðugar reglur"
+   },
+   "chrome_stable_rules_description": {
+      "message": "Þvinga dulritaðar tengingar við þessi vefsvæði:"
+   },
+   "chrome_status_cancel_button": {
+      "message": "Hætta við"
+   },
+   "menu_about": {
+      "message": "Um HTTPS Allsstaðar"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "Hindra allar ódulritaðar beiðnir"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "Styrkja EFF"
+   },
+   "menu_globalDisable": {
+      "message": "Gera HTTPS Allsstaðar óvirkt"
+   },
+   "menu_globalEnable": {
+      "message": "Virkja HTTPS Allsstaðar"
+   },
+   "menu_observatory": {
+      "message": "SSL Observatory valkostir"
+   },
+   "menu_showCounter": {
+      "message": "Birta teljara"
+   },
+   "menu_viewAllRules": {
+      "message": "Skoða allar reglur"
+   },
+   "options_import": {
+      "message": "Import"
+   },
+   "options_importSettings": {
+      "message": "Import Settings"
+   },
+   "options_imported": {
+      "message": "Your settings have been imported."
+   },
+   "prefs_disable_all": {
+      "message": "Gera allt óvirkt"
+   },
+   "prefs_enable_all": {
+      "message": "Virkja allt"
+   },
+   "prefs_enabled": {
+      "message": "Virkt"
+   },
+   "prefs_export_settings": {
+      "message": "Export Settings"
+   },
+   "prefs_here_link": {
+      "message": "hér"
+   },
+   "prefs_list_caption": {
+      "message": "Hvaða HTTPS endurbeiningarreglur ættu að gilda?"
+   },
+   "prefs_notes": {
+      "message": "Skýringar"
+   },
+   "prefs_reset_default": {
+      "message": "Frumstillaá sjálfgefið"
+   },
+   "prefs_reset_defaults": {
+      "message": "Frumstilla á sjálfgefnar stillingar"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Þú getur lært hvernig á að skrifa eigin reglusett (til að bæta við stuðningi fyrir aðrar vefsíður)"
+   },
+   "prefs_search": {
+      "message": "Leita"
+   },
+   "prefs_settings_click_ok": {
+      "message": "Please click 'OK'"
+   },
+   "prefs_settings_custom": {
+      "message": "Custom site rules"
+   },
+   "prefs_settings_global": {
+      "message": "Global preferences"
+   },
+   "prefs_settings_toggle": {
+      "message": "Per-site on/off setting"
+   },
+   "prefs_settings_warning": {
+      "message": "Warning:"
+   },
+   "prefs_settings_warning_closing": {
+      "message": "below to ensure your settings are saved.  Once HTTPS Everywhere is upgraded, you will later have to import these settings in the extension options section."
+   },
+   "prefs_settings_warning_delete": {
+      "message": "Some of your HTTPS Everywhere settings are about to be deleted!"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "This extension will be upgraded substantially in the near future.  If you do not export your settings, you could lose one or more of the following:"
+   },
+   "prefs_site": {
+      "message": "Vefsvæði"
+   },
+   "prefs_title": {
+      "message": "HTTPS Allsstaðar valkostir"
+   },
+   "prefs_toggle": {
+      "message": "Víxla"
+   },
+   "prefs_view_xml_source": {
+      "message": "Skoða XML-uppruna"
+   }
+}

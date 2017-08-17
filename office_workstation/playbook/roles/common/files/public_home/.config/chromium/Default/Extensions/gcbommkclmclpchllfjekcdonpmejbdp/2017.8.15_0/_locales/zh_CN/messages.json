@@ -1,0 +1,191 @@
+{
+   "about_add_new_rule": {
+      "message": "添加新规则"
+   },
+   "about_and": {
+      "message": "，及"
+   },
+   "about_created_by": {
+      "message": "创建者"
+   },
+   "about_donate_eff": {
+      "message": "捐助电子前线基金会 (EFF)"
+   },
+   "about_donate_tor": {
+      "message": "捐助 Tor"
+   },
+   "about_ext_description": {
+      "message": "加密网络浏览，自动使用 HTTPS 连接访问站点，更加安全。"
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "规则管理员"
+   },
+   "about_many_contributors": {
+      "message": "许许多多的贡献者，包括"
+   },
+   "about_noscript": {
+      "message": "另外，HTTPS Everywhere 的部分源代码基于 NoScript，作者是 Giorgio Maone 等人。我们非常感谢他们出色的成果！"
+   },
+   "about_or": {
+      "message": "或"
+   },
+   "about_thanks": {
+      "message": "致谢"
+   },
+   "about_title": {
+      "message": "关于 HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "zh_CN"
+   },
+   "about_version": {
+      "message": "版本"
+   },
+   "chrome_add_new_rule": {
+      "message": "为此站点添加新规则"
+   },
+   "chrome_add_rule": {
+      "message": "为此站点添加规则"
+   },
+   "chrome_always_https_for_host": {
+      "message": "对此主机始终使用 https"
+   },
+   "chrome_experimental_rules": {
+      "message": "实验性规则"
+   },
+   "chrome_experimental_rules_description": {
+      "message": "可能引发警告或异常。默认被禁用。"
+   },
+   "chrome_hide_advanced": {
+      "message": "隐藏高级选项"
+   },
+   "chrome_host": {
+      "message": "主机:"
+   },
+   "chrome_redirect_to": {
+      "message": "重定向到"
+   },
+   "chrome_regex": {
+      "message": "正则表达式匹配"
+   },
+   "chrome_rule_name": {
+      "message": "规则名称"
+   },
+   "chrome_show_advanced": {
+      "message": "显示高级选项"
+   },
+   "chrome_stable_rules": {
+      "message": "稳定规则"
+   },
+   "chrome_stable_rules_description": {
+      "message": "强制对这些网站加密连接："
+   },
+   "chrome_status_cancel_button": {
+      "message": "取消"
+   },
+   "menu_about": {
+      "message": "关于 HTTPS Everywhere"
+   },
+   "menu_blockUnencryptedRequests": {
+      "message": "拦截所有未加密请求"
+   },
+   "menu_donate_eff_imperative": {
+      "message": "捐助电子前线基金会 (EFF)"
+   },
+   "menu_globalDisable": {
+      "message": "禁用 HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "启用 HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "SSL Observatory 首选项"
+   },
+   "menu_showCounter": {
+      "message": "显示计数器"
+   },
+   "menu_viewAllRules": {
+      "message": "查看所有规则"
+   },
+   "options_import": {
+      "message": "导入"
+   },
+   "options_importSettings": {
+      "message": "导入设置"
+   },
+   "options_imported": {
+      "message": "您的设置已导入。"
+   },
+   "prefs_disable_all": {
+      "message": "全部禁用"
+   },
+   "prefs_enable_all": {
+      "message": "全部启用"
+   },
+   "prefs_enabled": {
+      "message": "已启用"
+   },
+   "prefs_export_settings": {
+      "message": "导出设置"
+   },
+   "prefs_here_link": {
+      "message": "这里"
+   },
+   "prefs_list_caption": {
+      "message": "应用哪些 HTTPS 重定向规则？"
+   },
+   "prefs_notes": {
+      "message": "注释"
+   },
+   "prefs_reset_default": {
+      "message": "重置为默认值"
+   },
+   "prefs_reset_defaults": {
+      "message": "重置为默认值"
+   },
+   "prefs_ruleset_howto": {
+      "message": "您可以学习如何编写您自己的规则（以增加对其他网站的支持）"
+   },
+   "prefs_search": {
+      "message": "搜索"
+   },
+   "prefs_settings_click_ok": {
+      "message": "请按“确定”"
+   },
+   "prefs_settings_custom": {
+      "message": "自定义站点规则"
+   },
+   "prefs_settings_global": {
+      "message": "全局偏好设置"
+   },
+   "prefs_settings_toggle": {
+      "message": "各网站开关设置"
+   },
+   "prefs_settings_warning": {
+      "message": "警告："
+   },
+   "prefs_settings_warning_closing": {
+      "message": "以确保保存您的设置。您需要在 HTTPS Everywhere 升级后从扩展选项处导入这些设置。"
+   },
+   "prefs_settings_warning_delete": {
+      "message": "您的某些 HTTPS Everywhere 设置即将被删除！"
+   },
+   "prefs_settings_warning_explain": {
+      "message": "此扩展将在不久后大幅升级。如果您不导出您的设置，您或许会丢失下列一个或多个设置："
+   },
+   "prefs_site": {
+      "message": "站点"
+   },
+   "prefs_title": {
+      "message": "HTTPS Everywhere 首选项"
+   },
+   "prefs_toggle": {
+      "message": "切换"
+   },
+   "prefs_view_xml_source": {
+      "message": "查看 XML 格式的源代码"
+   }
+}

@@ -1,0 +1,122 @@
+{
+   "about_created_by": {
+      "message": "Stworzone przez"
+   },
+   "about_donate_eff": {
+      "message": "Dotacje dla EFF"
+   },
+   "about_donate_tor": {
+      "message": "Dotacje dla Tora"
+   },
+   "about_ext_description": {
+      "message": "Szyfruj sieć! Automatycznie używaj zabezpieczenia HTTPS na wielu stronach"
+   },
+   "about_ext_name": {
+      "message": "HTTPS Everywhere"
+   },
+   "about_librarians": {
+      "message": "Biblioteki reguł"
+   },
+   "about_thanks": {
+      "message": "Podziękowania dla"
+   },
+   "about_title": {
+      "message": "O HTTPS Everywhere"
+   },
+   "about_tor_lang_code": {
+      "message": "en"
+   },
+   "about_version": {
+      "message": "Wersja"
+   },
+   "menu_about": {
+      "message": "O HTTPS Everywhere"
+   },
+   "menu_globalDisable": {
+      "message": "Wyłącz HTTPS Everywhere"
+   },
+   "menu_globalEnable": {
+      "message": "Włącz HTTPS Everywhere"
+   },
+   "menu_observatory": {
+      "message": "Preferencje Obserwatorium SSL"
+   },
+   "popup_keep": {
+      "message": "Keep me on the development version"
+   },
+   "popup_paragraph1": {
+      "message": "Oops. You were using the stable version of HTTPS Everywhere, but we might have accidentally upgraded you to the development version in our last release."
+   },
+   "popup_paragraph2": {
+      "message": "Would you like to go back to stable?"
+   },
+   "popup_paragraph3": {
+      "message": "We'd love it if you continued using our development release and helped us make HTTPS Everywhere better! You might find there are a few more bugs here and there, which you can report to https-everywhere@eff.org. Sorry about the inconvenience, and thank you for using HTTPS Everywhere."
+   },
+   "popup_revert": {
+      "message": "Download the latest stable version"
+   },
+   "popup_title": {
+      "message": "HTTPS Everywhere 4.0development.11 notification"
+   },
+   "prefs_disable_all": {
+      "message": "Wyłącz wszystko"
+   },
+   "prefs_enable_all": {
+      "message": "Włącz wszystko"
+   },
+   "prefs_enabled": {
+      "message": "Włączone"
+   },
+   "prefs_here_link": {
+      "message": "tutaj"
+   },
+   "prefs_list_caption": {
+      "message": "Które reguły przekierowania HTTPS mają być zastosowane?"
+   },
+   "prefs_notes": {
+      "message": "Notatki"
+   },
+   "prefs_reset_default": {
+      "message": "Resetuj do Domyślnych"
+   },
+   "prefs_reset_defaults": {
+      "message": "Resetuj do Domyślnych"
+   },
+   "prefs_ruleset_howto": {
+      "message": "Możesz dowiedzieć się, jak pisać własne reguły (aby dodać obsługę innych stron)"
+   },
+   "prefs_search": {
+      "message": "Szukaj"
+   },
+   "prefs_site": {
+      "message": "Strona"
+   },
+   "prefs_title": {
+      "message": "Preferencje HTTPS Everywhere"
+   },
+   "prefs_toggle": {
+      "message": "Przełącz"
+   },
+   "prefs_view_xml_source": {
+      "message": "Wyświetl źródło XML"
+   },
+   "ruleset_tests_status_cancel_button": {
+      "message": "Anuluj"
+   },
+   "ruleset_tests_status_start_button": {
+      "message": "Start"
+   },
+   "ruleset_tests_status_title": {
+      "message": "HTTPS Everywhere Ruleset Tests"
+   },
+   "source_downloading": {
+      "message": "Pobieranie"
+   },
+   "source_filename": {
+      "message": "Nazwa pliku"
+   },
+   "source_unable_to_download": {
+      "message": "Nie można pobrać źródła."
+   }
+}

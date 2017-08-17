@@ -1,0 +1,71 @@
+Generated File. Do not edit.
+
+[HEADER]
+Version:0.18f:$
+Arch:x86_64-gcc3:$
+
+[PLUGINS]
+libfreshwrapper-flashplayer.so:$
+/usr/lib/browser-plugin-freshplayer-pepperflash/libfreshwrapper-flashplayer.so:$
+13.1.2.3:$
+1462261668000:0:0:0:$
+Shockwave Flash 13.1 r2:$
+Shockwave Flash:$
+2
+0:application/x-shockwave-flash:Shockwave Flash:swf:$
+1:application/futuresplash:FutureSplash Player:spl:$
+skypebuttons.so:$
+/usr/lib/mozilla/plugins/skypebuttons.so:$
+:$
+1484316046000:0:0:0:$
+Mime Type x-skype for Skype Buttons:$
+Skype Buttons for Kopete:$
+1
+0:application/x-skype:Skype Buttons::$
+IcedTeaPlugin.so:$
+/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/IcedTeaPlugin.so:$
+:$
+1484408814000:0:0:0:$
+The <a href="http://icedtea.classpath.org/wiki/IcedTea-Web">IcedTea-Web Plugin</a> executes Java applets.:$
+IcedTea-Web Plugin (using IcedTea-Web 1.6.2 (1.6.2-3.1)):$
+38
+0:application/x-java-vm:IcedTea:class,jar:$
+1:application/x-java-applet:IcedTea:class,jar:$
+2:application/x-java-applet;version=1.1:IcedTea:class,jar:$
+3:application/x-java-applet;version=1.1.1:IcedTea:class,jar:$
+4:application/x-java-applet;version=1.1.2:IcedTea:class,jar:$
+5:application/x-java-applet;version=1.1.3:IcedTea:class,jar:$
+6:application/x-java-applet;version=1.2:IcedTea:class,jar:$
+7:application/x-java-applet;version=1.2.1:IcedTea:class,jar:$
+8:application/x-java-applet;version=1.2.2:IcedTea:class,jar:$
+9:application/x-java-applet;version=1.3:IcedTea:class,jar:$
+10:application/x-java-applet;version=1.3.1:IcedTea:class,jar:$
+11:application/x-java-applet;version=1.4:IcedTea:class,jar:$
+12:application/x-java-applet;version=1.4.1:IcedTea:class,jar:$
+13:application/x-java-applet;version=1.4.2:IcedTea:class,jar:$
+14:application/x-java-applet;version=1.5:IcedTea:class,jar:$
+15:application/x-java-applet;version=1.6:IcedTea:class,jar:$
+16:application/x-java-applet;version=1.7:IcedTea:class,jar:$
+17:application/x-java-applet;version=1.8:IcedTea:class,jar:$
+18:application/x-java-applet;jpi-version=1.8.0_50:IcedTea:class,jar:$
+19:application/x-java-bean:IcedTea:class,jar:$
+20:application/x-java-bean;version=1.1:IcedTea:class,jar:$
+21:application/x-java-bean;version=1.1.1:IcedTea:class,jar:$
+22:application/x-java-bean;version=1.1.2:IcedTea:class,jar:$
+23:application/x-java-bean;version=1.1.3:IcedTea:class,jar:$
+24:application/x-java-bean;version=1.2:IcedTea:class,jar:$
+25:application/x-java-bean;version=1.2.1:IcedTea:class,jar:$
+26:application/x-java-bean;version=1.2.2:IcedTea:class,jar:$
+27:application/x-java-bean;version=1.3:IcedTea:class,jar:$
+28:application/x-java-bean;version=1.3.1:IcedTea:class,jar:$
+29:application/x-java-bean;version=1.4:IcedTea:class,jar:$
+30:application/x-java-bean;version=1.4.1:IcedTea:class,jar:$
+31:application/x-java-bean;version=1.4.2:IcedTea:class,jar:$
+32:application/x-java-bean;version=1.5:IcedTea:class,jar:$
+33:application/x-java-bean;version=1.6:IcedTea:class,jar:$
+34:application/x-java-bean;version=1.7:IcedTea:class,jar:$
+35:application/x-java-bean;version=1.8:IcedTea:class,jar:$
+36:application/x-java-bean;jpi-version=1.8.0_50:IcedTea:class,jar:$
+37:application/x-java-vm-npruntime:IcedTea::$
+
+[INVALID]
