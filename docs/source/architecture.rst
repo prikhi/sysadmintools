@@ -102,8 +102,18 @@ used as our public LAN's backbone.
 Hardware <switch-hardware>` section for port layouts/assignments of the
 switches.
 
-There will eventually be a map of the Seed Office here showing what jack each
-of the Public LAN ports hook up to.
+The following maps show the Patch Panel Ports for each Wall Jack in the
+building:
+
+.. figure:: _images/Seed_Office_Downstairs.png
+    :target: _images/Seed_Office_Downstairs.png
+    :align: center
+    :alt: The corresponding Patch Panel ports for each ethernet jack.
+
+.. figure:: _images/Seed_Office_Upstairs.png
+    :target: _images/Seed_Office_Upstairs.png
+    :align: center
+    :alt: The corresponding Patch Panel ports for each ethernet jack.
 
 
 Heartwood

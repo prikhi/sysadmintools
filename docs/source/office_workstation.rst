@@ -254,6 +254,7 @@ To Do
 * Update public user files for debian 9 & new KDE.
 * Use Ansible Vault for password hashes.
 * Pre-configure mumble so the audio wizard isn't required.
+* Configure udevil to allow cifs mounting
 
 .. _Debian Stretch Netinstall Image: https://www.debian.org/CD/netinst/
 .. _Debian Linux:                   https://www.debian.org/

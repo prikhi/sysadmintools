@@ -49,7 +49,8 @@ LB4M-1
     :align: center
     :alt: The assigned networks for each port on the LB4M-1 & LB4M-2 switches.
 
-    See the :ref:`seed-office` section for a map of each Public LAN port.
+    See the :ref:`seed-office` section for a map of Patch Panel Ports to Wall
+    Jacks.
 
     =====       ===========================
     Port        Host
@@ -69,7 +70,8 @@ LB4M-2
     :align: center
     :alt: The assigned networks for each port on the LB4M-1 & LB4M-2 switches.
 
-    See the :ref:`seed-office` section for a map of each Public LAN port.
+    See the :ref:`seed-office` section for a map of Patch Panel Ports to Wall
+    Jacks.
 
     =====       ===========================
     Port        Host
