@@ -8,8 +8,6 @@ Servers, along with documentation on maintenance & our automation.
 
 TODO: Migrate stuff on the Acorn Redmine Wiki
 
-TODO: Add Chart for Seed Office Jack <-> Patch Panel Port Mapping
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
