@@ -139,10 +139,23 @@ You will need the keyname & secret for DNS updates from
     > update add 246.1.168.192.in-addr.arpa 86400 PTR allium.outdoor.acorn
     > send
 
-    # Deleting A & PTR records
+    # Deleting A, TXT, & PTR records
     > update delete barn.outdoor.acorn A
+    > update delete barn.outdoor.acorn TXT
     > update delete 245.1.168.192.in-addr.arpa PTR
     > send
+
+
+.. note::
+
+    The DHCP server will automatically create A, TXT, & PTR records for hosts,
+    pointing ``<hostname>.acorn`` to their IP address. These records are tied
+    to the hosts MAC address via the TXT record.
+
+    This means that the DNS records will not be updated if a host's MAC address
+    changes. To fix this, you need to delete the A, TXT, & PTR records for the
+    host and then renew the DHCP lease from the host(e.g., run ``ipconfig
+    /renew`` on windows).
 
 
 Switch Internet from CVALink to Telnes
