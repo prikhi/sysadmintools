@@ -22,6 +22,107 @@ pop up the selection window, then the up/down arrow keys to navigate the host
 list, and ``Enter`` to select a host.
 
 
+Configuring LB4M/LB6M Switches
+------------------------------
+
+Serial Connection
++++++++++++++++++
+
+For the initial configuration of an LBXM switch, you will need to do everything
+over a serial connection. We use a `Prolific USB to Serial Adapter`_ paired
+with a `DB9 RS232 to RJ45 Adapter Cable`_:
+
+#. Connect the two adapters so you have a USB to RJ45 cable.
+#. Grab a Windows laptop.
+#. Install the Drivers for the Prolific Adapter from the included CD or the
+   `Prolific Driver Site`_.
+#. Download `PuttySSH`_ or `KittySSH`_.
+#. Plug the USB end of the cable into the laptop and the RJ45 end into the
+   ``Console`` port of the switch.
+#. Launch Putty or Kitty.
+#. Select the ``Serial`` radio option.
+#. Enter the COM port of the adapter into the address input box. Usually this
+   is ``COM3`` or ``COM4``. Check the COM section of Device Manager if you are
+   unsure.
+#. Leave the speed at the default value, or try ``115200`` if you have issues.
+#. Hit the ``Ok`` button.
+#. If a window pops up but there is no text try hitting the ``Enter`` key to
+   bring up the login prompt.
+#. Authenticate using the ``admin`` user and a blank password.
+
+You can now do the initial configuration of the switch. Afterwards, you will be
+able to connect via SSH instead of a Serial connection.
+
+.. _Prolific USB to Serial Adapter: https://amzn.to/2wQ45B9
+.. _DB9 RS232 to RJ45 Adapter Cable: https://amzn.to/38PBh8U
+.. _Prolific Driver Site: http://www.prolific.com.tw/US/ShowProduct.aspx?p_id=225&pcid=41
+.. _PuttySSH: https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+.. _KittySSH: http://www.9bis.net/kitty/#!pages/download.md
+
+
+Initial Setup
++++++++++++++
+
+The initial setup for every switch should set a unique hostname & static IP,
+and enable the ports & SSH server::
+
+    enable
+    ip ssh
+    network parms 192.168.1.211 255.255.255.0
+    network gateway 192.168.1.254
+    configure
+    no shutdown all
+    hostname LB6M-1-Public
+    exit
+    write memory
+
+You can now connect to the switch via SSH::
+
+    $ ssh admin@192.168.1.211
+
+
+Link Aggregation
+++++++++++++++++
+
+We use LAG/LACP to aggregate multiple 10G fiber links between the LB4M switches
+and the LB6M switches.
+
+You will need to group the ports together. Start by SSHing into a switch and
+then configure the interfaces on the LB4M::
+
+    enable
+    configure
+    interface 0/49,0/50
+    addport 3/1
+    lacp actor admin state passive
+    exit
+    interface 3/1
+    description 'LACP to LB6M-1-Public'
+    no port-channel static
+    port-channel load-balance 6
+    exit
+    exit
+    write memory
+    exit
+
+On the LB6M switch, add matching entries for each LB4M::
+
+    enable
+    configure
+    interface 0/1,0/2
+    addport 1/1
+    lacp actor admin state passive
+    exit
+    interface 1/1
+    description 'LACP to LB4M-1-Public'
+    no port-channel static
+    port-channel load-balance 6
+    exit
+    exit
+    write memory
+    exit
+
+
 Networking
 ==========
 
