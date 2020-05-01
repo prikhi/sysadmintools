@@ -272,15 +272,15 @@ links, or a fatter overlay pipe.
 Storage Nodes
 --------------
 
-6x3TB per node gives us a safe size of 12TB & risky size of 18TB, with the
-ability to add 5 more drives per node, or 4 drives & a journal drive.
+8x3TB per node gives us a safe size of 16TB & risky size of 24TB, with the
+ability to add 3 more drives per node, or 2 drives & a journal drive.
 
 http://florian.ca/ceph-calculator/
 
 ====================  ========================================================
 **CPU**               2x Intel Xeon E5645 6-Core 2.4Ghz
 **Chassis**           2U Supermicro CSE-826TQ-R800LPB SuperChasis
-**HDD**               250GB OS, 6x3TB SAS Storage
+**HDD**               250GB OS, 8x3TB SAS Storage
 **Motherboard**       Supermicro X8DTN+
 **NIC**               2x1GB Onboard & 2x10GB via Supermicro AOC-STGN-i2S
 **PSU**               2x800w
@@ -317,4 +317,4 @@ _           left            right
 **bottom**  09      12  03  06
 ==========  ====    ==  ==  =====
 
-The OS drive lives in bay ``9``, the 6x HDDs live in bays ``4`` to ``8``.
+The OS drive lives in bay ``1``, the 8x HDDs live in bays ``2`` to ``9``.
