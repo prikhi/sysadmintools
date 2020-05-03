@@ -217,9 +217,13 @@ Deploy the initial cluster with the Controller nodes as monitors::
     ceph-deploy new --public-network 10.4.1.0/24 ${CONTROLLERS[@]}
 
 Open up the ``ceph.conf`` in ``~/ceph-cluster/`` and add the cluster network
-setting::
+& nearfull ratio settings::
 
     cluster network = 10.5.1.0/24
+    mon osd nearfull ratio = 0.67
+
+A ``nearfull ratio`` of ``0.67`` is based off of allowing 1-node to fail in a
+3-node ceph cluster.
 
 Install Ceph on the nodes(we specify the full repo URL instead of just using
 ``--release luminous`` to avoid HTTPS, allowing packages to be cached by our web
