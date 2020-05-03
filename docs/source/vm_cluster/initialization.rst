@@ -165,7 +165,7 @@ TODO: Instructions for re-enabling STONITH
 Create the Virtual IP Address::
 
     sudo pcs resource create management-vip ocf:heartbeat:IPaddr2 \
-        params ip="10.2.1.10" cidr_netmask="24" op monitor interval="30s"
+        ip="10.2.1.10" cidr_netmask="24" op monitor interval="30s"
 
 Add HAProxy to the cluster & only serve the VIP when HAProxy is running::
 
