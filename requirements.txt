@@ -1,3 +1,4 @@
 Sphinx>=2,<3
 sphinx_rtd_theme
 sphinx-autobuild
+ansible>=2.9,<2.10
