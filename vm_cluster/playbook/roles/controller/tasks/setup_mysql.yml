@@ -4,11 +4,6 @@
   apt_key: keyserver="hkp://keyserver.ubuntu.com:80" id=F1656F24C74CD1D8
   become: yes
 
-- name: Ensure the MariaDB Repository Mirror is Enabled
-  apt_repository: repo="deb [arch=amd64,i386] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu bionic main"
-                  filename="mariadb"
-  become: yes
-
 - name: Ensure the MariaDB Server & Client are Installed
   apt: name="{{ item }}"
   become: yes
