@@ -44,8 +44,8 @@
   apt: name=software-properties-common
   become: yes
 
-- name: Ensure the Newton OpenStack Repository is Enabled
-  shell: add-apt-repository cloud-archive:newton
+- name: Ensure the Stein OpenStack Repository is Enabled
+  shell: add-apt-repository cloud-archive:stein
   become: yes
 
 - name: Ensure Package Cache is Current
