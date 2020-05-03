@@ -198,7 +198,7 @@ Start by SSHing into the master controller, we'll make running repeated
 commands easier by setting some array variables::
 
     # On stack-controller-1
-    CONTROLLERS=('stack-controller-1' 'stack-controller-2' 'stack-controller-3)
+    CONTROLLERS=('stack-controller-1' 'stack-controller-2' 'stack-controller-3')
     COMPUTE=('stack-compute-1' 'stack-compute-2' 'stack-compute-3')
     STORAGE=('stack-storage-1' 'stack-storage-2' 'stack-storage-3')
 
