@@ -47,6 +47,7 @@
     - localhost
     - '%'
   when: inventory_hostname in groups['master-controller']
+  become: yes
 
 - name: Ensure the HAProxy MySQL Root Database User Exists
   mysql_user: name=haproxy_root password={{ vaulted_haproxy_db_password }}
@@ -56,3 +57,4 @@
     - localhost
     - '%'
   when: inventory_hostname in groups['master-controller']
+  become: yes
