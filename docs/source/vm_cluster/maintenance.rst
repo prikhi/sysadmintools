@@ -121,7 +121,7 @@ Install & deploy Ceph on the new controller node::
 
     # On stack-controller-1
     cd ~/storage-cluster
-    ceph-deploy install --repo-url http://download.ceph.com/debian-kraken stack-controller-4
+    ceph-deploy install --repo-url http://download.ceph.com/debian-luminous stack-controller-4
     ceph-deploy admin stack-controller-4
 
 Setup the new controller as a Ceph monitor::
@@ -200,7 +200,7 @@ Then use ``ceph-deploy`` on the master controller to install Ceph on the new
 node::
 
     cd ~/storage-cluster
-    ceph-deploy install --repo-url http://download.ceph.com/debian-kraken stack-storage-4
+    ceph-deploy install --repo-url http://download.ceph.com/debian-luminous stack-storage-4
 
 Note that we use ``--repo-url`` here instead of the ``--release`` flag, so that
 packages are downloaded through HTTP instead of HTTPS, which allows them to be
