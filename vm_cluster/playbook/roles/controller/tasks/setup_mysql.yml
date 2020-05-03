@@ -5,7 +5,7 @@
   become: yes
 
 - name: Ensure the MariaDB Repository Mirror is Enabled
-  apt_repository: repo="deb [arch=amd64,i386] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu xenial main"
+  apt_repository: repo="deb [arch=amd64,i386] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu bionic main"
                   filename="mariadb"
   become: yes
 
