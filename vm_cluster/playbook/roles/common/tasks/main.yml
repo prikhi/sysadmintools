@@ -71,7 +71,7 @@
   tags: ceph
 
 - name: Ensure the Ceph Repository is Enabled
-  apt_repository: repo='deb http://download.ceph.com/debian-kraken/ xenial main'
+  apt_repository: repo='deb http://download.ceph.com/debian-luminous/ bionic main'
                   filename=ceph
   become: yes
   tags: ceph
