@@ -75,7 +75,7 @@
   notify: restart apache
 
 - name: Ensure Keystone Virtual Host is Correctly Configured
-  copy: src=apache-keystone.conf dest=/etc/apache2/sites-available/keystone.conf
+  template: src=apache-keystone.conf.j2 dest=/etc/apache2/sites-available/keystone.conf
   become: yes
   notify: restart apache
 
