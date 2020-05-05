@@ -43,7 +43,7 @@
   become: yes
 
 - name: Ensure MariaDB is Correctly Configured
-  ini_file: dest=/etc/mysql/conf.d/openstack.cnf create=yes
+  ini_file: dest=/etc/mysql/mariadb.conf.d/50-server.cnf create=yes
             section="mysqld" option="{{ item.option }}" value="{{ item.value }}"
   become: yes
   vars:
