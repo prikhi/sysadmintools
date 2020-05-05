@@ -4,6 +4,7 @@
   mysql_db: name={{ glance_db_name }}
             login_user=root login_password="{{ vaulted_db_root_password }}"
   when: inventory_hostname in groups['master-controller']
+  become: yes
 
 - name: Ensure the Glance Database User Exists
   mysql_user: name={{ glance_db_user }} password={{ vaulted_db_password }}
@@ -13,6 +14,7 @@
     - localhost
     - '%'
   when: inventory_hostname in groups['master-controller']
+  become: yes
 
 - name: Retrieve a List of Existing Users
   shell: openstack user list -f value -c Name

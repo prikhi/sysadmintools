@@ -7,6 +7,7 @@
   notify:
     - sync keystone database
     - initialize key repositories
+  become: yes
 
 - name: Ensure the Keystone Database User Exists
   mysql_user: name={{ keystone_db_user }} password={{ vaulted_db_password }}
@@ -16,6 +17,7 @@
     - localhost
     - '%'
   when: inventory_hostname in groups['master-controller']
+  become: yes
 
 - name: Ensure Keystone is Installed
   apt: name={{ item }}

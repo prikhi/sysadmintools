@@ -8,6 +8,7 @@
     - "{{ nova_db_name }}_api"
   notify: sync nova database
   when: inventory_hostname in groups['master-controller']
+  become: yes
 
 - name: Ensure the Nova Database User Exists
   mysql_user: name={{ nova_db_user }} password={{ vaulted_db_password }}
@@ -18,6 +19,7 @@
     - '%'
   notify: sync nova database
   when: inventory_hostname in groups['master-controller']
+  become: yes
 
 - name: Ensure the Nova API Database User Exists
   mysql_user: name={{ nova_db_user }} priv='{{ nova_db_name }}_api.*:ALL'
@@ -28,6 +30,7 @@
     - '%'
   notify: sync nova database
   when: inventory_hostname in groups['master-controller']
+  become: yes
 
 - name: Retrieve a List of Existing Users
   shell: openstack user list -f value -c Name

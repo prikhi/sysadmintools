@@ -3,7 +3,10 @@
 - name: Ensure Neutron Database Exists
   mysql_db: name={{ neutron_db_name }}
             login_user=root login_password="{{ vaulted_db_root_password }}"
+  notify:
+    - sync neutron database
   when: inventory_hostname in groups['master-controller']
+  become: yes
 
 - name: Ensure the Neutron Database User Exists
   mysql_user: name={{ neutron_db_user }} password={{ vaulted_db_password }}
@@ -14,6 +17,7 @@
     - '%'
     - "{{ ansible_hostname }}"
   when: inventory_hostname in groups['master-controller']
+  become: yes
 
 - name: Retrieve a List of Existing Users
   shell: openstack user list -f value -c Name
