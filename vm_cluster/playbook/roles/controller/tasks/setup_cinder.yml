@@ -87,6 +87,15 @@
     - restart tgt service
     - restart cinder service
 
+- name: Ensure Cinder's Apache is Correctly Configured
+  lineinfile: dest=/etc/apache2/conf-available/cinder-wsgi.conf
+              regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+    - { regexp: "^<VirtualHost .*$", line: "<VirtualHost {{ management_ip }}:8776>" }
+    - { regexp: "^Listen .*$", line: "Listen {{ management_ip }}:8776" }
+  become: yes
+  notify: restart apache
+
 - name: Ensure Nova is Correctly Configured
   ini_file: dest=/etc/nova/nova.conf section="cinder"
             option="os_region_name" value="RegionOne"

@@ -26,7 +26,7 @@
       - keystone
       - python-keystoneclient
       - apache2
-      - libapache2-mod-wsgi
+      - libapache2-mod-wsgi-py3
 
 - name: Ensure the Fernet Key Directory Exists
   file: path=/etc/keystone/fernet-keys state=directory
@@ -60,6 +60,17 @@
 - name: Ensure Apache is Correctly Configured
   lineinfile: dest=/etc/apache2/apache2.conf
               regexp='^ServerName .*' line='ServerName {{ master_controller_hostname }}'
+  become: yes
+  notify: restart apache
+
+- name: Ensure Apache Does Not Listen on Port 80
+  lineinfile: dest=/etc/apache2/ports.conf
+              regexp='^Listen .*$' line='Listen 8888'
+  become: yes
+  notify: restart apache
+
+- name: Ensure the Default Apache Site is Disabled
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
   become: yes
   notify: restart apache
 
