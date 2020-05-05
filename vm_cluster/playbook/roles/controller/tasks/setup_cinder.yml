@@ -3,6 +3,8 @@
 - name: Ensure Cinder Database Exists
   mysql_db: name={{ cinder_db_name }}
             login_user=root login_password="{{ vaulted_db_root_password }}"
+  notify:
+    - sync cinder database
   when: inventory_hostname in groups['master-controller']
   become: yes
 
