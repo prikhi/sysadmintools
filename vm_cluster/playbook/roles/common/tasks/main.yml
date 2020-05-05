@@ -46,6 +46,8 @@
 
 - name: Ensure the Stein OpenStack Repository is Enabled
   shell: add-apt-repository cloud-archive:stein
+  args:
+    creates: /etc/apt/sources.list.d/cloudarchive-stein.list
   become: yes
 
 - name: Ensure Package Cache is Current
