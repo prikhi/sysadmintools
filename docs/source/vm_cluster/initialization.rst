@@ -219,8 +219,8 @@ Deploy the initial cluster with the Controller nodes as monitors::
 Open up the ``ceph.conf`` in ``~/ceph-cluster/`` and add the cluster network
 & nearfull ratio settings::
 
-    cluster network = 10.5.1.0/24
-    mon osd nearfull ratio = 0.67
+    cluster_network = 10.5.1.0/24
+    mon_osd_nearfull_ratio = 0.67
 
 A ``nearfull ratio`` of ``0.67`` is based off of allowing 1-node to fail in a
 3-node ceph cluster.
@@ -249,6 +249,18 @@ OSD(``/dev/sdb#``), and an HDD for each OSD::
     for SRV in "${STORAGE[@]}"; do
         ceph-deploy osd create $SRV:/dev/sdc:/dev/sdb1 $SRV:/dev/sdd:/dev/sdb2
     done
+
+Here's a short script you can use to generate an OSD creation command::
+
+    # List of OSDs w/ optional journal partition: '/dev/<osd>:/dev/<journal-partition>'
+    OSDS=('/dev/sdb' '/dev/sdc' '/dev/sdd' '/dev/sde')
+    OSD_CMD="ceph-deploy osd create"
+    for SRV in "${STORAGE[@]}"; do
+        for OSD in "${OSDS[@]}"; do
+            OSD_CMD="${OSD_CMD} ${SRV}:${OSD}"
+        done
+    done
+    echo "${OSD_CMD}"
 
 Now copy the configuraton file & admin key to the controller nodes::
 
