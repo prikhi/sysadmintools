@@ -83,6 +83,8 @@ common_neutron_config:
       value: '{{ neutron_os_user }}' }
   - { section: 'keystone_authtoken', option: 'password',
       value: '{{ vaulted_neutron_os_password }}' }
+  - { section: 'oslo_concurrency', option: 'lock_path',
+      value: '/var/lib/neutron/tmp' }
 
 common_ovs_config:
   - { section: 'DEFAULT', option: 'enable_distributed_routing', value: 'True' }
