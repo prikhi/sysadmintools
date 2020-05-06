@@ -1,10 +1,5 @@
 ---
 
-- name: Ensure Ceph Deployment & Python Bindings are Installed
-  apt: name={{ item }}
+- name: Ensure Ceph Deployment Program is Installed
+  apt: name=ceph-deploy
   become: yes
-  with_items:
-    - ceph-common
-    - ceph-deploy
-    - python-rbd
-    - python-ceph

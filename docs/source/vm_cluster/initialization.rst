@@ -226,10 +226,10 @@ A ``nearfull ratio`` of ``0.67`` is based off of allowing 1-node to fail in a
 3-node ceph cluster.
 
 Install Ceph on the nodes(we specify the full repo URL instead of just using
-``--release luminous`` to avoid HTTPS, allowing packages to be cached by our web
+``--release mimic`` to avoid HTTPS, allowing packages to be cached by our web
 proxy)::
 
-    ceph-deploy install --repo-url http://download.ceph.com/debian-luminous ${CONTROLLERS[@]} ${STORAGE[@]}
+    ceph-deploy install --release mimic --repo-url http://download.ceph.com/debian-mimic ${CONTROLLERS[@]} ${STORAGE[@]}
 
 Then create the initial monitors & start them on boot::
 

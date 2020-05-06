@@ -73,7 +73,7 @@
   tags: ceph
 
 - name: Ensure the Ceph Repository is Enabled
-  apt_repository: repo='deb http://download.ceph.com/debian-luminous/ bionic main'
+  apt_repository: repo='deb http://download.ceph.com/debian-mimic/ bionic main'
                   filename=ceph
   become: yes
   tags: ceph

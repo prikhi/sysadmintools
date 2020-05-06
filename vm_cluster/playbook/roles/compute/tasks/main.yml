@@ -3,11 +3,8 @@
 # TODO: Getting big enough that it should be split into multiple files
 
 - name: Ensure the Ceph Dependencies are Installed
-  apt: name={{ item }}
+  apt: name=ceph-common
   become: yes
-  with_items:
-    - python-rbd
-    - ceph-common
   tags: ceph
 
 - name: Ensure OpenStack Nova is Installed
