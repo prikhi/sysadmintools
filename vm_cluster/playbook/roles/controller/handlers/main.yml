@@ -49,10 +49,7 @@
   when: inventory_hostname in groups['master-controller']
 
 - name: restart glance
-  service: name={{ item }} state=restarted
-  with_items:
-    - glance-registry
-    - glance-api
+  service: name=glance-api state=restarted
   become: yes
 
 - name: sync placement database

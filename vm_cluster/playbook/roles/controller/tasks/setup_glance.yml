@@ -70,15 +70,6 @@
     - glance
     - ceph
 
-- name: Ensure the Glance Registry is Correctly Configured
-  ini_file: dest=/etc/glance/glance-registry.conf section="{{ item.section }}"
-            option="{{ item.option }}" value="{{ item.value }}"
-  become: yes
-  with_items: "{{ common_auth_config + common_rabbit_config + glance_common_config }}"
-  notify:
-    - sync glance database
-    - restart glance
-
 - name: Ensure the Default Glance Database is Removed
   file: state=absent path=/var/lib/glance/glance.sqlite
   become: yes

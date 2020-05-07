@@ -55,16 +55,6 @@ defaults
   server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:9292 check inter 2000 rise 2 fall 5
 {% endfor %}
 
- listen glance_registry_cluster
-  bind {{ master_controller_ip }}:9191
-  balance  source
-  option  tcpka
-  option  tcplog
-{% for host in all_controllers %}
-  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
-  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:9191 check inter 2000 rise 2 fall 5
-{% endfor %}
-
  listen keystone_admin_cluster
   bind {{ master_controller_ip }}:35357
   balance  source

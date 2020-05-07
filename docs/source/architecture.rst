@@ -277,7 +277,6 @@ The controller nodes run the following services:
 * cinder-volume
 * tgt
 * glance-api
-* glance-registry
 * neutron-dhcp-agent
 * neutron-l3-agent
 * neutron-linuxbridge-agent
