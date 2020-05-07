@@ -44,14 +44,14 @@
   shell: openstack service create --name {{ item.name }}
          --description "Block Storage Service" {{ item.type }}
   with_items:
-    - { name: cinder, type: volume }
     - { name: cinderv2, type: volumev2 }
+    - { name: cinderv3, type: volumev3 }
   when: (os_services.stdout.find("volume") == -1) and
         (inventory_hostname in groups['master-controller'])
 
-- name: Ensure the Volume Service API Endpoints Exist
-  shell: openstack endpoint create --region RegionOne volume {{ item }}
-         http://{{ master_controller_hostname }}:8776/v1/%\(tenant_id\)s
+- name: Ensure the Volume2 Service API Endpoints Exist
+  shell: openstack endpoint create --region RegionOne volumev2 {{ item }}
+         http://{{ master_controller_hostname }}:8776/v2/%\(tenant_id\)s
   with_items:
       - public
       - internal
@@ -59,9 +59,9 @@
   when: (os_services.stdout.find("volume") == -1) and
         (inventory_hostname in groups['master-controller'])
 
-- name: Ensure the Volume2 Service API Endpoints Exist
-  shell: openstack endpoint create --region RegionOne volumev2 {{ item }}
-         http://{{ master_controller_hostname }}:8776/v2/%\(tenant_id\)s
+- name: Ensure the Volume3 Service API Endpoints Exist
+  shell: openstack endpoint create --region RegionOne volumev3 {{ item }}
+         http://{{ master_controller_hostname }}:8776/v3/%\(tenant_id\)s
   with_items:
       - public
       - internal

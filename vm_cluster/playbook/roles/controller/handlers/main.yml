@@ -113,5 +113,4 @@
   service: name={{ item }} state=restarted
   with_items:
     - cinder-scheduler
-    - cinder-api
   become: yes
