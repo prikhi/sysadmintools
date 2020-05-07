@@ -40,3 +40,9 @@
   roles:
     - { name: compute, tags: compute }
   any_errors_fatal: True
+
+- hosts:
+    - storage
+  roles:
+    - { name: storage, tags: storage }
+  any_errors_fatal: True

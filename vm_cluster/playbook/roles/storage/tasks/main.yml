@@ -1,0 +1,6 @@
+---
+
+- name: Ensure LVM is Installed
+  apt:
+    name: lvm2
+  become: yes
