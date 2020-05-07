@@ -5,6 +5,7 @@ mq_user: "openstack"
 nova_os_user: "nova"
 neutron_os_user: "neutron"
 cinder_os_user: "cinder"
+placement_os_user: "placement"
 
 admin_os_project: 'admin'
 admin_os_user: 'admin'
@@ -75,6 +76,14 @@ common_nova_config:
       value: 'nova.virt.firewall.NoopFirewallDriver' }
   - { section: 'oslo_concurrency', option: 'lock_path',
       value: '/var/lib/nova/tmp' }
+  - { section: 'placement', option: 'region_name', value: 'RegionOne' }
+  - { section: 'placement', option: 'project_domain_id', value: 'default' }
+  - { section: 'placement', option: 'project_name', value: '{{ service_os_project }}' }
+  - { section: 'placement', option: 'auth_type', value: 'password' }
+  - { section: 'placement', option: 'user_domain_id', value: 'default' }
+  - { section: 'placement', option: 'auth_url', value: 'http://{{ master_controller_hostname }}:5000/v3' }
+  - { section: 'placement', option: 'username', value: '{{ placement_os_user }}' }
+  - { section: 'placement', option: 'password', value: '{{ vaulted_placement_os_password }}' }
 
 # Neutron
 common_neutron_config:

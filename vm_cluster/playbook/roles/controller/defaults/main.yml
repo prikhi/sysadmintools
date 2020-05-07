@@ -9,6 +9,8 @@ nova_db_name: "nova"
 nova_db_user: "nova"
 neutron_db_name: "neutron"
 neutron_db_user: "neutron"
+placement_db_name: "placement"
+placement_db_user: "placement"
 
 mysql_config:
   - { option: "bind-address", value: "{{ hostvars[ansible_hostname][key].ipv4.address }}" }
@@ -53,6 +55,13 @@ glance_common_config:
   - { section: 'keystone_authtoken', option: 'password', value: "{{ vaulted_glance_os_password }}" }
   - { section: 'paste_deploy', option: 'flavor', value: 'keystone' }
 
+placement_config:
+  - { section: 'api', option: 'auth_strategy', value: 'keystone' }
+  - { section: 'placement_database', option: 'connection',
+      value: 'mysql+pymysql://{{ placement_db_user }}:{{ vaulted_db_password }}@{{ master_controller_hostname }}/{{ placement_db_name }}' }
+  - { section: 'keystone_authtoken', option: 'username', value: "{{ placement_os_user }}" }
+  - { section: 'keystone_authtoken', option: 'password', value: "{{ vaulted_placement_os_password }}" }
+
 nova_config:
   - { section: 'DEFAULT', option: 'osapi_compute_listen', value: '{{ management_ip }}' }
   - { section: 'DEFAULT', option: 'metadata_listen', value: '{{ management_ip }}' }
@@ -66,6 +75,7 @@ nova_config:
   - { section: 'glance', option: 'api_servers', value: 'http://{{ master_controller_hostname }}:9292' }
   - { section: 'libvirt', option: 'rbd_user', value: 'cinder' }
   - { section: 'libvirt', option: 'rbd_secret_uuid', value: '{{ vaulted_rbd_cinder_uuid }}' }
+  - { section: 'scheduler', option: 'discover_hosts_in_cells_interval', value: '300' }
 
 neutron_config:
   - { section: 'DEFAULT', option: 'bind_host', value: '{{ management_ip }}' }

@@ -139,3 +139,13 @@ defaults
   {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
   server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:9696 check inter 2000 rise 2 fall 5
 {% endfor %}
+
+ listen placement_api_cluster
+  bind {{ master_controller_ip }}:8778
+  balance  source
+  option  tcpka
+  option  tcplog
+{% for host in all_controllers %}
+  {% set interface_key %}ansible_{{ hostvars[host]['management_interface'] }}{% endset %}
+  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host][interface_key]['ipv4']['address'] }}:8778 check inter 2000 rise 2 fall 5
+{% endfor %}

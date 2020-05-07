@@ -55,6 +55,12 @@
     - glance-api
   become: yes
 
+- name: sync placement database
+  shell: placement-manage db sync
+  become: yes
+  become_user: placement
+  when: inventory_hostname in groups['master-controller']
+
 - name: restart nova
   service: name={{ item }} state=restarted
   with_items:

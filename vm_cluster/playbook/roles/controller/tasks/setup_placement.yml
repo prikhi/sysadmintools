@@ -1,0 +1,81 @@
+---
+
+- name: Ensure Placement Database Exists
+  mysql_db: name={{ placement_db_name }}
+            login_user=root login_password="{{ vaulted_db_root_password }}"
+  notify: sync placement database
+  when: inventory_hostname in groups['master-controller']
+  become: yes
+
+- name: Ensure the Placement Database User Exists
+  mysql_user: name={{ placement_db_user }} password={{ vaulted_db_password }}
+              priv='{{ placement_db_name }}.*:ALL' host="{{ item }}" append_privs=yes
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items:
+    - localhost
+    - '%'
+  notify: sync placement database
+  when: inventory_hostname in groups['master-controller']
+  become: yes
+
+- name: Retrieve a List of Existing Users
+  shell: openstack user list -f value -c Name
+  register: os_users
+  changed_when: false
+
+- name: Ensure the OpenStack Placement User Exists
+  shell: openstack user create --domain default
+         --password "{{ vaulted_placement_os_password|quote }}"
+         "{{ placement_os_user }}"
+  when: (os_users.stdout.find(placement_os_user) == -1) and
+        (inventory_hostname in groups['master-controller'])
+
+- name: Ensure the OpenStack Placement User's Role is Properly Configured
+  shell: openstack role add --project {{ service_os_project }}
+         --user {{ placement_os_user }} admin
+  when: inventory_hostname in groups['master-controller']
+
+- name: Retrieve a List of OpenStack Services
+  shell: openstack endpoint list -c "Service Type" -f value
+  register: os_services
+  changed_when: false
+
+- name: Ensure the OpenStack Placement Service Exists
+  shell: openstack service create --name placement
+         --description "Placement API" placement
+  when: (os_services.stdout.find("plcement") == -1) and
+        (inventory_hostname in groups['master-controller'])
+
+- name: Ensure the Placement Service API Endpoints Exist
+  shell: openstack endpoint create --region RegionOne placement {{ item }}
+         http://{{ master_controller_hostname }}:8778
+  with_items:
+      - public
+      - internal
+      - admin
+  when: (os_services.stdout.find("placement") == -1) and
+        (inventory_hostname in groups['master-controller'])
+
+- name: Ensure Placement is Installed
+  apt: name=placement-api
+  become: yes
+
+- name: Ensure Placement's Apache Site is Correctly Configured
+  lineinfile:
+    path: /etc/apache2/sites-available/placement-api.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: "^Listen .*$", line: "Listen {{ management_ip }}:8778" }
+    - { regexp: "^<VirtualHost.*$", line: "<VirtualHost {{ management_ip }}:8778>" }
+  become: yes
+  notify: restart apache
+
+- name: Ensure Placement is Correctly Configured
+  ini_file: dest=/etc/placement/placement.conf section="{{ item.section }}"
+            option="{{ item.option }}" value="{{ item.value }}"
+  with_items: "{{ common_auth_config + placement_config  }}"
+  become: yes
+  notify:
+    - sync placement database
+    - restart apache

@@ -38,6 +38,9 @@
 - include: setup_glance.yml
   tags: glance
 
+- include: setup_placement.yml
+  tags: placement
+
 - include: setup_nova.yml
   tags: nova
 
