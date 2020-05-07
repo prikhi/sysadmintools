@@ -241,26 +241,24 @@ Then create the initial monitors & start them on boot::
 Next, add the OSDs. You'll want an SSD with a journal partition for each
 OSD(``/dev/sdb#``), and an HDD for each OSD::
 
-    ceph-deploy osd create stack-storage-1:/dev/sdc:/dev/sdb1 stack-storage-1:/dev/sdd:/dev/sdb2 \
-        stack-storage-2:/dev/sdc:/dev/sdb1 stack-storage-2:/dev/sdd:/dev/sdb2 \
-        stack-storage-3:/dev/sdc:/dev/sdb1 stack-storage-3:/dev/sdd:/dev/sdb2
+    # Block Storage
+    ceph-deploy osd create stack-storage-1 --data /dev/sdc
+    ceph-deploy osd create stack-storage-1 --data /dev/sdd
+    ceph-deploy osd create stack-storage-2 --data /dev/sdc
+    ceph-deploy osd create stack-storage-2 --data /dev/sdd
+    # etc.
+
+    # File Storage
+    ceph-deploy osd create stack-storage-1 --filestore --data /dev/sdc --journal /dev/sdb1
+    # etc.
 
     # If your drive layout is identical on every storage server:
-    for SRV in "${STORAGE[@]}"; do
-        ceph-deploy osd create $SRV:/dev/sdc:/dev/sdb1 $SRV:/dev/sdd:/dev/sdb2
-    done
-
-Here's a short script you can use to generate an OSD creation command::
-
-    # List of OSDs w/ optional journal partition: '/dev/<osd>:/dev/<journal-partition>'
-    OSDS=('/dev/sdb' '/dev/sdc' '/dev/sdd' '/dev/sde')
-    OSD_CMD="ceph-deploy osd create"
+    OSDS=('/dev/sdc' '/dev/sdd')
     for SRV in "${STORAGE[@]}"; do
         for OSD in "${OSDS[@]}"; do
-            OSD_CMD="${OSD_CMD} ${SRV}:${OSD}"
+            ceph-deploy osd create $SRV --data $OSD
         done
     done
-    echo "${OSD_CMD}"
 
 Now copy the configuraton file & admin key to the controller nodes::
 
@@ -272,6 +270,10 @@ And set the correct permissions on the admin key::
         ssh $SRV sudo chmod +r /etc/ceph/ceph.client.admin.keyring
     done
 
+Enable the manager daemon::
+
+    ceph-deploy mgr create ${CONTROLLERS[@]}
+
 Check the health of the storage cluster with ``ceph health`` & watch syncing
 progress with ``ceph -w``.
 
@@ -282,9 +284,12 @@ OpenStack Integration
 Now we'll make OpenStack use the Ceph cluster for Image & Block storage. Start
 by creating some pools to use::
 
-    ceph osd pool create volumes 512
+    ceph osd pool create volumes 512 replicated replicated_rule 64
+    rbd pool init volumes
     ceph osd pool create vms 128
+    rbd pool init vms
     ceph osd pool create images 64
+    rbd pool init images
 
 Create Ceph Users for the various OpenStack Services, and assign them the
 appropriate pool permissions::
