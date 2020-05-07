@@ -69,13 +69,15 @@
   become: yes
 
 - name: sync nova database
-  shell: nova-manage {{ item }} sync
+  shell: nova-manage {{ item }}
   become: yes
   become_user: nova
   when: inventory_hostname in groups['master-controller']
   with_items:
-    - api_db
-    - db
+    - api_db sync
+    - cell_v2 map_cell0
+    - "cell_v2 create_cell --name=cell1"
+    - db sync
 
 - name: sync neutron database
   shell: neutron-db-manage --config-file /etc/neutron/neutron.conf

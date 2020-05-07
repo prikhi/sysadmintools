@@ -6,6 +6,7 @@
   with_items:
     - "{{ nova_db_name }}"
     - "{{ nova_db_name }}_api"
+    - "{{ nova_db_name }}_cell0"
   notify: sync nova database
   when: inventory_hostname in groups['master-controller']
   become: yes
@@ -23,6 +24,17 @@
 
 - name: Ensure the Nova API Database User Exists
   mysql_user: name={{ nova_db_user }} priv='{{ nova_db_name }}_api.*:ALL'
+              host="{{ item }}" append_privs=yes
+              login_user=root login_password="{{ vaulted_db_root_password }}"
+  with_items:
+    - localhost
+    - '%'
+  notify: sync nova database
+  when: inventory_hostname in groups['master-controller']
+  become: yes
+
+- name: Ensure the Nova Cell0 Database User Exists
+  mysql_user: name={{ nova_db_user }} priv='{{ nova_db_name }}_cell0.*:ALL'
               host="{{ item }}" append_privs=yes
               login_user=root login_password="{{ vaulted_db_root_password }}"
   with_items:
