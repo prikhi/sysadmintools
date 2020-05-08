@@ -316,6 +316,7 @@ IP addressing of nodes is done manually in ``/etc/network/interfaces``.
 
 ``10.2.1.0/24``
 
+* ``5`` is reserved for Cerberus.
 * ``10`` is reserved for the Master Controller's Virtual IP.
 * ``11`` to ``40`` reserved for Controller nodes.
 * ``41`` to ``70`` reserved for Compute nodes.

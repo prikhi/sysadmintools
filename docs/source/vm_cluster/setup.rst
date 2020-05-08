@@ -74,15 +74,11 @@ The network connections & IP addresses must be setup by manually. Refer to the
 node & network type. Configure the networks by editing
 ``/etc/network/interfaces``::
 
-    # TODO: Remove this for final install since public routed through mgmt
-    # The primary public interface
-    auto enp0s3
-    iface enp0s3 inet dhcp
-
     # The Management Network Interface
     auto enp0s8
     iface enp0s8 inet static
         address 10.2.1.11
+        gateway 10.2.1.5
         netmask 255.255.255.0
 
 On controller & compute nodes, add the Provider & Overlay Network Interfaces::
@@ -118,6 +114,12 @@ On storage nodes, add the Storage Sync Network::
 Then restart the networking service::
 
     sudo systemctl restart networking
+
+
+We also need to manually set the DNS resolver in ``/etc/systemd/resolved.conf``::
+
+    DNS=10.2.1.5
+
 
 
 Ansible Playbook
