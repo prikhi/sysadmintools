@@ -1,4 +1,4 @@
 ---
 
-management_interface: 'enp0s8'
-storage_interface: 'enp0s10'
+management_interface: 'enp10s0f0'
+storage_interface: 'enp9s0f0'

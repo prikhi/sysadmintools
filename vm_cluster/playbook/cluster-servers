@@ -1,18 +1,20 @@
 [master-controller]
-stack-controller-1 ansible_host=192.168.1.191 ansible_port=22
+stack-controller-1 ansible_host=stack-controller-1.acorn ansible_port=22
 
 [backup-controller]
-stack-controller-2 ansible_host=192.168.1.192 ansible_port=22
+stack-controller-2 ansible_host=stack-controller-2.acorn ansible_port=22
+stack-controller-3 ansible_host=stack-controller-3.acorn ansible_port=22
 
 [controllers:children]
 master-controller
 backup-controller
 
 [compute]
-stack-compute-1 ansible_host=192.168.1.194 ansible_port=22
-stack-compute-2 ansible_host=192.168.1.195 ansible_port=22
+stack-compute-1 ansible_host=stack-compute-1.acorn ansible_port=22
+stack-compute-2 ansible_host=stack-compute-2.acorn ansible_port=22
+stack-compute-3 ansible_host=stack-compute-3.acorn ansible_port=22
 
 [storage]
-stack-storage-1 ansible_host=192.168.1.197 ansible_port=22
-stack-storage-2 ansible_host=192.168.1.198 ansible_port=22
-stack-storage-3 ansible_host=192.168.1.199 ansible_port=22
+stack-storage-1 ansible_host=stack-storage-1.acorn ansible_port=22
+stack-storage-2 ansible_host=stack-storage-2.acorn ansible_port=22
+stack-storage-3 ansible_host=stack-storage-3.acorn ansible_port=22

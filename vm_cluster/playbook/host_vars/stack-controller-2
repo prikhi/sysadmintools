@@ -1,4 +1,4 @@
 ---
 
-management_interface: 'enp0s8'
-overlay_interface: 'enp0s10'
+management_interface: 'enp1s0f0'
+overlay_interface: 'enp1s0f1'
