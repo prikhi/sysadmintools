@@ -18,6 +18,30 @@ TODO: Fabric command to check & bootstrap inactive galera cluster?
 .. _Fabric:                         http://www.fabfile.org/
 
 
+Adding / Replacing Storage Drives
+==================================
+
+When a storage drive fails, you will need to shutdown the node, swap the drive
+out, & initialize the new drive:
+
+* Run ``sudo poweroff`` on the storage node to shut it off.
+* Swap out the HDD with a replacement drive. We use 3TB SAS drives.
+* Power the node back on.
+* During the boot process, you will receive an error from the RAID card stating
+  the drive configuration has changed. Press ``Control-a`` to enter the RAID
+  setup.
+* Select the RAID adapter that controls the new drive.
+* Select the ``Initialize Drives`` option & select the new drive with ``Space``
+  and then press ``Enter`` to confirm.
+* Press ``Escape`` to go back to the menu and select ``Create JBOD``.
+* Select the new drive and confirm the JBOD creation.
+* Exit the menu to boot into the OS.
+* Once the storage node has booted up, SSH into ``stack-controller-1.acorn``.
+* Enter the Ceph Deploy directory with ``cd ceph-cluster`` and deploy an OSD to
+  the replacement drive by running ``ceph-deploy osd create
+  stack-storage-<node-number> --data /dev/<new-drive>``.
+
+
 Starting Up
 ============
 
