@@ -21,8 +21,11 @@ TODO: Fabric command to check & bootstrap inactive galera cluster?
 Adding / Replacing Storage Drives
 ==================================
 
+When a storage node's OS drive fails, you need to replace the drive, create a
+new 1 volume RAID array using the Adapatec Configuration boot utility.
+
 When a storage drive fails, you will need to shutdown the node, swap the drive
-out, & initialize the new drive:
+out, & initialize the new JBOD drive:
 
 * Run ``sudo poweroff`` on the storage node to shut it off.
 * Swap out the HDD with a replacement drive. We use 3TB SAS drives.
