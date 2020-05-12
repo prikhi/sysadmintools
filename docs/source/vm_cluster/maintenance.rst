@@ -18,6 +18,44 @@ TODO: Fabric command to check & bootstrap inactive galera cluster?
 .. _Fabric:                         http://www.fabfile.org/
 
 
+Adding OS Images
+=================
+
+You can download `pre-made images`_ or `create your own image`_ for Linux &
+Windows VMs using a virtualizer like KVM or VirtualBox.
+
+Once you have an image file, you need to convert it to the ``raw`` format using
+``qemu-img``::
+
+    qemu-img convert -O raw my-src-image.qcow2 my-target-image.raw
+
+Then you can add the image to the cluster via the Dashboard:
+
+* Login to the `Dashboard`_ using the admin credentials.
+* Under the ``Admin`` menu, select ``Compute`` and ``Images``.
+* Click ``Create Image``, give it a name and description, select your raw image
+  file, and change the format to ``Raw``.
+* Hit ``Create Image`` to upload the image file.
+* Once complete, you should be able to switch to the ``acorn`` project & launch
+  a VM using your new image.
+
+.. _pre-made images:                https://docs.openstack.org/image-guide/obtain-images.html
+.. _create your own image:          https://docs.openstack.org/image-guide/create-images-manually.html
+.. _Dashboard:                      http://stack-master-controller.acorn/horizon/
+
+
+Adding VM Flavors
+==================
+
+Flavors let you set the available resources for a VM. You can customize the CPU
+count, RAM, swap, & OS drive size.
+
+* Login to the `Dashboard`_ using the admin credentials.
+* Under the ``Admin`` menu, select ``Compute`` and ``Flavors``.
+* Hit the ``Create Flavor`` button.
+* Name the flavor and specify the resources sizs, then hit ``Create Flavor``.
+
+
 Adding / Replacing Storage Drives
 ==================================
 

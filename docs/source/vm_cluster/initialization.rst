@@ -7,7 +7,7 @@ Cluster Initialization
 This details the process we went through the to initialize all cluster
 components for the first time. This requires some additional steps compared to
 starting an initialized cluster, or adding nodes to an existing cluster(see
-``maintenance.rst`` for those topics).
+:ref:`cluster-maintenance` for those topics).
 
 
 Initial Cluster Setup
