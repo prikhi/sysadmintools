@@ -24,7 +24,7 @@ dhcp_agent_config:
   - { option: 'force_metadata', value: 'True'  }
 
 metadata_agent_config:
-  - { option: 'nova_metadata_ip', value: '{{ master_controller_hostname }}' }
+  - { option: 'nova_metadata_host', value: '{{ master_controller_hostname }}' }
   - { option: 'metadata_proxy_shared_secret', value: '{{ vaulted_metadata_secret }}' }
 
 l3_agent_config:
