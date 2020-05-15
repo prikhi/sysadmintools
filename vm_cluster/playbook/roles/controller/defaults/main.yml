@@ -109,6 +109,7 @@ ml2_config:
   - { section: 'ml2_type_flat', option: 'flat_networks', value: 'provider' }
   - { section: 'ml2_type_vlan', option: 'network_vlan_ranges', value: 'provider' }
   - { section: 'ml2_type_vxlan', option: 'vni_ranges', value: '500:1500' }
+  - { section: 'securitygroup', option: 'enable_ipset', value: 'true' }
   - { section: 'securitygroup', option: 'firewall_driver', value: 'openvswitch' }
 
 ovs_agent_config:
