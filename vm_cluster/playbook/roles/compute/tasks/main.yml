@@ -5,7 +5,9 @@
 - name: Ensure the Ceph Dependencies are Installed
   apt: name=ceph-common
   become: yes
-  tags: ceph
+  tags:
+    - ceph
+    - ha
 
 - name: Ensure OpenStack Nova is Installed
   apt: name=nova-compute
