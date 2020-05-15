@@ -100,7 +100,7 @@ common_ovs_config:
   - { section: 'agent', option: 'l2_population', value: 'True' }
   - { section: 'agent', option: 'tunnel_types', value: 'vxlan' }
   - { section: 'ovs', option: 'bridge_mappings', value: 'provider:br-provider' }
-  - { section: 'securitygroup', option: 'firewall_driver', value: 'openvswitch' }
+  - { section: 'securitygroup', option: 'firewall_driver', value: 'iptables_hybrid' }
 
 common_l3_agent_config:
     - { option: 'interface_driver', value: 'openvswitch' }
