@@ -23,8 +23,8 @@ public_network_options:
     cidr: "192.168.1.0/24"
     gateway: "192.168.1.254"
     dns: "192.168.1.254"
-    start_ip: "192.168.0.181"
-    end_ip: "192.168.0.230"
+    start_ip: "192.168.1.190"
+    end_ip: "192.168.1.199"
 
 private_network_options:
     cidr: "10.0.1.0/24"
