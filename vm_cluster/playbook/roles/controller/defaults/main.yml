@@ -99,7 +99,7 @@ neutron_config:
   - { section: 'nova', option: 'project_name', value: '{{ service_os_project }}' }
   - { section: 'nova', option: 'username', value: '{{ nova_os_user }}' }
   - { section: 'nova', option: 'password', value: '{{ vaulted_nova_os_password }}' }
-  - { section: 'agent', option: 'dhcp_agents_per_network', value: '1' } # TODO: Change to 2 when have 2 compute nodes
+  - { section: 'agent', option: 'dhcp_agents_per_network', value: '3' }
 
 ml2_config:
   - { section: 'ml2', option: 'type_drivers', value: 'flat,vlan,vxlan' }
