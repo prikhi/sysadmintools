@@ -65,7 +65,7 @@
 
 - name: Ensure Apache Does Not Listen on Port 80
   lineinfile: dest=/etc/apache2/ports.conf
-              regexp='^Listen .*$' line='Listen 8888'
+              regexp='^Listen .*$' line='Listen {{ management_ip }}:80'
   become: yes
   notify: restart apache
 
