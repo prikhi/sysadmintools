@@ -65,6 +65,8 @@ new 1 volume RAID array using the Adapatec Configuration boot utility.
 When a storage drive fails, you will need to shutdown the node, swap the drive
 out, & initialize the new JBOD drive:
 
+* SSH into a controller node and run ``ceph osd set noout`` to prevent
+  rebalancing when you take the storage node offline.
 * Run ``sudo poweroff`` on the storage node to shut it off.
 * Swap out the HDD with a replacement drive. We use 3TB SAS drives.
 * Power the node back on.
@@ -81,6 +83,7 @@ out, & initialize the new JBOD drive:
 * Enter the Ceph Deploy directory with ``cd ceph-cluster`` and deploy an OSD to
   the replacement drive by running ``ceph-deploy osd create
   stack-storage-<node-number> --data /dev/<new-drive>``.
+* Run ``ceph osd unset noout`` to enable data rebalancing on drive failure.
 
 
 Starting Up
