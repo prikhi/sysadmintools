@@ -25,5 +25,7 @@
     - { exp: 'OPENSTACK_API_VERSIONS =.*',
         line: 'OPENSTACK_API_VERSIONS = {"identity":3,"image":2,"volume":2}' }
     - { exp: 'TIME_ZONE =.*', line: 'TIME_ZONE = "America/New_York"' }
+    - { exp: '\s*can_set_password.*',
+        line: "    'can_set_password': True," }
   become: yes
   notify: restart apache
