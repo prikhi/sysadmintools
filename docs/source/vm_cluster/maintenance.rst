@@ -86,6 +86,24 @@ out, & initialize the new JBOD drive:
 * Run ``ceph osd unset noout`` to enable data rebalancing on drive failure.
 
 
+Shutting Down
+==============
+
+To shutdown a cluster:
+
+* Shutdown all the VMs using the web UI or with the ``openstack server stop
+  <server1> <server2> ...`` command from a controller node.
+* SSH into the Compute nodes and shut them down by running ``sudo poweroff``.
+* On a controller node, disable storage rebalancing so we can take the storage
+  cluster offline by running ``ceph osd set noout``.
+* SSH into each Storage node and shut them down.
+* On a controller node, put the pacemaker cluster into maintenance mode by
+  running ``pcs property set maintenance-mode=true``.
+* Shut off the controller nodes in a staggered fashion from node 3 to node 1.
+  E.g., shutdown ``stack-controller-3``, wait a minute, shutdown 2, wait a
+  minute, shutdown 1.
+
+
 Starting Up
 ============
 
@@ -96,7 +114,14 @@ If you ever need to start a stopped cluster:
 * If you don't know which controller shutdown last, check
   ``/var/lib/mysql/grastate.dat`` on each controller for ``safe_to_bootstrap:
   1``. Run ``sudo galera_new_cluster`` on this controller.
-* Once the first MySQL server starts, you can start up all the other nodes.
+* Once the first MySQL server starts, start mysql on the other nodes by running
+  ``systemctl start mysql``.
+* Now start the Storage nodes. Verify all disks are up by running ``ceph osd
+  tree`` on a controller node. Check the health of the storage cluster by
+  running ``ceph status``.
+* On a controller node, re-enable drive re-balancing by running ``ceph osd
+  unset noout``.
+* Start the Compute nodes.
 * Once everything has booted up, you should be able to start the VMs from the
   dashboard.
 
