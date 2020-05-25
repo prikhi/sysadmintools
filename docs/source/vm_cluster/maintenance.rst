@@ -84,6 +84,37 @@ out, & initialize the new JBOD drive:
   the replacement drive by running ``ceph-deploy osd create
   stack-storage-<node-number> --data /dev/<new-drive>``.
 * Run ``ceph osd unset noout`` to enable data rebalancing on drive failure.
+* Login to the `Dashboard`_ using the admin credentials.
+* Ensure you are viewing the ``admin`` project. Under the ``Identity`` menu,
+  navigate to the ``Projects`` page.
+* Click the dropdown for the ``acorn`` project and select ``Modify Quotas``.
+* Click the ``Volume`` tab and enter the new ``Total Size`` of the cluster,
+  using the ``Safe Cluster Size`` value from the `Ceph Calculator`_.
+* Hit the ``Save`` button.
+
+.. _Ceph Calculator:                https://florian.ca/ceph-calculator/
+
+
+Extending a Volume
+===================
+
+If a VM's volume is running out of free space, you can extend the volume to
+increase it's total size:
+
+* SSH into the VM & shut it down.
+* Login to the `Dashboard`_ & navigate to the ``Instances`` page under the
+  ``Project > Compute`` menu.
+* Click the dropdown menu for the VM and click the ``Detach Volume`` option and
+  select the desired volume.
+* Navigate to the ``Volumes`` page under the ``Volumes`` menu.
+* Use the dropdown menu for the volume to resize the volume.
+* Once the volume is resized, re-attach it to the VM and boot up the VM.
+* SSH into the VM, unmount the volume, and run ``gdisk /dev/<volume-disk>``.
+  Delete the partition and create an identical one that fills up the entire
+  disk.
+* Run ``sudo partprobe`` to pickup the partition table changes.
+* Run ``sudo ressize2fs /dev/<volume-partition>`` to extend the filesystem to
+  the new partition size.
 
 
 Shutting Down
