@@ -131,7 +131,7 @@
 - name: Ensure the Ceph Client Socket & Log Directories Exist
   file: path="{{ item }}" state=directory owner=libvirt-qemu group=libvirt
         mode=0775
-  with_items: [ "/var/log/qemu", "/var/run/ceph-guests" ]
+  with_items: [ "/var/log/qemu", "/var/run/ceph/guests" ]
   become: yes
   tags: ceph
 

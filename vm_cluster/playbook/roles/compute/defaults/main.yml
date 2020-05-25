@@ -43,6 +43,6 @@ ceph_config:
 ceph_client_config:
   - { option: 'rbd cache', value: 'true' }
   - { option: 'rbd cache writethrough until flush', value: 'true' }
-  - { option: 'admin socket', value: '/var/run/ceph-guests/$cluster-$type.$id.$pid.$cctid.asok' }
+  - { option: 'admin socket', value: '/var/run/ceph/$cluster-$type.$id.$pid.$cctid.asok' }
   - { option: 'log file', value: '/var/log/qemu/qemu-guest-$pid.log' }
   - { option: 'rbd concurrent management ops', value: '20' }
