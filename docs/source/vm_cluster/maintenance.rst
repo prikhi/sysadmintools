@@ -5,6 +5,82 @@ Cluster Maintenance
 ===================
 
 
+Cluster Status
+===============
+
+There are various commands and log files that you can use to assess the
+cluster's health & status.
+
+Pacemaker
+----------
+
+The controller nodes run ``pacemaker`` to share the virtual IP address for the
+``stack-master-controller.acorn`` domain. Only one controller node will be the
+master-controller at once. Pacemaker also ensures various services like the
+load balancer ``haproxy`` are running.
+
+To check the status of the Pacemaker cluster, run ``sudo pcs status`` on any
+controller node. This will display the node with the master-controller virtual
+IP and the status of services on each controller node.
+
+To restart the pacemaker service on a controller node, run ``sudo systemctl
+restart pacemaker``. Log files for the service can be found at
+``/var/log/pcsd/`` and you can run ``sudo journalctl -u pacemaker`` for
+additional service information.
+
+MySQL
+------
+
+The MySQL database is replicated on each controller node. You can check a
+node's status in the cluster by running ``sudo mysql`` to open an SQL shell,
+and then run a ``SHOW STATUS LIKE 'wsrep_local_state%';`` query. A state
+comment of ``Synced`` means the node is synced with the rest of the cluster.
+You can check the logs by running ``sudo journalctl -u mariadb``.
+
+Ceph
+-----
+
+The controller nodes are the monitors & manager for the Ceph storage cluster
+used by OpenStack.
+
+To check the health of the storage cluster, run ``ceph health``. For more
+detailed information, run ``ceph status``. While the cluster is being
+re-balanced or repaired, you can run ``ceph -w`` to print the status and then
+monitor any health-related messages. Run ``ceph iostat`` to continuously print
+a table of the cluster's I/O activity.
+
+The storage nodes have a Ceph OSD for each storage drive. To print the layout
+of storage nodes & OSDs, run ``ceph osd tree``. For more detailed information
+like the used & available space per-OSD, run ``ceph osd status``.
+
+Ceph log files are found in ``/var/log/ceph/`` on the controller & storage
+nodes. You can view the ceph services running on each node by running
+``systemctl``. To restart all ceph services on a node, run ``sudo systemctl
+restart ceph.target``. You can start a specific OSD by SSHing into the OSDs
+storage node and running something like ``sudo systemctl start
+ceph-osd@2.service``.
+
+OpenStack
+----------
+
+You can check the status of openstack services & VMs by using the ``openstack``
+command from any controller node. You will need to source one of the credential
+files on the node, e.g.: ``. ~/admin-openrc.sh``.
+
+Check the available services using ``openstack service list``. Check the
+hypervisor services with ``openstack compute service list`` and the networking
+services with ``openstack network agent list``. Check the hypervisor stats with
+``openstack hypervisor stats show`` and the per-hypervisor resources with
+``openstack hypervisor list --long``.
+
+Source the ``~/acorn-openrc.sh`` credential file to display details of the
+acorn project. ``openstack server list`` will show all VMs and their status.
+Similarly, run ``openstack volume list`` for all volumes, ``image list`` for
+all images, & ``flavor list`` for all VM flavors.
+
+See ``openstack --help`` for all available commands and flags.
+
+
 Automated Maintenance
 ======================
 
