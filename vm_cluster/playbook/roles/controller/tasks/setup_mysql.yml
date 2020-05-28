@@ -59,6 +59,15 @@
   with_items: "{{ mysql_config }}"
   notify: restart mysql
 
+- name: Ensure MySQL Backups Are In Place
+  cron:
+    name: "backup mysql"
+    minute: "0"
+    hour: "1"
+    job: "mysqldump --opt --all-databases | gzip > /var/openstack.sql.gz"
+  become: yes
+  when: "'backup-controller' not in group_names"
+
 # Restart Mysql on backup controllers first, so they can sync from the master controller
 - meta: flush_handlers
   when: "'backup-controller' in group_names"
