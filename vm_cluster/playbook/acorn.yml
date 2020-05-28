@@ -7,7 +7,7 @@
 
 - hosts: all
   serial: 1
-  tags: [common, initial]
+  tags: [common, initial, reboot]
   tasks:
     - name: Check if Reboot is Necessary
       stat: path=/var/run/reboot-required
@@ -23,7 +23,7 @@
       local_action:
         module: wait_for
           host={{ ansible_ssh_host }} port={{ ansible_port }}
-          delay=30 timeout=120
+          delay=30 timeout=240
       when: reboot_required.stat.exists
   any_errors_fatal: True
 
