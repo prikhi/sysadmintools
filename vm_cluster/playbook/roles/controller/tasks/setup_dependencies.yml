@@ -61,4 +61,35 @@
   become: yes
   notify: restart memcached
 
+- name: Ensure APCUPSd is Installed
+  apt:
+    name: apcupsd
+  become: yes
+  when: "'backup-controller' not in group_names"
+  tags: ups
+
+- name: Ensure APCUPSd is Configured
+  lineinfile: dest=/etc/apcupsd/apcupsd.conf regexp="{{ item.regexp }}" line="{{ item.line }}"
+  with_items:
+    - regexp: "^DEVICE.*$"
+      line: "DEVICE"
+    - regexp: "BATTERYLEVEL .*$"
+      line: "BATTERYLEVEL 50"
+    - regexp: "MINUTES .*$"
+      line: "MINUTES 15"
+  become: yes
+  notify: restart apcupsd
+  when: "'backup-controller' not in group_names"
+  tags: ups
+
+- name: Ensure the APCUPSd Shutdown Script Exists
+  copy:
+    src: cluster-shutdown.sh
+    dest: /etc/apcupsd/doshutdown
+    mode: u=rwx,g=wrx,o=r
+  become: yes
+  when: "'backup-controller' not in group_names"
+  tags: ups
+
+
 - meta: flush_handlers

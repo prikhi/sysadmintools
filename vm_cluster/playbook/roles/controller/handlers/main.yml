@@ -16,6 +16,10 @@
   service: name=memcached state=restarted
   become: yes
 
+- name: restart apcupsd
+  service: name=apcupsd state=restarted
+  become: yes
+
 - name: restart haproxy
   service: name=haproxy state=restarted
   become: yes
