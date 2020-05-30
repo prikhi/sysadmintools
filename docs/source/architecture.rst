@@ -79,6 +79,11 @@ Adonis
 Adonis is our Slackware backup server, that hosts daily, monthly, & yearly
 backups of the Business, Community, & Personal shares.
 
+It uses `hs-backup`_ to make backups using the configuration file at
+``/etc/hs-backup.yaml``.
+
+.. _hs-backup:                      https://github.com/prikhi/hs-backup
+
 
 Buildings
 =========
