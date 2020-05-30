@@ -5,12 +5,15 @@ from fabric.contrib.files import exists
 from fabric.operations import reboot
 
 env.hosts = [
-    'stack@192.168.1.190',
-    'stack@192.168.1.194',
-    'stack@192.168.1.195',
-    'stack@192.168.1.197',
-    'stack@192.168.1.198',
-    'stack@192.168.1.199',
+    'stack@stack-controller-1.acorn',
+    'stack@stack-controller-2.acorn',
+    'stack@stack-controller-3.acorn',
+    'stack@stack-compute-1.acorn',
+    'stack@stack-compute-2.acorn',
+    'stack@stack-compute-3.acorn',
+    'stack@stack-storage-1.acorn',
+    'stack@stack-storage-2.acorn',
+    'stack@stack-storage-3.acorn',
 ]
 
 
