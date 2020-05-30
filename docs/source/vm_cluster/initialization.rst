@@ -137,9 +137,10 @@ Pacemaker
 Ansible only installs the Pacemaker & HAProxy packages. You will need to create
 the cluster & Virtual IP address when first creating the OpenStack cluster.
 
-Start by removing the initial config file & authenticating the controller
-node::
+Start by SSHing into stack-controller-1, removing the initial config file &
+authenticating the controller node::
 
+    # On stack-controller-1
     sudo pcs cluster destroy
     sudo pcs cluster auth stack-controller-1 stack-controller-2 stack-controller-3 \
         -u hacluster -p PASSWORD
@@ -156,11 +157,9 @@ Set some basic properties::
         pe-error-series-max=1000 \
         cluster-recheck-interval=3min
 
-Disable STONITH for now::
+Disable STONITH::
 
     sudo pcs property set stonith-enabled=false
-
-TODO: Instructions for re-enabling STONITH
 
 Create the Virtual IP Address::
 

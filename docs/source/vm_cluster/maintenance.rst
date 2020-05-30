@@ -185,9 +185,16 @@ increase it's total size:
 * Navigate to the ``Volumes`` page under the ``Volumes`` menu.
 * Use the dropdown menu for the volume to resize the volume.
 * Once the volume is resized, re-attach it to the VM and boot up the VM.
-* SSH into the VM, unmount the volume, and run ``gdisk /dev/<volume-disk>``.
-  Delete the partition and create an identical one that fills up the entire
-  disk.
+* SSH into the VM.
+* Unmount the volume by running ``sudo umount <mount-point>`` or ``sudo umount
+  /dev/<volume-disk>``. Run ``mount`` to see a list of all mounted drives on
+  the system.
+* Run ``gdisk /dev/<volume-disk>`` to partition the new drive.
+* We need to delete the existing partition and create an identical one that
+  fills up the entire disk partition. If there is only one partition, you can
+  enter ``d`` to delete it, then ``n`` to create a new one and accept the
+  defaults in the following prompts by hitting ``<Enter>`` to make it take the
+  entire disk. Then enter ``w`` to write the new parition table.
 * Run ``sudo partprobe`` to pickup the partition table changes.
 * Run ``sudo ressize2fs /dev/<volume-partition>`` to extend the filesystem to
   the new partition size.
@@ -355,7 +362,12 @@ and storage nodes::
     ssh-copy-id stack-storage-2
     ssh-copy-id stack-storage-3
 
-TODO: Finish ceph-deploy node setup for extra controller
+And finally, copy over the ``~/ceph-cluster`` folder from an existing
+controller node to a new one::
+
+    # On stack-controller-1
+    rsync -avhz ~/ceph-cluster stack-controller-4:~/
+
 
 Neutron
 ++++++++
@@ -384,9 +396,8 @@ controller node. The list should include the new compute host.
 Storage
 --------
 
-Follow the installation & manual setup instructions, then add the hostname to
-the ``storage`` group in the ``cluster-servers`` file and run the ansible
-playbook.
+Follow the :ref:`setup-and-config` instructions, then add the hostname to the
+``storage`` group in the ``cluster-servers`` file and run the ansible playbook.
 
 This will install Ceph and setup Cinder, but you'll need to manually add the
 new node and any new storage drives to our Ceph cluster.
